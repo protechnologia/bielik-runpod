@@ -2,13 +2,10 @@
 set -e
 
 echo ">>> Instalacja Pythona..."
-apt-get update -qq && apt-get install -y python3 python3-pip git
-
-echo ">>> Klonowanie repo..."
-git clone https://github.com/protechnologia/bielik-runpod /workspace/bielik
-cd /workspace/bielik/api
+apt-get update -qq && apt-get install -y python3 python3-pip
 
 echo ">>> Instalacja zależności Python..."
+cd /tmp/init/api
 pip install -q -r requirements.txt
 
 echo ">>> Start Ollama..."
