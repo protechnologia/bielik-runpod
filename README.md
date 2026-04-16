@@ -85,6 +85,7 @@ Kolejne uruchomienia ~2 minuty — modele już są na Volume.
 | `POST` | `/ask` | Generowanie odpowiedzi (opcjonalnie z RAG) |
 | `POST` | `/ingest` | Dodawanie chunków tekstowych do bazy wektorowej |
 | `POST` | `/ingest/pdf` | Wgranie pliku PDF — automatyczny chunking i zapis do Qdrant |
+| `POST` | `/inspect/pdf` | Wgranie pliku PDF — podgląd chunków bez zapisu do Qdrant |
 | `GET` | `/collections` | Lista kolekcji Qdrant z liczbą wektorów |
 | `DELETE` | `/collections/{name}` | Usunięcie kolekcji |
 | `GET` | `/models` | Lista modeli załadowanych w Ollama |
@@ -101,6 +102,29 @@ URL Poda dostępny w panelu RunPod: **Connect → HTTP Service [Port 8000]**
 curl -X POST https://{POD_ID}-8000.proxy.runpod.net/ask \
   -H "Content-Type: application/json" \
   -d '{"prompt": "Czym jest spółdzielnia energetyczna? Odpowiedz w 2 zdaniach."}'
+```
+
+**Podgląd chunków PDF (bez zapisu do bazy):**
+```bash
+curl -X POST https://{POD_ID}-8000.proxy.runpod.net/inspect/pdf \
+  -F "file=@ustawa_oze.pdf"
+```
+
+Przykładowa odpowiedź:
+```json
+{
+  "filename": "ustawa_oze.pdf",
+  "pages": 48,
+  "chunks": 213,
+  "items": [
+    {
+      "index": 1,
+      "text": "Art. 1. Ustawa określa zasady...",
+      "char_count": 312,
+      "word_count": 47
+    }
+  ]
+}
 ```
 
 **Wgranie PDF do bazy wektorowej:**
