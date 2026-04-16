@@ -99,6 +99,20 @@ class PullRequest(BaseModel):
     model: str | None = None
 
 
+class ChunkInfo(BaseModel):
+    index: int
+    text: str
+    char_count: int
+    word_count: int
+
+
+class InspectPdfResponse(BaseModel):
+    filename: str
+    pages: int
+    chunks: int
+    items: list[ChunkInfo]
+
+
 # ── Helpery Ollama ─────────────────────────────────────────────────────────────
 
 async def ollama_embed(text: str) -> list[float]:
@@ -251,6 +265,47 @@ async def ingest_pdf(
         chunks=len(all_chunks),
         ingested=len(points),
         collection=collection,
+    )
+
+
+@app.post("/inspect/pdf", response_model=InspectPdfResponse)
+async def inspect_pdf(file: UploadFile = File(...)):
+    """Przyjmuje plik PDF i zwraca listę chunków bez zapisywania do Qdrant.
+    Służy do testowania jakości chunkingu i ekstrakcji tekstu."""
+    if not file.filename.lower().endswith(".pdf"):
+        raise HTTPException(status_code=400, detail="Plik musi być w formacie PDF.")
+
+    pdf_bytes = await file.read()
+
+    with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as tmp:
+        tmp.write(pdf_bytes)
+        tmp_path = tmp.name
+
+    try:
+        result = pdf_converter.convert(tmp_path)
+    except Exception as e:
+        raise HTTPException(status_code=422, detail=f"Nie można przetworzyć PDF: {e}")
+    finally:
+        os.unlink(tmp_path)
+
+    num_pages = len(result.document.pages)
+    all_chunks = list(pdf_chunker.chunk(result.document))
+
+    items = [
+        ChunkInfo(
+            index=i + 1,
+            text=chunk.text,
+            char_count=len(chunk.text),
+            word_count=len(chunk.text.split()),
+        )
+        for i, chunk in enumerate(all_chunks)
+    ]
+
+    return InspectPdfResponse(
+        filename=file.filename,
+        pages=num_pages,
+        chunks=len(items),
+        items=items,
     )
 
 
