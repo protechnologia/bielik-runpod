@@ -1,7 +1,7 @@
 import io
 import pytest
 import openpyxl
-from main import XlsxChunker, DEFAULT_ROWS_PER_CHUNK
+from xlsx_chunker import XlsxChunker, DEFAULT_ROWS_PER_CHUNK
 
 
 def make_xlsx(sheets: dict[str, list[list]]) -> bytes:

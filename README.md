@@ -10,6 +10,7 @@ Stack: Ollama + Bielik 11B v3.0 Q8_0 + Qdrant (RAG) + Python REST API. Uruchamia
 bielik-runpod/
 ├── api/
 │   ├── main.py
+│   ├── xlsx_chunker.py
 │   ├── requirements.txt
 │   └── test_xlsx_chunker.py
 └── start.sh
