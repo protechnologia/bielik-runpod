@@ -4,10 +4,9 @@ Bielik test API – endpoint do mierzenia czasu generowania + RAG przez Qdrant.
 import os
 import time
 import uuid
-import tempfile
+import io
+import pandas as pd
 import httpx
-from docling.document_converter import DocumentConverter
-from docling.chunking import HierarchicalChunker
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from pydantic import BaseModel
 from qdrant_client import QdrantClient
@@ -21,7 +20,10 @@ QDRANT_PATH = os.getenv("QDRANT_PATH", "/root/data/qdrant")
 # nomic-embed-text produkuje wektory 768-wymiarowe
 VECTOR_SIZE = 768
 DEFAULT_COLLECTION = "documents"
+DEFAULT_ROWS_PER_CHUNK = 50
 
+# Prompt używany przy zwykłych zapytaniach (rag=false).
+# Nie ogranicza wiedzy modelu — odpowiada na podstawie własnych danych treningowych.
 SYSTEM_PROMPT = (
     "Jesteś pomocnym asystentem języka polskiego. "
     "Zawsze odpowiadaj po polsku, chyba że użytkownik wyraźnie poprosi o inny język. "
@@ -30,9 +32,15 @@ SYSTEM_PROMPT = (
     "poinformuj że nie masz dostępu do takich informacji."
 )
 
+# Prompt używany gdy RAG jest aktywny (rag=true).
+# Ogranicza model wyłącznie do kontekstu z Qdrant — zapobiega halucynacjom.
+# Każdy chunk zaczyna się od prefiksu "{source_label} / {arkusz}", np. "ORNO OR-WE-516 / Rejestry odczytu".
+# Instrukcja nakazuje modelowi zawsze cytować to źródło w odpowiedzi.
 RAG_SYSTEM_PROMPT = (
     "Jesteś pomocnym asystentem języka polskiego. "
     "Odpowiadaj wyłącznie na podstawie podanego kontekstu. "
+    "Każdy fragment kontekstu zaczyna się od nazwy urządzenia lub dokumentu którego dotyczy — "
+    "zawsze podawaj tę nazwę w odpowiedzi jako źródło informacji. "
     "Jeśli odpowiedź nie wynika z kontekstu, powiedz wprost że nie wiesz. "
     "Zawsze odpowiadaj po polsku."
 )
@@ -42,10 +50,6 @@ app = FastAPI(title="Bielik test API")
 # Qdrant – lokalny tryb embedded, dane persystują na Volume
 qdrant = QdrantClient(path=QDRANT_PATH)
 
-# Docling – konwerter PDF, model TableFormer ładowany raz przy starcie
-pdf_converter = DocumentConverter()
-pdf_chunker = HierarchicalChunker()
-
 
 def ensure_collection(collection: str = DEFAULT_COLLECTION):
     if not qdrant.collection_exists(collection):
@@ -53,6 +57,47 @@ def ensure_collection(collection: str = DEFAULT_COLLECTION):
             collection_name=collection,
             vectors_config=VectorParams(size=VECTOR_SIZE, distance=Distance.COSINE),
         )
+
+
+def xlsx_to_chunks(
+    file_bytes: bytes,
+    source_label: str,
+    rows_per_chunk: int = DEFAULT_ROWS_PER_CHUNK,
+) -> list[dict]:
+    """
+    Wczytuje XLSX, iteruje po arkuszach.
+    Każdy arkusz = jedno urządzenie/kategoria.
+    Zwraca listę chunków: {"text": ..., "source_label": ..., "sheet": ..., "chunk": ...}
+    """
+    sheets: dict = pd.read_excel(io.BytesIO(file_bytes), sheet_name=None, dtype=str)
+    chunks = []
+
+    for sheet_name, df in sheets.items():
+        df = df.dropna(how="all").fillna("")
+        if df.empty:
+            continue
+
+        prefix = f"{source_label} / {sheet_name}"
+        rows = list(df.itertuples(index=False, name=None))
+        header = list(df.columns)
+
+        for chunk_idx, start in enumerate(range(0, len(rows), rows_per_chunk)):
+            batch = rows[start : start + rows_per_chunk]
+            # Markdown tabela z nagłówkiem przy każdym chunku
+            md_rows = [" | ".join(str(v) for v in row) for row in batch]
+            md_header = " | ".join(header)
+            md_separator = " | ".join("---" for _ in header)
+            table_md = "\n".join([md_header, md_separator] + md_rows)
+
+            text = f"{prefix}\n\n{table_md}"
+            chunks.append({
+                "text": text,
+                "source_label": source_label,
+                "sheet": sheet_name,
+                "chunk": chunk_idx + 1,
+            })
+
+    return chunks
 
 
 # ── Modele Pydantic ────────────────────────────────────────────────────────────
@@ -64,6 +109,15 @@ class AskRequest(BaseModel):
     rag: bool = False
     collection: str = DEFAULT_COLLECTION
     rag_top_k: int = 3
+    rag_score_threshold: float = 0.3
+
+
+class RagChunk(BaseModel):
+    index: int
+    score: float
+    source_label: str | None
+    sheet: str | None
+    text: str
 
 
 class AskResponse(BaseModel):
@@ -74,25 +128,31 @@ class AskResponse(BaseModel):
     tokens_generated: int | None
     tokens_per_second: float | None
     rag_chunks_used: int | None = None
+    rag_chunks: list[RagChunk] | None = None
 
 
-class IngestRequest(BaseModel):
-    texts: list[str]
-    collection: str = DEFAULT_COLLECTION
-    metadata: list[dict] | None = None
-
-
-class IngestResponse(BaseModel):
-    ingested: int
-    collection: str
-
-
-class IngestPdfResponse(BaseModel):
+class IngestXlsxResponse(BaseModel):
     filename: str
-    pages: int
+    sheets: int
     chunks: int
     ingested: int
     collection: str
+
+
+class ChunkInfo(BaseModel):
+    index: int
+    sheet: str
+    chunk: int
+    text: str
+    char_count: int
+    word_count: int
+
+
+class InspectXlsxResponse(BaseModel):
+    filename: str
+    sheets: int
+    chunks: int
+    items: list[ChunkInfo]
 
 
 class PullRequest(BaseModel):
@@ -182,84 +242,130 @@ async def pull_model(req: PullRequest = PullRequest()):
     return {"status": "pulled", "model": model}
 
 
-@app.post("/ingest", response_model=IngestResponse)
-async def ingest(req: IngestRequest):
-    """Dodaje teksty do kolekcji Qdrant (chunki dokumentów)."""
-    ensure_collection(req.collection)
-
-    points = []
-    for i, text in enumerate(req.texts):
-        vector = await ollama_embed(text)
-        meta = (req.metadata[i] if req.metadata and i < len(req.metadata) else {})
-        points.append(
-            PointStruct(
-                id=str(uuid.uuid4()),
-                vector=vector,
-                payload={"text": text, **meta},
-            )
-        )
-
-    qdrant.upsert(collection_name=req.collection, points=points)
-    return IngestResponse(ingested=len(points), collection=req.collection)
-
-
-@app.post("/ingest/pdf", response_model=IngestPdfResponse)
-async def ingest_pdf(
+@app.post("/ingest/xlsx", response_model=IngestXlsxResponse)
+async def ingest_xlsx(
     file: UploadFile = File(...),
+    source_label: str = Form(...),
     collection: str = Form(DEFAULT_COLLECTION),
+    rows_per_chunk: int = Form(DEFAULT_ROWS_PER_CHUNK),
 ):
-    """Przyjmuje plik PDF, dzieli na chunki i zapisuje do Qdrant."""
-    if not file.filename.lower().endswith(".pdf"):
-        raise HTTPException(status_code=400, detail="Plik musi być w formacie PDF.")
+    """
+    Przyjmuje plik XLSX, dzieli na chunki i zapisuje do Qdrant.
+    Każdy arkusz traktowany jest jako osobne urządzenie/kategoria.
+    Prefiks każdego chunku: '{source_label} / {nazwa_arkusza}'.
+    """
+    if not file.filename.lower().endswith((".xlsx", ".xlsm")):
+        raise HTTPException(status_code=400, detail="Plik musi być w formacie XLSX.")
 
-    pdf_bytes = await file.read()
-
-    with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as tmp:
-        tmp.write(pdf_bytes)
-        tmp_path = tmp.name
+    file_bytes = await file.read()
 
     try:
-        result = pdf_converter.convert(tmp_path)
+        chunks = xlsx_to_chunks(file_bytes, source_label, rows_per_chunk)
     except Exception as e:
-        raise HTTPException(status_code=422, detail=f"Nie można przetworzyć PDF: {e}")
-    finally:
-        os.unlink(tmp_path)
+        raise HTTPException(status_code=422, detail=f"Nie można przetworzyć XLSX: {e}")
 
-    num_pages = len(result.document.pages)
-    all_chunks = list(pdf_chunker.chunk(result.document))
+    if not chunks:
+        raise HTTPException(status_code=422, detail="Plik XLSX nie zawiera danych.")
+
+    sheet_names = list(dict.fromkeys(c["sheet"] for c in chunks))
     ensure_collection(collection)
 
     points = []
-    for i, chunk in enumerate(all_chunks):
-        vector = await ollama_embed(chunk.text)
+    for chunk in chunks:
+        vector = await ollama_embed(chunk["text"])
         points.append(PointStruct(
             id=str(uuid.uuid4()),
             vector=vector,
             payload={
-                "text": chunk.text,
+                "text": chunk["text"],
+                "source_label": chunk["source_label"],
+                "sheet": chunk["sheet"],
+                "chunk": chunk["chunk"],
                 "source": file.filename,
-                "chunk": i + 1,
-                "total_chunks": len(all_chunks),
             },
         ))
 
     qdrant.upsert(collection_name=collection, points=points)
 
-    return IngestPdfResponse(
+    return IngestXlsxResponse(
         filename=file.filename,
-        pages=num_pages,
-        chunks=len(all_chunks),
+        sheets=len(sheet_names),
+        chunks=len(chunks),
         ingested=len(points),
         collection=collection,
     )
 
 
+@app.post("/inspect/xlsx", response_model=InspectXlsxResponse)
+async def inspect_xlsx(
+    file: UploadFile = File(...),
+    source_label: str = Form(...),
+    rows_per_chunk: int = Form(DEFAULT_ROWS_PER_CHUNK),
+):
+    """
+    Przyjmuje plik XLSX i zwraca listę chunków bez zapisywania do Qdrant.
+    Służy do testowania jakości chunkingu przed właściwym ingestion.
+    """
+    if not file.filename.lower().endswith((".xlsx", ".xlsm")):
+        raise HTTPException(status_code=400, detail="Plik musi być w formacie XLSX.")
+
+    file_bytes = await file.read()
+
+    try:
+        chunks = xlsx_to_chunks(file_bytes, source_label, rows_per_chunk)
+    except Exception as e:
+        raise HTTPException(status_code=422, detail=f"Nie można przetworzyć XLSX: {e}")
+
+    if not chunks:
+        raise HTTPException(status_code=422, detail="Plik XLSX nie zawiera danych.")
+
+    sheet_names = list(dict.fromkeys(c["sheet"] for c in chunks))
+    items = [
+        ChunkInfo(
+            index=i + 1,
+            sheet=c["sheet"],
+            chunk=c["chunk"],
+            text=c["text"],
+            char_count=len(c["text"]),
+            word_count=len(c["text"].split()),
+        )
+        for i, c in enumerate(chunks)
+    ]
+
+    return InspectXlsxResponse(
+        filename=file.filename,
+        sheets=len(sheet_names),
+        chunks=len(items),
+        items=items,
+    )
+
+
+# Przykładowa odpowiedź z RAG:
+# {
+#   "answer": "Napięcie znamionowe licznika ORNO OR-WE-516 wynosi 3x230/400V.",
+#   "model": "SpeakLeash/bielik-11b-v3.0-instruct:Q8_0",
+#   "time_total_s": 14.2,
+#   "time_to_first_token_s": 1.5,
+#   "tokens_generated": 104,
+#   "tokens_per_second": 7.3,
+#   "rag_chunks_used": 2,
+#   "rag_chunks": [
+#     {
+#       "index": 1,
+#       "score": 0.8731,
+#       "source_label": "ORNO OR-WE-516",
+#       "sheet": "Rejestry odczytu",
+#       "text": "ORNO OR-WE-516 / Rejestry odczytu\n\nAdres | Nazwa | ..."
+#     }
+#   ]
+# }
 @app.post("/ask", response_model=AskResponse)
 async def ask(req: AskRequest):
     rag_chunks_used = None
     prompt_to_send = req.prompt
     system = None
 
+    rag_chunks = None
     if req.rag:
         ensure_collection(req.collection)
         query_vector = await ollama_embed(req.prompt)
@@ -267,7 +373,7 @@ async def ask(req: AskRequest):
             collection_name=req.collection,
             query_vector=query_vector,
             limit=req.rag_top_k,
-            score_threshold=0.3,
+            score_threshold=req.rag_score_threshold,
         )
         if hits:
             context = "\n\n".join(
@@ -280,6 +386,16 @@ async def ask(req: AskRequest):
             )
             system = RAG_SYSTEM_PROMPT
             rag_chunks_used = len(hits)
+            rag_chunks = [
+                RagChunk(
+                    index=j + 1,
+                    score=round(hit.score, 4),
+                    source_label=hit.payload.get("source_label"),
+                    sheet=hit.payload.get("sheet"),
+                    text=hit.payload["text"],
+                )
+                for j, hit in enumerate(hits)
+            ]
 
     data = await ollama_generate(prompt_to_send, req.max_tokens, req.temperature, system)
 
@@ -297,6 +413,7 @@ async def ask(req: AskRequest):
         tokens_generated=eval_count,
         tokens_per_second=round(tps, 1) if tps else None,
         rag_chunks_used=rag_chunks_used,
+        rag_chunks=rag_chunks,
     )
 
 

@@ -24,5 +24,4 @@ OLLAMA_MODELS=/root/data/ollama \
 MODEL=SpeakLeash/bielik-11b-v3.0-instruct:Q8_0 \
 EMBED_MODEL=nomic-embed-text \
 QDRANT_PATH=/root/data/qdrant \
-HF_HOME=/root/data/hf_cache \
 uvicorn main:app --host 0.0.0.0 --port 8000

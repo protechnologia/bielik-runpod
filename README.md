@@ -1,6 +1,6 @@
 # bielik-runpod
 
-Stack: Ollama + Bielik 11B v3.0 Q8_0 + Qdrant (RAG) + Docling (PDF) + Python REST API. Uruchamiany na RunPod przez on-start script.
+Stack: Ollama + Bielik 11B v3.0 Q8_0 + Qdrant (RAG) + Python REST API. Uruchamiany na RunPod przez on-start script.
 
 ---
 
@@ -21,8 +21,7 @@ bielik-runpod/
 ```
 /root/data/
 ├── ollama/      ← modele Ollama (Bielik, nomic-embed-text)
-├── qdrant/      ← baza wektorowa Qdrant (dokumenty RAG)
-└── hf_cache/    ← modele Docling/TableFormer (HuggingFace)
+└── qdrant/      ← baza wektorowa Qdrant (dokumenty RAG)
 ```
 
 Oba katalogi persystują na Volume i przeżywają Terminate Poda.
@@ -59,7 +58,7 @@ bash -c "apt-get update && apt-get install -y curl git zstd && curl -fsSL https:
 - **Cloud:** Secure Cloud (On Demand) — do prezentacji; Community Cloud — do testów
 - **GPU Count:** 1
 
-Pierwsze uruchomienie trwa ~15 minut (pobieranie modeli ~12 GB Bielik + ~274 MB nomic-embed-text + ~200 MB docling/TableFormer na Volume).  
+Pierwsze uruchomienie trwa ~13 minut (pobieranie modeli ~12 GB Bielik + ~274 MB nomic-embed-text na Volume).  
 Kolejne uruchomienia ~2 minuty — modele już są na Volume.
 
 ---
@@ -73,7 +72,6 @@ Kolejne uruchomienia ~2 minuty — modele już są na Volume.
 | `MODEL` | `SpeakLeash/bielik-11b-v3.0-instruct:Q8_0` |
 | `EMBED_MODEL` | `nomic-embed-text` |
 | `QDRANT_PATH` | `/root/data/qdrant` |
-| `HF_HOME` | `/root/data/hf_cache` |
 
 ---
 
@@ -83,8 +81,8 @@ Kolejne uruchomienia ~2 minuty — modele już są na Volume.
 |---|---|---|
 | `GET` | `/health` | Status Ollamy, modeli i kolekcji Qdrant |
 | `POST` | `/ask` | Generowanie odpowiedzi (opcjonalnie z RAG) |
-| `POST` | `/ingest` | Dodawanie chunków tekstowych do bazy wektorowej |
-| `POST` | `/ingest/pdf` | Wgranie pliku PDF — automatyczny chunking i zapis do Qdrant |
+| `POST` | `/ingest/xlsx` | Wgranie pliku XLSX — automatyczny chunking i zapis do Qdrant |
+| `POST` | `/inspect/xlsx` | Wgranie pliku XLSX — podgląd chunków bez zapisu do Qdrant |
 | `GET` | `/collections` | Lista kolekcji Qdrant z liczbą wektorów |
 | `DELETE` | `/collections/{name}` | Usunięcie kolekcji |
 | `GET` | `/models` | Lista modeli załadowanych w Ollama |
@@ -103,61 +101,81 @@ curl -X POST https://{POD_ID}-8000.proxy.runpod.net/ask \
   -d '{"prompt": "Czym jest spółdzielnia energetyczna? Odpowiedz w 2 zdaniach."}'
 ```
 
-**Wgranie PDF do bazy wektorowej:**
+**Wgranie XLSX do bazy wektorowej:**
 ```bash
-curl -X POST https://{POD_ID}-8000.proxy.runpod.net/ingest/pdf \
-  -F "file=@ustawa_oze.pdf" \
-  -F "collection=documents"
+curl -X POST https://{POD_ID}-8000.proxy.runpod.net/ingest/xlsx \
+  -F "file=@rejestry.xlsx" \
+  -F "source_label=ORNO OR-WE-516" \
+  -F "collection=documents" \
+  -F "rows_per_chunk=50"
 ```
 
 Przykładowa odpowiedź:
 ```json
 {
-  "filename": "ustawa_oze.pdf",
-  "pages": 48,
-  "chunks": 213,
-  "ingested": 213,
+  "filename": "rejestry.xlsx",
+  "sheets": 2,
+  "chunks": 6,
+  "ingested": 6,
   "collection": "documents"
 }
 ```
 
-**Dodanie pojedynczych tekstów do bazy wektorowej:**
+**Podgląd chunków XLSX (bez zapisu do bazy):**
 ```bash
-curl -X POST https://{POD_ID}-8000.proxy.runpod.net/ingest \
-  -H "Content-Type: application/json" \
-  -d '{
-    "texts": [
-      "Spółdzielnia energetyczna to forma organizacyjna zrzeszająca prosumentów.",
-      "Członkowie spółdzielni mogą wspólnie produkować i rozliczać energię elektryczną."
-    ],
-    "metadata": [
-      {"source": "ustawa_oze.pdf", "page": 12},
-      {"source": "ustawa_oze.pdf", "page": 13}
-    ]
-  }'
+curl -X POST https://{POD_ID}-8000.proxy.runpod.net/inspect/xlsx \
+  -F "file=@rejestry.xlsx" \
+  -F "source_label=ORNO OR-WE-516" \
+  -F "rows_per_chunk=50"
 ```
 
 **Zapytanie z RAG:**
 ```bash
 curl -X POST https://{POD_ID}-8000.proxy.runpod.net/ask \
   -H "Content-Type: application/json" \
-  -d '{"prompt": "Kto może być członkiem spółdzielni?", "rag": true, "rag_top_k": 3}'
+  -d '{"prompt": "Jakie jest napięcie znamionowe?", "rag": true, "rag_top_k": 3, "rag_score_threshold": 0.3}'
 ```
 
 Przykładowa odpowiedź `/ask` z RAG:
 ```json
 {
-  "answer": "Członkiem spółdzielni energetycznej może być prosument...",
+  "answer": "Napięcie znamionowe licznika ORNO OR-WE-516 wynosi 3x230/400V.",
   "model": "SpeakLeash/bielik-11b-v3.0-instruct:Q8_0",
   "time_total_s": 14.2,
   "time_to_first_token_s": 1.5,
   "tokens_generated": 104,
   "tokens_per_second": 7.3,
-  "rag_chunks_used": 2
+  "rag_chunks_used": 2,
+  "rag_chunks": [
+    {
+      "index": 1,
+      "score": 0.8731,
+      "source_label": "ORNO OR-WE-516",
+      "sheet": "Rejestry odczytu",
+      "text": "ORNO OR-WE-516 / Rejestry odczytu\n\nAdres | Nazwa | ..."
+    }
+  ]
 }
 ```
 
 Swagger UI: `https://{POD_ID}-8000.proxy.runpod.net/docs`
+
+---
+
+## TODO
+
+### Jakość RAG
+- [ ] Reranking — hybrid search BM25 + cosine łączony przez RRF (Reciprocal Rank Fusion, k=60)
+- [ ] Lepszy model embeddingów (np. `multilingual-e5-large`)
+- [ ] HyDE — model generuje hipotetyczną odpowiedź, jej embedding idzie do Qdrant
+- [ ] Osobne kolekcje per urządzenie
+
+### Architektura i produkcyjność
+- [ ] Asynchroniczny ingest + endpoint `/tasks/{id}` ze statusem
+- [ ] Autoryzacja — API key
+- [ ] Obsługa duplikatów przy ponownym wgraniu tego samego pliku
+- [ ] Auto-wybór kolekcji przez embedding
+- [ ] Prosty frontend
 
 ---
 
@@ -167,4 +185,4 @@ Swagger UI: `https://{POD_ID}-8000.proxy.runpod.net/docs`
 - Volume (`/root/data`) przeżywa Terminate — modele i dane Qdrant nie muszą być pobierane ponownie.
 - `rm -rf /tmp/init` w start command zabezpiecza przed błędem przy ponownym starcie na tym samym węźle.
 - Container Disk kasuje się przy każdym Stop — `git clone` i `pip install` wykonują się przy każdym starcie (~60 sek.).
-- Volume Disk zwiększony do **35 GB**: ~12 GB Bielik + ~274 MB nomic-embed-text + ~200 MB docling/TableFormer + margines na dane Qdrant.
+- Volume Disk ustawiony na **35 GB**: ~12 GB Bielik + ~274 MB nomic-embed-text + margines na dane Qdrant.
