@@ -10,7 +10,8 @@ Stack: Ollama + Bielik 11B v3.0 Q8_0 + Qdrant (RAG) + Python REST API. Uruchamia
 bielik-runpod/
 ├── api/
 │   ├── main.py
-│   └── requirements.txt
+│   ├── requirements.txt
+│   └── test_xlsx_chunker.py
 └── start.sh
 ```
 
@@ -159,6 +160,17 @@ Przykładowa odpowiedź `/ask` z RAG:
 ```
 
 Swagger UI: `https://{POD_ID}-8000.proxy.runpod.net/docs`
+
+---
+
+## Testy
+
+Testy jednostkowe dla klasy `XlsxChunker` znajdują się w `api/test_xlsx_chunker.py`.
+
+```bash
+pip install pytest
+pytest api/test_xlsx_chunker.py -v
+```
 
 ---
 

@@ -59,45 +59,48 @@ def ensure_collection(collection: str = DEFAULT_COLLECTION):
         )
 
 
-def xlsx_to_chunks(
-    file_bytes: bytes,
-    source_label: str,
-    rows_per_chunk: int = DEFAULT_ROWS_PER_CHUNK,
-) -> list[dict]:
-    """
-    Wczytuje XLSX, iteruje po arkuszach.
-    Każdy arkusz = jedno urządzenie/kategoria.
-    Zwraca listę chunków: {"text": ..., "source_label": ..., "sheet": ..., "chunk": ...}
-    """
-    sheets: dict = pd.read_excel(io.BytesIO(file_bytes), sheet_name=None, dtype=str)
-    chunks = []
+class XlsxChunker:
+    def __init__(self, rows_per_chunk: int = DEFAULT_ROWS_PER_CHUNK):
+        self.rows_per_chunk = rows_per_chunk
 
-    for sheet_name, df in sheets.items():
-        df = df.dropna(how="all").fillna("")
-        if df.empty:
-            continue
+    def _load_sheets(self, file_bytes: bytes) -> dict:
+        """Wczytuje wszystkie arkusze z XLSX, usuwa puste wiersze, pomija arkusze bez danych."""
+        sheets = pd.read_excel(io.BytesIO(file_bytes), sheet_name=None, dtype=str)
+        return {
+            name: df.dropna(how="all").fillna("")
+            for name, df in sheets.items()
+            if not df.dropna(how="all").empty
+        }
 
-        prefix = f"{source_label} / {sheet_name}"
+    def _to_markdown(self, df, rows: list) -> str:
+        """Zamienia listę krotek wierszy na tabelę Markdown z nagłówkiem i separatorem."""
+        header = " | ".join(df.columns)
+        separator = " | ".join("---" for _ in df.columns)
+        md_rows = [" | ".join(str(v) for v in row) for row in rows]
+        return "\n".join([header, separator] + md_rows)
+
+    def _chunk_sheet(self, df, prefix: str, source_label: str, sheet_name: str) -> list[dict]:
+        """Dzieli arkusz na chunki po rows_per_chunk wierszy. Każdy chunk zawiera pełny nagłówek tabeli."""
         rows = list(df.itertuples(index=False, name=None))
-        header = list(df.columns)
-
-        for chunk_idx, start in enumerate(range(0, len(rows), rows_per_chunk)):
-            batch = rows[start : start + rows_per_chunk]
-            # Markdown tabela z nagłówkiem przy każdym chunku
-            md_rows = [" | ".join(str(v) for v in row) for row in batch]
-            md_header = " | ".join(header)
-            md_separator = " | ".join("---" for _ in header)
-            table_md = "\n".join([md_header, md_separator] + md_rows)
-
-            text = f"{prefix}\n\n{table_md}"
+        chunks = []
+        for chunk_idx, start in enumerate(range(0, len(rows), self.rows_per_chunk)):
+            batch = rows[start : start + self.rows_per_chunk]
             chunks.append({
-                "text": text,
+                "text": f"{prefix}\n\n{self._to_markdown(df, batch)}",
                 "source_label": source_label,
                 "sheet": sheet_name,
                 "chunk": chunk_idx + 1,
             })
+        return chunks
 
-    return chunks
+    def chunk(self, file_bytes: bytes, source_label: str) -> list[dict]:
+        """Główna metoda — przetwarza cały plik XLSX i zwraca listę chunków ze wszystkich arkuszy."""
+        sheets = self._load_sheets(file_bytes)
+        chunks = []
+        for sheet_name, df in sheets.items():
+            prefix = f"{source_label} / {sheet_name}"
+            chunks.extend(self._chunk_sheet(df, prefix, source_label, sheet_name))
+        return chunks
 
 
 # ── Modele Pydantic ────────────────────────────────────────────────────────────
@@ -260,7 +263,7 @@ async def ingest_xlsx(
     file_bytes = await file.read()
 
     try:
-        chunks = xlsx_to_chunks(file_bytes, source_label, rows_per_chunk)
+        chunks = XlsxChunker(rows_per_chunk).chunk(file_bytes, source_label)
     except Exception as e:
         raise HTTPException(status_code=422, detail=f"Nie można przetworzyć XLSX: {e}")
 
@@ -312,7 +315,7 @@ async def inspect_xlsx(
     file_bytes = await file.read()
 
     try:
-        chunks = xlsx_to_chunks(file_bytes, source_label, rows_per_chunk)
+        chunks = XlsxChunker(rows_per_chunk).chunk(file_bytes, source_label)
     except Exception as e:
         raise HTTPException(status_code=422, detail=f"Nie można przetworzyć XLSX: {e}")
 
