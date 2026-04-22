@@ -9,9 +9,13 @@ Stack: Ollama + Bielik 11B v3.0 Q8_0 + Qdrant (RAG) + Python REST API. Uruchamia
 ```
 bielik-runpod/
 ├── api/
+│   ├── __init__.py
 │   ├── main.py
 │   ├── xlsx_chunker.py
-│   ├── requirements.txt
+│   └── requirements.txt
+├── cli/
+│   └── cli_xlsx_chunker.py
+├── test/
 │   └── test_xlsx_chunker.py
 └── start.sh
 ```
@@ -164,13 +168,56 @@ Swagger UI: `https://{POD_ID}-8000.proxy.runpod.net/docs`
 
 ---
 
+## Narzędzia lokalne
+
+### cli_xlsx_chunker.py
+
+Skrypt CLI do lokalnego testowania chunkera bez uruchamiania API. Parsuje plik XLSX przez `XlsxChunker` i wyświetla wynik analogiczny do endpointu `/inspect/xlsx`.
+
+```bash
+python cli/cli_xlsx_chunker.py <plik.xlsx> <source_label> [--rows-per-chunk N]
+```
+
+Przykład:
+```bash
+python cli/cli_xlsx_chunker.py rejestry.xlsx "ORNO OR-WE-516" --rows-per-chunk 30
+```
+
+
+Przykładowy output:
+```
+════════════════════════════════════════════════════════════════════════
+  Plik:          rejestry.xlsx
+  Source label:  ORNO OR-WE-516
+  Rows per chunk:30
+  Arkusze:       2  (Rejestry odczytu, Rejestry zapisu)
+  Chunków łącznie: 8
+════════════════════════════════════════════════════════════════════════
+
+────────────────────────────────────────────────────────────────────────
+  Chunk #1  |  Arkusz: Rejestry odczytu  |  Część: 1
+  Znaki: 1842   Słowa: 312
+────────────────────────────────────────────────────────────────────────
+ORNO OR-WE-516 / Rejestry odczytu
+
+Adres | Nazwa | ...
+--- | --- | ...
+...
+
+════════════════════════════════════════════════════════════════════════
+  Podsumowanie: 8 chunków | 14736 znaków | 2496 słów
+════════════════════════════════════════════════════════════════════════
+```
+
+---
+
 ## Testy
 
-Testy jednostkowe dla klasy `XlsxChunker` znajdują się w `api/test_xlsx_chunker.py`.
+Testy jednostkowe dla klasy `XlsxChunker` znajdują się w `test/test_xlsx_chunker.py`.
 
 ```bash
 pip install pytest
-pytest api/test_xlsx_chunker.py -v
+pytest test/test_xlsx_chunker.py -v
 ```
 
 ---
