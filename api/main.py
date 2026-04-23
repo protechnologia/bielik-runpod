@@ -9,8 +9,7 @@ from ollama_client import OllamaClient
 import httpx
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from pydantic import BaseModel
-from qdrant_client import QdrantClient
-from qdrant_client.models import Distance, VectorParams, PointStruct
+from qdrant_store import QdrantStore
 
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434")
 MODEL = os.getenv("MODEL", "SpeakLeash/bielik-11b-v3.0-instruct:Q8_0")
@@ -47,18 +46,10 @@ RAG_SYSTEM_PROMPT = (
 app = FastAPI(title="Bielik test API")
 
 # Qdrant – lokalny tryb embedded, dane persystują na Volume
-qdrant = QdrantClient(path=QDRANT_PATH)
+store = QdrantStore(path=QDRANT_PATH, vector_size=VECTOR_SIZE)
 
 # Klient Ollama – embed i generate
 ollama = OllamaClient(base_url=OLLAMA_URL, model=MODEL, embed_model=EMBED_MODEL)
-
-
-def ensure_collection(collection: str = DEFAULT_COLLECTION):
-    if not qdrant.collection_exists(collection):
-        qdrant.create_collection(
-            collection_name=collection,
-            vectors_config=VectorParams(size=VECTOR_SIZE, distance=Distance.COSINE),
-        )
 
 
 # ── Modele Pydantic ────────────────────────────────────────────────────────────
@@ -130,7 +121,7 @@ async def health():
         models = [m["name"] for m in r.json().get("models", [])]
         model_ready = any(ollama.model in m for m in models)
         embed_ready = any(ollama.embed_model in m for m in models)
-        collections = [c.name for c in qdrant.get_collections().collections]
+        collections = [c["name"] for c in store.list_collections()]
         return {
             "status": "ok",
             "ollama": "reachable",
@@ -184,24 +175,24 @@ async def ingest_xlsx(
         raise HTTPException(status_code=422, detail="Plik XLSX nie zawiera danych.")
 
     sheet_names = list(dict.fromkeys(c["sheet"] for c in chunks))
-    ensure_collection(collection)
+    store.ensure_collection(collection)
 
     points = []
     for chunk in chunks:
         vector = await ollama.embed(chunk["text"])
-        points.append(PointStruct(
-            id=str(uuid.uuid4()),
-            vector=vector,
-            payload={
+        points.append({
+            "id": str(uuid.uuid4()),
+            "vector": vector,
+            "payload": {
                 "text": chunk["text"],
                 "source_label": chunk["source_label"],
                 "sheet": chunk["sheet"],
                 "chunk": chunk["chunk"],
                 "source": file.filename,
             },
-        ))
+        })
 
-    qdrant.upsert(collection_name=collection, points=points)
+    store.upsert(collection, points)
 
     return IngestXlsxResponse(
         filename=file.filename,
@@ -283,17 +274,17 @@ async def ask(req: AskRequest):
 
     rag_chunks = None
     if req.rag:
-        ensure_collection(req.collection)
+        store.ensure_collection(req.collection)
         query_vector = await ollama.embed(req.prompt)
-        hits = qdrant.search(
-            collection_name=req.collection,
-            query_vector=query_vector,
-            limit=req.rag_top_k,
+        hits = store.search(
+            collection=req.collection,
+            vector=query_vector,
+            top_k=req.rag_top_k,
             score_threshold=req.rag_score_threshold,
         )
         if hits:
             context = "\n\n".join(
-                f"[Fragment {j+1}]\n{hit.payload['text']}"
+                f"[Fragment {j+1}]\n{hit['payload']['text']}"
                 for j, hit in enumerate(hits)
             )
             prompt_to_send = (
@@ -305,10 +296,10 @@ async def ask(req: AskRequest):
             rag_chunks = [
                 RagChunk(
                     index=j + 1,
-                    score=round(hit.score, 4),
-                    source_label=hit.payload.get("source_label"),
-                    sheet=hit.payload.get("sheet"),
-                    text=hit.payload["text"],
+                    score=round(hit["score"], 4),
+                    source_label=hit["payload"].get("source_label"),
+                    sheet=hit["payload"].get("sheet"),
+                    text=hit["payload"]["text"],
                 )
                 for j, hit in enumerate(hits)
             ]
@@ -343,18 +334,11 @@ async def list_models():
 @app.get("/collections")
 async def list_collections():
     """Zwraca kolekcje Qdrant z liczbą wektorów."""
-    result = []
-    for c in qdrant.get_collections().collections:
-        info = qdrant.get_collection(c.name)
-        result.append({
-            "name": c.name,
-            "vectors_count": info.vectors_count,
-        })
-    return result
+    return store.list_collections()
 
 
 @app.delete("/collections/{collection}")
 async def delete_collection(collection: str):
     """Usuwa kolekcję wraz ze wszystkimi wektorami."""
-    qdrant.delete_collection(collection)
+    store.delete_collection(collection)
     return {"deleted": collection}
