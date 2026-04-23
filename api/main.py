@@ -4,9 +4,8 @@ Bielik test API – endpoint do mierzenia czasu generowania + RAG przez Qdrant.
 import os
 import time
 import uuid
-import io
 from xlsx_chunker import XlsxChunker, DEFAULT_ROWS_PER_CHUNK
-import pandas as pd
+from ollama_client import OllamaClient
 import httpx
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from pydantic import BaseModel
@@ -50,6 +49,9 @@ app = FastAPI(title="Bielik test API")
 # Qdrant – lokalny tryb embedded, dane persystują na Volume
 qdrant = QdrantClient(path=QDRANT_PATH)
 
+# Klient Ollama – embed i generate
+ollama = OllamaClient(base_url=OLLAMA_URL, model=MODEL, embed_model=EMBED_MODEL)
+
 
 def ensure_collection(collection: str = DEFAULT_COLLECTION):
     if not qdrant.collection_exists(collection):
@@ -57,15 +59,6 @@ def ensure_collection(collection: str = DEFAULT_COLLECTION):
             collection_name=collection,
             vectors_config=VectorParams(size=VECTOR_SIZE, distance=Distance.COSINE),
         )
-
-    def chunk(self, file_bytes: bytes, source_label: str) -> list[dict]:
-        """Główna metoda — przetwarza cały plik XLSX i zwraca listę chunków ze wszystkich arkuszy."""
-        sheets = self._load_sheets(file_bytes)
-        chunks = []
-        for sheet_name, df in sheets.items():
-            prefix = f"{source_label} / {sheet_name}"
-            chunks.extend(self._chunk_sheet(df, prefix, source_label, sheet_name))
-        return chunks
 
 
 # ── Modele Pydantic ────────────────────────────────────────────────────────────
@@ -127,68 +120,23 @@ class PullRequest(BaseModel):
     model: str | None = None
 
 
-# ── Helpery Ollama ─────────────────────────────────────────────────────────────
-
-async def ollama_embed(text: str) -> list[float]:
-    async with httpx.AsyncClient(timeout=60.0) as client:
-        resp = await client.post(
-            f"{OLLAMA_URL}/api/embed",
-            json={"model": EMBED_MODEL, "input": text},
-        )
-    if resp.status_code != 200:
-        raise HTTPException(status_code=502, detail=f"Embed error: {resp.text}")
-    return resp.json()["embeddings"][0]
-
-
-async def ollama_generate(
-    prompt: str,
-    max_tokens: int,
-    temperature: float,
-    system_override: str | None = None,
-) -> dict:
-    payload = {
-        "model": MODEL,
-        "messages": [
-            {"role": "system", "content": system_override or SYSTEM_PROMPT},
-            {"role": "user", "content": prompt},
-        ],
-        "stream": False,
-        "options": {
-            "num_predict": max_tokens,
-            "temperature": temperature,
-        },
-    }
-    async with httpx.AsyncClient(timeout=300.0) as client:
-        t0 = time.perf_counter()
-        resp = await client.post(f"{OLLAMA_URL}/api/chat", json=payload)
-        elapsed = time.perf_counter() - t0
-
-    if resp.status_code != 200:
-        raise HTTPException(status_code=502, detail=f"Ollama error: {resp.text}")
-
-    data = resp.json()
-    data["_wall_time"] = elapsed
-    data["response"] = data.get("message", {}).get("content", "")
-    return data
-
-
 # ── Endpointy ─────────────────────────────────────────────────────────────────
 
 @app.get("/health")
 async def health():
     try:
         async with httpx.AsyncClient(timeout=5.0) as client:
-            r = await client.get(f"{OLLAMA_URL}/api/tags")
+            r = await client.get(f"{ollama.base_url}/api/tags")
         models = [m["name"] for m in r.json().get("models", [])]
-        model_ready = any(MODEL in m for m in models)
-        embed_ready = any(EMBED_MODEL in m for m in models)
+        model_ready = any(ollama.model in m for m in models)
+        embed_ready = any(ollama.embed_model in m for m in models)
         collections = [c.name for c in qdrant.get_collections().collections]
         return {
             "status": "ok",
             "ollama": "reachable",
-            "model": MODEL,
+            "model": ollama.model,
             "model_ready": model_ready,
-            "embed_model": EMBED_MODEL,
+            "embed_model": ollama.embed_model,
             "embed_ready": embed_ready,
             "available_models": models,
             "qdrant_collections": collections,
@@ -199,10 +147,10 @@ async def health():
 
 @app.post("/pull")
 async def pull_model(req: PullRequest = PullRequest()):
-    model = req.model or MODEL
+    model = req.model or ollama.model
     async with httpx.AsyncClient(timeout=600.0) as client:
         r = await client.post(
-            f"{OLLAMA_URL}/api/pull",
+            f"{ollama.base_url}/api/pull",
             json={"name": model, "stream": False},
         )
     if r.status_code != 200:
@@ -240,7 +188,7 @@ async def ingest_xlsx(
 
     points = []
     for chunk in chunks:
-        vector = await ollama_embed(chunk["text"])
+        vector = await ollama.embed(chunk["text"])
         points.append(PointStruct(
             id=str(uuid.uuid4()),
             vector=vector,
@@ -336,7 +284,7 @@ async def ask(req: AskRequest):
     rag_chunks = None
     if req.rag:
         ensure_collection(req.collection)
-        query_vector = await ollama_embed(req.prompt)
+        query_vector = await ollama.embed(req.prompt)
         hits = qdrant.search(
             collection_name=req.collection,
             query_vector=query_vector,
@@ -365,7 +313,7 @@ async def ask(req: AskRequest):
                 for j, hit in enumerate(hits)
             ]
 
-    data = await ollama_generate(prompt_to_send, req.max_tokens, req.temperature, system)
+    data = await ollama.generate(prompt_to_send, req.max_tokens, req.temperature, system)
 
     ns = 1e9
     prompt_eval_ns = data.get("prompt_eval_duration", 0)
@@ -388,7 +336,7 @@ async def ask(req: AskRequest):
 @app.get("/models")
 async def list_models():
     async with httpx.AsyncClient(timeout=5.0) as client:
-        r = await client.get(f"{OLLAMA_URL}/api/tags")
+        r = await client.get(f"{ollama.base_url}/api/tags")
     return r.json()
 
 

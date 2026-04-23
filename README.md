@@ -11,6 +11,7 @@ bielik-runpod/
 ├── api/
 │   ├── __init__.py
 │   ├── main.py
+│   ├── ollama_client.py
 │   ├── xlsx_chunker.py
 │   └── requirements.txt
 ├── cli/
@@ -231,6 +232,9 @@ pytest test/test_xlsx_chunker.py -v
 - [ ] Osobne kolekcje per urządzenie
 
 ### Architektura i produkcyjność
+- [x] Wydzielenie `OllamaClient` (`ollama_client.py`) — klient HTTP do Ollamy z metodami `embed()` i `generate()`
+- [ ] Wydzielenie `QdrantStore` — operacje na kolekcjach i wektorach
+- [ ] Wydzielenie `RagPipeline` — orkiestracja: embed → search → build prompt → generate
 - [ ] Asynchroniczny ingest + endpoint `/tasks/{id}` ze statusem
 - [ ] Autoryzacja — API key
 - [ ] Obsługa duplikatów przy ponownym wgraniu tego samego pliku
