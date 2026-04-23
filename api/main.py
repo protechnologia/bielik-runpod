@@ -4,44 +4,23 @@ Bielik test API – endpoint do mierzenia czasu generowania + RAG przez Qdrant.
 import os
 import time
 import uuid
+from config import (
+    MODEL, EMBED_MODEL, VECTOR_SIZE, DEFAULT_COLLECTION,
+    SYSTEM_PROMPT, RAG_SYSTEM_PROMPT,
+)
 from xlsx_chunker import XlsxChunker, DEFAULT_ROWS_PER_CHUNK
 from ollama_client import OllamaClient
-import httpx
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
-from pydantic import BaseModel
 from qdrant_store import QdrantStore
+from schemas import (
+    AskRequest, AskResponse, RagChunk,
+    IngestXlsxResponse, ChunkInfo, InspectXlsxResponse,
+    PullRequest,
+)
 
+# Zmienne zależne od środowiska — różnią się między RunPodem, lokalnie i testami.
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434")
-MODEL = os.getenv("MODEL", "SpeakLeash/bielik-11b-v3.0-instruct:Q8_0")
-EMBED_MODEL = os.getenv("EMBED_MODEL", "nomic-embed-text")
 QDRANT_PATH = os.getenv("QDRANT_PATH", "/root/data/qdrant")
-
-# nomic-embed-text produkuje wektory 768-wymiarowe
-VECTOR_SIZE = 768
-DEFAULT_COLLECTION = "documents"
-
-# Prompt używany przy zwykłych zapytaniach (rag=false).
-# Nie ogranicza wiedzy modelu — odpowiada na podstawie własnych danych treningowych.
-SYSTEM_PROMPT = (
-    "Jesteś pomocnym asystentem języka polskiego. "
-    "Zawsze odpowiadaj po polsku, chyba że użytkownik wyraźnie poprosi o inny język. "
-    "Odpowiadaj zwięźle i konkretnie, zgodnie z poleceniem użytkownika. "
-    "Jeśli pytanie dotyczy aktualnych danych jak dzisiejsza data lub pogoda, "
-    "poinformuj że nie masz dostępu do takich informacji."
-)
-
-# Prompt używany gdy RAG jest aktywny (rag=true).
-# Ogranicza model wyłącznie do kontekstu z Qdrant — zapobiega halucynacjom.
-# Każdy chunk zaczyna się od prefiksu "{source_label} / {arkusz}", np. "ORNO OR-WE-516 / Rejestry odczytu".
-# Instrukcja nakazuje modelowi zawsze cytować to źródło w odpowiedzi.
-RAG_SYSTEM_PROMPT = (
-    "Jesteś pomocnym asystentem języka polskiego. "
-    "Odpowiadaj wyłącznie na podstawie podanego kontekstu. "
-    "Każdy fragment kontekstu zaczyna się od nazwy urządzenia lub dokumentu którego dotyczy — "
-    "zawsze podawaj tę nazwę w odpowiedzi jako źródło informacji. "
-    "Jeśli odpowiedź nie wynika z kontekstu, powiedz wprost że nie wiesz. "
-    "Zawsze odpowiadaj po polsku."
-)
 
 app = FastAPI(title="Bielik test API")
 
@@ -52,101 +31,54 @@ store = QdrantStore(path=QDRANT_PATH, vector_size=VECTOR_SIZE)
 ollama = OllamaClient(base_url=OLLAMA_URL, model=MODEL, embed_model=EMBED_MODEL)
 
 
-# ── Modele Pydantic ────────────────────────────────────────────────────────────
-
-class AskRequest(BaseModel):
-    prompt: str
-    max_tokens: int = 512
-    temperature: float = 0.1
-    rag: bool = False
-    collection: str = DEFAULT_COLLECTION
-    rag_top_k: int = 3
-    rag_score_threshold: float = 0.3
-
-
-class RagChunk(BaseModel):
-    index: int
-    score: float
-    source_label: str | None
-    sheet: str | None
-    text: str
-
-
-class AskResponse(BaseModel):
-    answer: str
-    model: str
-    time_total_s: float
-    time_to_first_token_s: float | None
-    tokens_generated: int | None
-    tokens_per_second: float | None
-    rag_chunks_used: int | None = None
-    rag_chunks: list[RagChunk] | None = None
-
-
-class IngestXlsxResponse(BaseModel):
-    filename: str
-    sheets: int
-    chunks: int
-    ingested: int
-    collection: str
-
-
-class ChunkInfo(BaseModel):
-    index: int
-    sheet: str
-    chunk: int
-    text: str
-    char_count: int
-    word_count: int
-
-
-class InspectXlsxResponse(BaseModel):
-    filename: str
-    sheets: int
-    chunks: int
-    items: list[ChunkInfo]
-
-
-class PullRequest(BaseModel):
-    model: str | None = None
-
-
 # ── Endpointy ─────────────────────────────────────────────────────────────────
 
 @app.get("/health")
 async def health():
+    """
+    Zwraca status Ollamy, modeli i kolekcji Qdrant.
+
+    Przykład odpowiedzi gdy wszystko działa:
+        {
+            "status": "ok",
+            "ollama": {
+                "reachable": true,
+                "model": "SpeakLeash/bielik-11b-v3.0-instruct:Q8_0",
+                "model_ready": true,
+                "embed_model": "nomic-embed-text",
+                "embed_ready": true,
+                "available_models": [
+                    "SpeakLeash/bielik-11b-v3.0-instruct:Q8_0",
+                    "nomic-embed-text:latest"
+                ]
+            },
+            "qdrant": {
+                "collections": ["documents"]
+            }
+        }
+
+    Przykład odpowiedzi gdy Ollama jest nieosiągalna:
+        {
+            "status": "error",
+            "detail": "All connection attempts failed"
+        }
+    """
     try:
-        async with httpx.AsyncClient(timeout=5.0) as client:
-            r = await client.get(f"{ollama.base_url}/api/tags")
-        models = [m["name"] for m in r.json().get("models", [])]
-        model_ready = any(ollama.model in m for m in models)
-        embed_ready = any(ollama.embed_model in m for m in models)
-        collections = [c["name"] for c in store.list_collections()]
         return {
             "status": "ok",
-            "ollama": "reachable",
-            "model": ollama.model,
-            "model_ready": model_ready,
-            "embed_model": ollama.embed_model,
-            "embed_ready": embed_ready,
-            "available_models": models,
-            "qdrant_collections": collections,
+            "ollama": await ollama.check(),
+            "qdrant": {
+                "collections": [c["name"] for c in store.list_collections()],
+            },
         }
     except Exception as e:
+        # Każdy wyjątek zwraca 200 z "error" — health check nigdy nie rzuca wyjątku.
         return {"status": "error", "detail": str(e)}
 
 
 @app.post("/pull")
 async def pull_model(req: PullRequest = PullRequest()):
-    model = req.model or ollama.model
-    async with httpx.AsyncClient(timeout=600.0) as client:
-        r = await client.post(
-            f"{ollama.base_url}/api/pull",
-            json={"name": model, "stream": False},
-        )
-    if r.status_code != 200:
-        raise HTTPException(status_code=502, detail=r.text)
-    return {"status": "pulled", "model": model}
+    return await ollama.pull_model(req.model)
 
 
 @app.post("/ingest/xlsx", response_model=IngestXlsxResponse)
@@ -326,19 +258,50 @@ async def ask(req: AskRequest):
 
 @app.get("/models")
 async def list_models():
-    async with httpx.AsyncClient(timeout=5.0) as client:
-        r = await client.get(f"{ollama.base_url}/api/tags")
-    return r.json()
+    """
+    Zwraca listę modeli załadowanych w Ollama.
+
+    Przykład odpowiedzi:
+        {
+            "models": [
+                {
+                    "name": "SpeakLeash/bielik-11b-v3.0-instruct:Q8_0",
+                    "size": 11800000000,
+                    "digest": "sha256:..."
+                },
+                {
+                    "name": "nomic-embed-text:latest",
+                    "size": 274000000,
+                    "digest": "sha256:..."
+                }
+            ]
+        }
+    """
+    return await ollama.list_models()
 
 
 @app.get("/collections")
 async def list_collections():
-    """Zwraca kolekcje Qdrant z liczbą wektorów."""
+    """
+    Zwraca listę kolekcji Qdrant z liczbą zapisanych wektorów.
+
+    Przykład odpowiedzi:
+        [
+            {"name": "documents", "vectors_count": 42}
+        ]
+    """
     return store.list_collections()
 
 
 @app.delete("/collections/{collection}")
 async def delete_collection(collection: str):
-    """Usuwa kolekcję wraz ze wszystkimi wektorami."""
+    """
+    Usuwa kolekcję wraz ze wszystkimi wektorami i metadanymi.
+
+    Operacja nieodwracalna — dane trzeba wgrać ponownie przez /ingest/xlsx.
+
+    Przykład odpowiedzi:
+        {"deleted": "documents"}
+    """
     store.delete_collection(collection)
     return {"deleted": collection}

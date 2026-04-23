@@ -11,7 +11,10 @@ bielik-runpod/
 ├── api/
 │   ├── __init__.py
 │   ├── main.py
+│   ├── config.py
+│   ├── schemas.py
 │   ├── ollama_client.py
+│   ├── qdrant_store.py
 │   ├── xlsx_chunker.py
 │   └── requirements.txt
 ├── cli/
@@ -100,6 +103,32 @@ Kolejne uruchomienia ~2 minuty — modele już są na Volume.
 ## Test
 
 URL Poda dostępny w panelu RunPod: **Connect → HTTP Service [Port 8000]**
+
+**Health check:**
+```bash
+curl https://{POD_ID}-8000.proxy.runpod.net/health
+```
+
+Przykładowa odpowiedź:
+```json
+{
+  "status": "ok",
+  "ollama": {
+    "reachable": true,
+    "model": "SpeakLeash/bielik-11b-v3.0-instruct:Q8_0",
+    "model_ready": true,
+    "embed_model": "nomic-embed-text",
+    "embed_ready": true,
+    "available_models": [
+      "SpeakLeash/bielik-11b-v3.0-instruct:Q8_0",
+      "nomic-embed-text:latest"
+    ]
+  },
+  "qdrant": {
+    "collections": ["documents"]
+  }
+}
+```
 
 **Zwykłe zapytanie:**
 ```bash
@@ -232,8 +261,10 @@ pytest test/test_xlsx_chunker.py -v
 - [ ] Osobne kolekcje per urządzenie
 
 ### Architektura i produkcyjność
-- [x] Wydzielenie `OllamaClient` (`ollama_client.py`) — klient HTTP do Ollamy z metodami `embed()` i `generate()`
-- [ ] Wydzielenie `QdrantStore` — operacje na kolekcjach i wektorach
+- [x] Wydzielenie `OllamaClient` (`ollama_client.py`) — klient HTTP do Ollamy z metodami `embed()`, `generate()`, `list_models()`, `pull_model()`, `check()`
+- [x] Wydzielenie `QdrantStore` (`qdrant_store.py`) — operacje na kolekcjach i wektorach; `main.py` nie importuje nic z `qdrant_client`
+- [x] Wydzielenie `config.py` — stałe konfiguracyjne niezmienne między środowiskami
+- [x] Wydzielenie `schemas.py` — modele Pydantic requestów i odpowiedzi API
 - [ ] Wydzielenie `RagPipeline` — orkiestracja: embed → search → build prompt → generate
 - [ ] Asynchroniczny ingest + endpoint `/tasks/{id}` ze statusem
 - [ ] Autoryzacja — API key

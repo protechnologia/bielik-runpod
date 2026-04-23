@@ -123,3 +123,95 @@ class OllamaClient:
         data["_wall_time"] = elapsed
         data["response"] = data.get("message", {}).get("content", "")
         return data
+
+    async def list_models(self) -> dict:
+        """
+        Zwraca listę modeli załadowanych w Ollama.
+
+        Wywołuje /api/tags i zwraca surową odpowiedź Ollamy.
+        Rzuca HTTPException(502) jeśli Ollama zwróci błąd.
+
+        Response z Ollama:
+            {
+                "models": [
+                    {
+                        "name": "SpeakLeash/bielik-11b-v3.0-instruct:Q8_0",
+                        "size": 11800000000,
+                        "digest": "sha256:...",
+                        ...
+                    },
+                    {
+                        "name": "nomic-embed-text:latest",
+                        ...
+                    }
+                ]
+            }
+        """
+        async with httpx.AsyncClient(timeout=5.0) as client:
+            resp = await client.get(f"{self.base_url}/api/tags")
+        if resp.status_code != 200:
+            raise HTTPException(status_code=502, detail=f"Ollama error: {resp.text}")
+        return resp.json()
+
+    async def pull_model(self, model: str | None = None) -> dict:
+        """
+        Pobiera model przez Ollama. Jeśli model nie zostanie podany,
+        używa domyślnego modelu generowania (self.model).
+
+        Rzuca HTTPException(502) jeśli Ollama zwróci błąd.
+
+        Request do Ollama:
+            POST /api/pull
+            {
+                "name": "SpeakLeash/bielik-11b-v3.0-instruct:Q8_0",
+                "stream": false
+            }
+
+        Response z Ollama:
+            {"status": "success"}
+        """
+        async with httpx.AsyncClient(timeout=600.0) as client:
+            resp = await client.post(
+                f"{self.base_url}/api/pull",
+                json={"name": model or self.model, "stream": False},
+            )
+        if resp.status_code != 200:
+            raise HTTPException(status_code=502, detail=resp.text)
+        return {"status": "pulled", "model": model or self.model}
+
+    async def check(self) -> dict:
+        """
+        Sprawdza osiągalność Ollamy i status załadowanych modeli.
+
+        Używane przez endpoint /health. Odpytuje /api/tags bezpośrednio,
+        z pominięciem list_models() — żeby health check testował połączenie
+        niezależnie od reszty kodu klienta.
+
+        Rzuca wyjątek (httpx.ConnectError, httpx.TimeoutException itp.)
+        jeśli Ollama jest nieosiągalna — health endpoint łapie go przez
+        ogólny except i zwraca {"status": "error"}.
+
+        Przykład zwracanego słownika:
+            {
+                "reachable": true,
+                "model": "SpeakLeash/bielik-11b-v3.0-instruct:Q8_0",
+                "model_ready": true,
+                "embed_model": "nomic-embed-text",
+                "embed_ready": true,
+                "available_models": [
+                    "SpeakLeash/bielik-11b-v3.0-instruct:Q8_0",
+                    "nomic-embed-text:latest"
+                ]
+            }
+        """
+        async with httpx.AsyncClient(timeout=5.0) as client:
+            r = await client.get(f"{self.base_url}/api/tags")
+        models = [m["name"] for m in r.json().get("models", [])]
+        return {
+            "reachable": True,
+            "model": self.model,
+            "model_ready": any(self.model in m for m in models),
+            "embed_model": self.embed_model,
+            "embed_ready": any(self.embed_model in m for m in models),
+            "available_models": models,
+        }
