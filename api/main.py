@@ -2,17 +2,17 @@
 Bielik test API – endpoint do mierzenia czasu generowania + RAG przez Qdrant.
 """
 import os
-import uuid
 from config import MODEL, EMBED_MODEL, VECTOR_SIZE, DEFAULT_COLLECTION, SYSTEM_PROMPT, RAG_SYSTEM_PROMPT
+from fastapi import FastAPI, File, Form, UploadFile
+from ollama_client import OllamaClient
 from qdrant_store import QdrantStore
 from rag_retriever import RagRetriever
-from ollama_client import OllamaClient
-from xlsx_chunker import XlsxChunker, DEFAULT_ROWS_PER_CHUNK
-from fastapi import FastAPI, File, Form, HTTPException, UploadFile
-from schemas import  AskRequest, AskResponse, IngestXlsxResponse, ChunkInfo, InspectXlsxResponse, PullRequest
+from xlsx_chunker import DEFAULT_ROWS_PER_CHUNK
+from xlsx_ingester import XlsxIngester
+from schemas import AskRequest, AskResponse, ChunkInfo, InspectXlsxResponse, PullRequest
 
 # Zmienne zależne od środowiska — różnią się między RunPodem, lokalnie i testami.
-OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434")
+OLLAMA_URL  = os.getenv("OLLAMA_URL", "http://localhost:11434")
 QDRANT_PATH = os.getenv("QDRANT_PATH", "/root/data/qdrant")
 
 app = FastAPI(title="Bielik test API")
@@ -23,6 +23,8 @@ store = QdrantStore(path=QDRANT_PATH, vector_size=VECTOR_SIZE)
 ollama = OllamaClient(base_url=OLLAMA_URL, model=MODEL, embed_model=EMBED_MODEL)
 # wyszukiwanie kontekstu do promptu
 rag_retriever = RagRetriever(store, ollama)
+# walidacja, chunkowanie i indeksowanie plików XLSX
+xlsx_ingester = XlsxIngester(store, ollama)
 
 
 # ── Endpointy ─────────────────────────────────────────────────────────────────
@@ -72,61 +74,46 @@ async def health():
 
 @app.post("/pull")
 async def pull_model(req: PullRequest = PullRequest()):
+    """
+    Pobiera model przez Ollama. Bez podania modelu pobiera domyślny model generowania.
+
+    Przykład requestu:
+        {"model": "SpeakLeash/bielik-11b-v3.0-instruct:Q8_0"}
+
+    Przykład odpowiedzi:
+        {"status": "pulled", "model": "SpeakLeash/bielik-11b-v3.0-instruct:Q8_0"}
+    """
     return await ollama.pull_model(req.model)
 
 
-@app.post("/ingest/xlsx", response_model=IngestXlsxResponse)
+@app.post("/ingest/xlsx")
 async def ingest_xlsx(
-    file: UploadFile = File(...),
-    source_label: str = Form(...),
-    collection: str = Form(DEFAULT_COLLECTION),
+    file: UploadFile    = File(...),
+    source_label: str   = Form(...),
+    collection: str     = Form(DEFAULT_COLLECTION),
     rows_per_chunk: int = Form(DEFAULT_ROWS_PER_CHUNK),
 ):
     """
     Przyjmuje plik XLSX, dzieli na chunki i zapisuje do Qdrant.
     Każdy arkusz traktowany jest jako osobne urządzenie/kategoria.
     Prefiks każdego chunku: '{source_label} / {nazwa_arkusza}'.
+
+    Request (multipart/form-data):
+        file:           plik XLSX
+        source_label:   "ORNO OR-WE-516"
+        collection:     "documents"
+        rows_per_chunk: 20
+
+    Przykład odpowiedzi:
+        {
+            "filename": "liczniki.xlsx",
+            "sheets": 2,
+            "chunks": 8,
+            "ingested": 8,
+            "collection": "documents"
+        }
     """
-    if not file.filename or not file.filename.lower().endswith((".xlsx", ".xlsm")):
-        raise HTTPException(status_code=400, detail="Plik musi być w formacie XLSX.")
-
-    file_bytes = await file.read()
-
-    try:
-        chunks = XlsxChunker(rows_per_chunk).chunk(file_bytes, source_label)
-    except Exception as e:
-        raise HTTPException(status_code=422, detail=f"Nie można przetworzyć XLSX: {e}")
-
-    if not chunks:
-        raise HTTPException(status_code=422, detail="Plik XLSX nie zawiera danych.")
-
-    sheet_names = list(dict.fromkeys(c["sheet"] for c in chunks))
-    store.ensure_collection(collection)
-
-    points = []
-    for chunk in chunks:
-        vector = await ollama.embed(chunk["text"])
-        points.append({
-            "id": str(uuid.uuid4()),
-            "vector": vector,
-            "payload": {
-                "text": chunk["text"],
-                "source_label": chunk["source_label"],
-                "sheet": chunk["sheet"],
-                "chunk": chunk["chunk"],
-                "source": file.filename,
-            },
-        })
-
-    store.upsert(collection, points)
-
-    return IngestXlsxResponse(
-        filename=file.filename,
-        sheets=len(sheet_names),
-        chunks=len(chunks),
-        ingested=len(points),
-        collection=collection,
-    )
+    return await xlsx_ingester.ingest(file, source_label, collection, rows_per_chunk)
 
 
 @app.post("/inspect/xlsx", response_model=InspectXlsxResponse)
@@ -138,71 +125,91 @@ async def inspect_xlsx(
     """
     Przyjmuje plik XLSX i zwraca listę chunków bez zapisywania do Qdrant.
     Służy do testowania jakości chunkingu przed właściwym ingestion.
+
+    Request (multipart/form-data):
+        file:           plik XLSX
+        source_label:   "ORNO OR-WE-516"
+        rows_per_chunk: 20
+
+    Przykład odpowiedzi:
+        {
+            "filename": "liczniki.xlsx",
+            "sheets": 2,
+            "chunks": 4,
+            "items": [
+                {
+                    "index": 1,
+                    "sheet": "Rejestry odczytu",
+                    "chunk": 1,
+                    "text": "ORNO OR-WE-516 / Rejestry odczytu\n\nAdres | Nazwa | ...",
+                    "char_count": 312,
+                    "word_count": 48
+                }
+            ]
+        }
     """
-    if not file.filename or not file.filename.lower().endswith((".xlsx", ".xlsm")):
-        raise HTTPException(status_code=400, detail="Plik musi być w formacie XLSX.")
-
-    file_bytes = await file.read()
-
-    try:
-        chunks = XlsxChunker(rows_per_chunk).chunk(file_bytes, source_label)
-    except Exception as e:
-        raise HTTPException(status_code=422, detail=f"Nie można przetworzyć XLSX: {e}")
-
-    if not chunks:
-        raise HTTPException(status_code=422, detail="Plik XLSX nie zawiera danych.")
-
-    sheet_names = list(dict.fromkeys(c["sheet"] for c in chunks))
+    parsed = await xlsx_ingester.parse(file, source_label, rows_per_chunk)
     items = [
         ChunkInfo(
-            index=i + 1,
-            sheet=c["sheet"],
-            chunk=c["chunk"],
-            text=c["text"],
-            char_count=len(c["text"]),
-            word_count=len(c["text"].split()),
+            index      = i + 1,
+            sheet      = c["sheet"],
+            chunk      = c["chunk"],
+            text       = c["text"],
+            char_count = len(c["text"]),
+            word_count = len(c["text"].split()),
         )
-        for i, c in enumerate(chunks)
+        for i, c in enumerate(parsed.chunks)
     ]
-
     return InspectXlsxResponse(
-        filename=file.filename,
-        sheets=len(sheet_names),
-        chunks=len(items),
-        items=items,
+        filename = file.filename,
+        sheets   = len(parsed.sheet_names),
+        chunks   = len(items),
+        items    = items,
     )
 
 
-# Przykładowa odpowiedź z RAG:
-# {
-#   "answer": "Napięcie znamionowe licznika ORNO OR-WE-516 wynosi 3x230/400V.",
-#   "model": "SpeakLeash/bielik-11b-v3.0-instruct:Q8_0",
-#   "time_total_s": 14.2,
-#   "time_to_first_token_s": 1.5,
-#   "tokens_generated": 104,
-#   "tokens_per_second": 7.3,
-#   "rag_chunks_used": 2,
-#   "rag_chunks": [
-#     {
-#       "index": 1,
-#       "score": 0.8731,
-#       "source_label": "ORNO OR-WE-516",
-#       "sheet": "Rejestry odczytu",
-#       "text": "ORNO OR-WE-516 / Rejestry odczytu\n\nAdres | Nazwa | ..."
-#     }
-#   ]
-# }
 @app.post("/ask", response_model=AskResponse)
 async def ask(req: AskRequest):
     """
     Wysyła prompt do modelu i zwraca odpowiedź wraz z metrykami czasu generowania.
     Przy rag=true wyszukuje najpierw kontekst w Qdrant i dokłada go do promptu.
+
+    Przykład requestu (rag=true):
+        {
+            "prompt": "Jakie jest napięcie znamionowe licznika ORNO OR-WE-516?",
+            "rag": true,
+            "collection": "documents",
+            "rag_top_k": 3,
+            "rag_score_threshold": 0.3
+        }
+
+    Przykład odpowiedzi:
+        {
+            "answer": "Napięcie znamionowe licznika ORNO OR-WE-516 wynosi 3x230/400V.",
+            "model": "SpeakLeash/bielik-11b-v3.0-instruct:Q8_0",
+            "time_total_s": 14.2,
+            "time_to_first_token_s": 1.5,
+            "tokens_generated": 104,
+            "tokens_per_second": 7.3,
+            "rag_chunks_used": 2,
+            "rag_chunks": [
+                {
+                    "index": 1,
+                    "score": 0.8731,
+                    "source_label": "ORNO OR-WE-516",
+                    "sheet": "Rejestry odczytu",
+                    "text": "ORNO OR-WE-516 / Rejestry odczytu\n\nAdres | Nazwa | ..."
+                }
+            ]
+        }
     """
+    # domyślnie: czysty prompt użytkownika, bez kontekstu
     prompt_to_send  = req.prompt
     system          = SYSTEM_PROMPT
     rag_chunks_used = None
     rag_chunks      = None
 
+    # RAG: wyszukaj pasujące fragmenty i przepisz prompt — jeśli nie ma trafień, zostaje oryginał
     if req.rag:
         result = await rag_retriever.retrieve( req.prompt, req.collection, req.rag_top_k, req.rag_score_threshold )
         if result:
@@ -211,8 +218,10 @@ async def ask(req: AskRequest):
             rag_chunks_used = len(result.chunks)
             rag_chunks      = result.chunks
 
+    # generowanie — blokuje do końca odpowiedzi (stream=False)
     data = await ollama.generate( prompt_to_send, req.max_tokens, req.temperature, system )
 
+    # metryki z odpowiedzi Ollamy — czasy w nanosekundach, przeliczamy na sekundy i TPS
     ns             = 1e9
     prompt_eval_ns = data.get("prompt_eval_duration", 0)
     eval_ns        = data.get("eval_duration", 0)
