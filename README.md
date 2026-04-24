@@ -10,12 +10,15 @@ Stack: Ollama + Bielik 11B v3.0 Q8_0 + Qdrant (RAG) + Python REST API. Uruchamia
 bielik-runpod/
 ├── api/
 │   ├── __init__.py
-│   ├── main.py
-│   ├── config.py
-│   ├── schemas.py
-│   ├── ollama_client.py
-│   ├── qdrant_store.py
-│   ├── xlsx_chunker.py
+│   ├── main.py           ← endpointy FastAPI (każdy to 1-2 linie)
+│   ├── config.py         ← stałe konfiguracyjne
+│   ├── schemas.py        ← modele Pydantic requestów i odpowiedzi API
+│   ├── ollama_client.py  ← klient HTTP do Ollamy (embed, generate, pull, check)
+│   ├── qdrant_store.py   ← operacje na kolekcjach i wektorach Qdrant
+│   ├── rag_retriever.py  ← embed zapytania → search → budowa kontekstu RAG
+│   ├── ask_pipeline.py   ← orkiestracja: RAG → generowanie → metryki → AskResponse
+│   ├── xlsx_ingester.py  ← walidacja, chunkowanie i indeksowanie plików XLSX
+│   ├── xlsx_chunker.py   ← parsowanie XLSX na chunki tekstowe
 │   └── requirements.txt
 ├── cli/
 │   └── cli_xlsx_chunker.py
@@ -261,11 +264,6 @@ pytest test/test_xlsx_chunker.py -v
 - [ ] Osobne kolekcje per urządzenie
 
 ### Architektura i produkcyjność
-- [x] Wydzielenie `OllamaClient` (`ollama_client.py`) — klient HTTP do Ollamy z metodami `embed()`, `generate()`, `list_models()`, `pull_model()`, `check()`
-- [x] Wydzielenie `QdrantStore` (`qdrant_store.py`) — operacje na kolekcjach i wektorach; `main.py` nie importuje nic z `qdrant_client`
-- [x] Wydzielenie `config.py` — stałe konfiguracyjne niezmienne między środowiskami
-- [x] Wydzielenie `schemas.py` — modele Pydantic requestów i odpowiedzi API
-- [ ] Wydzielenie `RagPipeline` — orkiestracja: embed → search → build prompt → generate
 - [ ] Asynchroniczny ingest + endpoint `/tasks/{id}` ze statusem
 - [ ] Autoryzacja — API key
 - [ ] Obsługa duplikatów przy ponownym wgraniu tego samego pliku

@@ -2,14 +2,15 @@
 Bielik test API – endpoint do mierzenia czasu generowania + RAG przez Qdrant.
 """
 import os
-from config import MODEL, EMBED_MODEL, VECTOR_SIZE, DEFAULT_COLLECTION, SYSTEM_PROMPT, RAG_SYSTEM_PROMPT
+from config import MODEL, EMBED_MODEL, VECTOR_SIZE, DEFAULT_COLLECTION
 from fastapi import FastAPI, File, Form, UploadFile
 from ollama_client import OllamaClient
 from qdrant_store import QdrantStore
 from rag_retriever import RagRetriever
+from ask_pipeline import AskPipeline
 from xlsx_chunker import DEFAULT_ROWS_PER_CHUNK
 from xlsx_ingester import XlsxIngester
-from schemas import AskRequest, AskResponse, ChunkInfo, InspectXlsxResponse, PullRequest
+from schemas import AskRequest, AskResponse, IngestXlsxResponse, InspectXlsxResponse, PullRequest
 
 # Zmienne zależne od środowiska — różnią się między RunPodem, lokalnie i testami.
 OLLAMA_URL  = os.getenv("OLLAMA_URL", "http://localhost:11434")
@@ -25,6 +26,8 @@ ollama = OllamaClient(base_url=OLLAMA_URL, model=MODEL, embed_model=EMBED_MODEL)
 rag_retriever = RagRetriever(store, ollama)
 # walidacja, chunkowanie i indeksowanie plików XLSX
 xlsx_ingester = XlsxIngester(store, ollama)
+# pełny pipeline zapytania: RAG → generowanie → metryki
+ask_pipeline = AskPipeline(ollama, rag_retriever)
 
 
 # ── Endpointy ─────────────────────────────────────────────────────────────────
@@ -86,7 +89,7 @@ async def pull_model(req: PullRequest = PullRequest()):
     return await ollama.pull_model(req.model)
 
 
-@app.post("/ingest/xlsx")
+@app.post("/ingest/xlsx", response_model=IngestXlsxResponse)
 async def ingest_xlsx(
     file: UploadFile    = File(...),
     source_label: str   = Form(...),
@@ -148,24 +151,7 @@ async def inspect_xlsx(
             ]
         }
     """
-    parsed = await xlsx_ingester.parse(file, source_label, rows_per_chunk)
-    items = [
-        ChunkInfo(
-            index      = i + 1,
-            sheet      = c["sheet"],
-            chunk      = c["chunk"],
-            text       = c["text"],
-            char_count = len(c["text"]),
-            word_count = len(c["text"].split()),
-        )
-        for i, c in enumerate(parsed.chunks)
-    ]
-    return InspectXlsxResponse(
-        filename = file.filename,
-        sheets   = len(parsed.sheet_names),
-        chunks   = len(items),
-        items    = items,
-    )
+    return await xlsx_ingester.inspect(file, source_label, rows_per_chunk)
 
 
 @app.post("/ask", response_model=AskResponse)
@@ -203,41 +189,7 @@ async def ask(req: AskRequest):
             ]
         }
     """
-    # domyślnie: czysty prompt użytkownika, bez kontekstu
-    prompt_to_send  = req.prompt
-    system          = SYSTEM_PROMPT
-    rag_chunks_used = None
-    rag_chunks      = None
-
-    # RAG: wyszukaj pasujące fragmenty i przepisz prompt — jeśli nie ma trafień, zostaje oryginał
-    if req.rag:
-        result = await rag_retriever.retrieve( req.prompt, req.collection, req.rag_top_k, req.rag_score_threshold )
-        if result:
-            prompt_to_send  = result.prompt
-            system          = RAG_SYSTEM_PROMPT
-            rag_chunks_used = len(result.chunks)
-            rag_chunks      = result.chunks
-
-    # generowanie — blokuje do końca odpowiedzi (stream=False)
-    data = await ollama.generate( prompt_to_send, req.max_tokens, req.temperature, system )
-
-    # metryki z odpowiedzi Ollamy — czasy w nanosekundach, przeliczamy na sekundy i TPS
-    ns             = 1e9
-    prompt_eval_ns = data.get("prompt_eval_duration", 0)
-    eval_ns        = data.get("eval_duration", 0)
-    eval_count     = data.get("eval_count")
-    tps            = (eval_count / (eval_ns / ns)) if eval_count and eval_ns else None
-
-    return AskResponse(
-        answer               = data.get("response", ""),
-        model                = data.get("model", MODEL),
-        time_total_s         = round(data["_wall_time"], 3),
-        time_to_first_token_s= round(prompt_eval_ns / ns, 3) if prompt_eval_ns else None,
-        tokens_generated     = eval_count,
-        tokens_per_second    = round(tps, 1) if tps else None,
-        rag_chunks_used      = rag_chunks_used,
-        rag_chunks           = rag_chunks,
-    )
+    return await ask_pipeline.run(req)
 
 
 @app.get("/models")

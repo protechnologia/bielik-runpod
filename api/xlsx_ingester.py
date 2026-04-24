@@ -1,10 +1,10 @@
 import uuid
-from dataclasses import dataclass
-from fastapi import HTTPException, UploadFile
-from xlsx_chunker import XlsxChunker
-from qdrant_store import QdrantStore
+from dataclasses   import dataclass
+from fastapi       import HTTPException, UploadFile
+from xlsx_chunker  import XlsxChunker
+from qdrant_store  import QdrantStore
 from ollama_client import OllamaClient
-from schemas import IngestXlsxResponse
+from schemas       import IngestXlsxResponse, InspectXlsxResponse, ChunkInfo
 
 
 @dataclass
@@ -34,7 +34,7 @@ class ParsedXlsx:
 class XlsxIngester:
     """Waliduje, chunkuje i indeksuje pliki XLSX w Qdrant."""
 
-    def __init__(self, store: QdrantStore, ollama: OllamaClient):
+    def __init__( self, store: QdrantStore, ollama: OllamaClient ):
         """
         Args:
             store: klient Qdrant do zapisu wektorów
@@ -48,8 +48,8 @@ class XlsxIngester:
         Waliduje plik i dzieli go na chunki.
 
         Args:
-            file:           przesłany plik XLSX
-            source_label:   etykieta źródła dołączana do każdego chunku
+            file: przesłany plik XLSX
+            source_label: etykieta źródła dołączana do każdego chunku
             rows_per_chunk: liczba wierszy na chunk
 
         Returns:
@@ -59,22 +59,11 @@ class XlsxIngester:
             HTTPException 400: zły format pliku
             HTTPException 422: błąd parsowania lub pusty plik
         """
-        self._validate(file)
-        file_bytes = await file.read()
-        return self._chunk(file_bytes, source_label, rows_per_chunk)
-
-    @staticmethod
-    def _validate(file: UploadFile) -> None:
-        """Sprawdza czy plik ma rozszerzenie XLSX/XLSM. Rzuca HTTPException 400 jeśli nie."""
         if not file.filename or not file.filename.lower().endswith((".xlsx", ".xlsm")):
             raise HTTPException(status_code=400, detail="Plik musi być w formacie XLSX.")
 
-    @staticmethod
-    def _chunk(file_bytes: bytes, source_label: str, rows_per_chunk: int) -> ParsedXlsx:
-        """
-        Dzieli bajty pliku na chunki i zwraca ParsedXlsx.
-        Rzuca HTTPException 422 jeśli parsowanie się nie powiedzie lub plik jest pusty.
-        """
+        file_bytes = await file.read()
+
         try:
             chunks = XlsxChunker(rows_per_chunk).chunk(file_bytes, source_label)
         except Exception as e:
@@ -87,24 +76,25 @@ class XlsxIngester:
         sheet_names = list(dict.fromkeys(c["sheet"] for c in chunks))
         return ParsedXlsx(chunks=chunks, sheet_names=sheet_names)
 
-    async def ingest(
-        self,
-        file: UploadFile,
-        source_label: str,
-        collection: str,
-        rows_per_chunk: int,
-    ) -> IngestXlsxResponse:
+    async def ingest( self, file: UploadFile, source_label: str, collection: str, rows_per_chunk: int ) -> IngestXlsxResponse:
         """
         Pełny pipeline ingestion: walidacja → chunkowanie → embedding → upsert do Qdrant.
 
         Args:
-            file: przesłany plik XLSX
-            source_label: etykieta źródła dołączana do każdego chunku
-            collection: nazwa kolekcji Qdrant
+            file:           przesłany plik XLSX
+            source_label:   etykieta źródła dołączana do każdego chunku
+            collection:     nazwa kolekcji Qdrant
             rows_per_chunk: liczba wierszy na chunk
 
         Returns:
-            Podsumowanie operacji ingestion.
+            Podsumowanie operacji ingestion, np.:
+                IngestXlsxResponse(
+                    filename="liczniki.xlsx",
+                    sheets=2,
+                    chunks=8,
+                    ingested=8,
+                    collection="documents",
+                )
         """
         parsed = await self.parse(file, source_label, rows_per_chunk)
         self.store.ensure_collection(collection)
@@ -132,4 +122,50 @@ class XlsxIngester:
             chunks     = len(parsed.chunks),
             ingested   = len(points),
             collection = collection,
+        )
+
+    async def inspect(
+        self,
+        file: UploadFile,
+        source_label: str,
+        rows_per_chunk: int,
+    ) -> InspectXlsxResponse:
+        """
+        Waliduje plik i zwraca listę chunków bez zapisywania do Qdrant.
+
+        Args:
+            file:           przesłany plik XLSX
+            source_label:   etykieta źródła dołączana do każdego chunku
+            rows_per_chunk: liczba wierszy na chunk
+
+        Returns:
+            Szczegółowa lista chunków z metrykami tekstu, np.:
+                InspectXlsxResponse(
+                    filename="liczniki.xlsx",
+                    sheets=2,
+                    chunks=4,
+                    items=[
+                        ChunkInfo(index=1, sheet="Rejestry odczytu", chunk=1,
+                                  text="...", char_count=312, word_count=48),
+                        ...
+                    ],
+                )
+        """
+        parsed = await self.parse(file, source_label, rows_per_chunk)
+        items = [
+            ChunkInfo(
+                index      = i + 1,
+                sheet      = c["sheet"],
+                chunk      = c["chunk"],
+                text       = c["text"],
+                char_count = len(c["text"]),
+                word_count = len(c["text"].split()),
+            )
+            for i, c in enumerate(parsed.chunks)
+        ]
+        return InspectXlsxResponse(
+            filename = file.filename,
+            sheets   = len(parsed.sheet_names),
+            chunks   = len(items),
+            items    = items,
         )
