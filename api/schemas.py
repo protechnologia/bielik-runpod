@@ -6,6 +6,23 @@ from config import DEFAULT_COLLECTION
 
 
 class AskRequest(BaseModel):
+    """
+    Parametry zapytania do modelu.
+
+    Używany: POST /ask (request body)
+
+    Przykład (rag=true):
+        {
+            "prompt": "Jakie jest napięcie znamionowe licznika ORNO OR-WE-516?",
+            "max_tokens": 512,
+            "temperature": 0.1,
+            "rag": true,
+            "collection": "documents",
+            "rag_top_k": 3,
+            "rag_score_threshold": 0.3
+        }
+    """
+
     prompt: str
     max_tokens: int = 512
     temperature: float = 0.1
@@ -16,6 +33,21 @@ class AskRequest(BaseModel):
 
 
 class RagChunk(BaseModel):
+    """
+    Pojedynczy fragment z Qdrant użyty do budowy kontekstu RAG.
+
+    Używany: pole rag_chunks w AskResponse, pole chunks w RagResult (rag_retriever.py)
+
+    Przykład:
+        {
+            "index": 1,
+            "score": 0.8731,
+            "source_label": "ORNO OR-WE-516",
+            "sheet": "Rejestry odczytu",
+            "text": "ORNO OR-WE-516 / Rejestry odczytu\n\nAdres | Nazwa | ..."
+        }
+    """
+
     index: int
     score: float
     source_label: str | None
@@ -24,6 +56,24 @@ class RagChunk(BaseModel):
 
 
 class AskResponse(BaseModel):
+    """
+    Odpowiedź modelu z metrykami czasu generowania i opcjonalnymi chunkami RAG.
+
+    Używany: POST /ask (response body)
+
+    Przykład:
+        {
+            "answer": "Napięcie znamionowe wynosi 3x230/400V.",
+            "model": "SpeakLeash/bielik-11b-v3.0-instruct:Q8_0",
+            "time_total_s": 14.2,
+            "time_to_first_token_s": 1.5,
+            "tokens_generated": 104,
+            "tokens_per_second": 7.3,
+            "rag_chunks_used": 2,
+            "rag_chunks": [...]
+        }
+    """
+
     answer: str
     model: str
     time_total_s: float
@@ -35,6 +85,21 @@ class AskResponse(BaseModel):
 
 
 class IngestXlsxResponse(BaseModel):
+    """
+    Podsumowanie operacji ingestion pliku XLSX do Qdrant.
+
+    Używany: POST /ingest/xlsx (response body)
+
+    Przykład:
+        {
+            "filename": "liczniki.xlsx",
+            "sheets": 2,
+            "chunks": 8,
+            "ingested": 8,
+            "collection": "documents"
+        }
+    """
+
     filename: str
     sheets: int
     chunks: int
@@ -43,6 +108,22 @@ class IngestXlsxResponse(BaseModel):
 
 
 class ChunkInfo(BaseModel):
+    """
+    Szczegóły pojedynczego chunku z metrykami tekstu.
+
+    Używany: pole items w InspectXlsxResponse
+
+    Przykład:
+        {
+            "index": 1,
+            "sheet": "Rejestry odczytu",
+            "chunk": 1,
+            "text": "ORNO OR-WE-516 / Rejestry odczytu\n\nAdres | Nazwa | ...",
+            "char_count": 312,
+            "word_count": 48
+        }
+    """
+
     index: int
     sheet: str
     chunk: int
@@ -52,6 +133,29 @@ class ChunkInfo(BaseModel):
 
 
 class InspectXlsxResponse(BaseModel):
+    """
+    Wynik podglądu chunków pliku XLSX bez zapisu do Qdrant.
+
+    Używany: POST /inspect/xlsx (response body)
+
+    Przykład:
+        {
+            "filename": "liczniki.xlsx",
+            "sheets": 2,
+            "chunks": 4,
+            "items": [
+                {
+                    "index": 1,
+                    "sheet": "Rejestry odczytu",
+                    "chunk": 1,
+                    "text": "ORNO OR-WE-516 / Rejestry odczytu\n\n...",
+                    "char_count": 312,
+                    "word_count": 48
+                }
+            ]
+        }
+    """
+
     filename: str
     sheets: int
     chunks: int
@@ -59,4 +163,15 @@ class InspectXlsxResponse(BaseModel):
 
 
 class PullRequest(BaseModel):
+    """
+    Parametry żądania pobrania modelu.
+
+    Używany: POST /pull (request body)
+
+    Przykład:
+        {"model": "SpeakLeash/bielik-11b-v3.0-instruct:Q8_0"}
+
+    Bez podania modelu pobierany jest domyślny model generowania (z config.MODEL).
+    """
+
     model: str | None = None

@@ -167,8 +167,8 @@ class OllamaClient:
                 "stream": false
             }
 
-        Response z Ollama:
-            {"status": "success"}
+        Zwracany słownik:
+            {"status": "pulled", "model": "SpeakLeash/bielik-11b-v3.0-instruct:Q8_0"}
         """
         async with httpx.AsyncClient(timeout=600.0) as client:
             resp = await client.post(

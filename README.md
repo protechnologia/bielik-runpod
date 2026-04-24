@@ -264,11 +264,16 @@ pytest test/test_xlsx_chunker.py -v
 - [ ] Osobne kolekcje per urządzenie
 
 ### Architektura i produkcyjność
-- [ ] Asynchroniczny ingest + endpoint `/tasks/{id}` ze statusem
+- [ ] Asynchroniczny ingest + endpoint `/tasks/{id}` ze statusem — przy dużych plikach embedding sekwencyjny będzie wolny
 - [ ] Autoryzacja — API key
 - [ ] Obsługa duplikatów przy ponownym wgraniu tego samego pliku
 - [ ] Auto-wybór kolekcji przez embedding
 - [ ] Prosty frontend
+
+### Testy
+- [ ] Testy jednostkowe dla `RagRetriever`, `AskPipeline`, `XlsxIngester` — nowe klasy nie mają pokrycia testami
+- [ ] CLI do tworzenia golden setu — ładuje XLSX, chunkuje, dla każdego chunku (relevant) losuje jeden irrelevant i prosi użytkownika o wpisanie promptu; jeśli operator uzna że oba chunki dotyczą tego samego, może poprosić o ponowne losowanie irrelevant
+- [ ] Testy ewaluacyjne embeddera — metryki jakości wyszukiwania (Recall@k, MRR) mierzone na golden secie; pozwolą ocenić czy zmiana modelu embeddingu (np. na `multilingual-e5-large`) realnie poprawia wyniki RAG
 
 ---
 
