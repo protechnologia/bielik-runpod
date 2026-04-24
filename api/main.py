@@ -2,21 +2,14 @@
 Bielik test API – endpoint do mierzenia czasu generowania + RAG przez Qdrant.
 """
 import os
-import time
 import uuid
-from config import (
-    MODEL, EMBED_MODEL, VECTOR_SIZE, DEFAULT_COLLECTION,
-    SYSTEM_PROMPT, RAG_SYSTEM_PROMPT,
-)
-from xlsx_chunker import XlsxChunker, DEFAULT_ROWS_PER_CHUNK
-from ollama_client import OllamaClient
-from fastapi import FastAPI, File, Form, HTTPException, UploadFile
+from config import MODEL, EMBED_MODEL, VECTOR_SIZE, DEFAULT_COLLECTION, SYSTEM_PROMPT, RAG_SYSTEM_PROMPT
 from qdrant_store import QdrantStore
-from schemas import (
-    AskRequest, AskResponse, RagChunk,
-    IngestXlsxResponse, ChunkInfo, InspectXlsxResponse,
-    PullRequest,
-)
+from rag_retriever import RagRetriever
+from ollama_client import OllamaClient
+from xlsx_chunker import XlsxChunker, DEFAULT_ROWS_PER_CHUNK
+from fastapi import FastAPI, File, Form, HTTPException, UploadFile
+from schemas import  AskRequest, AskResponse, IngestXlsxResponse, ChunkInfo, InspectXlsxResponse, PullRequest
 
 # Zmienne zależne od środowiska — różnią się między RunPodem, lokalnie i testami.
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434")
@@ -24,11 +17,12 @@ QDRANT_PATH = os.getenv("QDRANT_PATH", "/root/data/qdrant")
 
 app = FastAPI(title="Bielik test API")
 
-# Qdrant – lokalny tryb embedded, dane persystują na Volume
+# lokalny tryb embedded, dane persystują na Volume
 store = QdrantStore(path=QDRANT_PATH, vector_size=VECTOR_SIZE)
-
-# Klient Ollama – embed i generate
+# embed i generacja tekstu
 ollama = OllamaClient(base_url=OLLAMA_URL, model=MODEL, embed_model=EMBED_MODEL)
+# wyszukiwanie kontekstu do promptu
+rag_retriever = RagRetriever(store, ollama)
 
 
 # ── Endpointy ─────────────────────────────────────────────────────────────────
@@ -93,7 +87,7 @@ async def ingest_xlsx(
     Każdy arkusz traktowany jest jako osobne urządzenie/kategoria.
     Prefiks każdego chunku: '{source_label} / {nazwa_arkusza}'.
     """
-    if not file.filename.lower().endswith((".xlsx", ".xlsm")):
+    if not file.filename or not file.filename.lower().endswith((".xlsx", ".xlsm")):
         raise HTTPException(status_code=400, detail="Plik musi być w formacie XLSX.")
 
     file_bytes = await file.read()
@@ -145,7 +139,7 @@ async def inspect_xlsx(
     Przyjmuje plik XLSX i zwraca listę chunków bez zapisywania do Qdrant.
     Służy do testowania jakości chunkingu przed właściwym ingestion.
     """
-    if not file.filename.lower().endswith((".xlsx", ".xlsm")):
+    if not file.filename or not file.filename.lower().endswith((".xlsx", ".xlsm")):
         raise HTTPException(status_code=400, detail="Plik musi być w formacie XLSX.")
 
     file_bytes = await file.read()
@@ -200,59 +194,40 @@ async def inspect_xlsx(
 # }
 @app.post("/ask", response_model=AskResponse)
 async def ask(req: AskRequest):
+    """
+    Wysyła prompt do modelu i zwraca odpowiedź wraz z metrykami czasu generowania.
+    Przy rag=true wyszukuje najpierw kontekst w Qdrant i dokłada go do promptu.
+    """
+    prompt_to_send  = req.prompt
+    system          = SYSTEM_PROMPT
     rag_chunks_used = None
-    prompt_to_send = req.prompt
-    system = None
+    rag_chunks      = None
 
-    rag_chunks = None
     if req.rag:
-        store.ensure_collection(req.collection)
-        query_vector = await ollama.embed(req.prompt)
-        hits = store.search(
-            collection=req.collection,
-            vector=query_vector,
-            top_k=req.rag_top_k,
-            score_threshold=req.rag_score_threshold,
-        )
-        if hits:
-            context = "\n\n".join(
-                f"[Fragment {j+1}]\n{hit['payload']['text']}"
-                for j, hit in enumerate(hits)
-            )
-            prompt_to_send = (
-                f"Kontekst:\n{context}\n\n"
-                f"Pytanie: {req.prompt}"
-            )
-            system = RAG_SYSTEM_PROMPT
-            rag_chunks_used = len(hits)
-            rag_chunks = [
-                RagChunk(
-                    index=j + 1,
-                    score=round(hit["score"], 4),
-                    source_label=hit["payload"].get("source_label"),
-                    sheet=hit["payload"].get("sheet"),
-                    text=hit["payload"]["text"],
-                )
-                for j, hit in enumerate(hits)
-            ]
+        result = await rag_retriever.retrieve( req.prompt, req.collection, req.rag_top_k, req.rag_score_threshold )
+        if result:
+            prompt_to_send  = result.prompt
+            system          = RAG_SYSTEM_PROMPT
+            rag_chunks_used = len(result.chunks)
+            rag_chunks      = result.chunks
 
-    data = await ollama.generate(prompt_to_send, req.max_tokens, req.temperature, system)
+    data = await ollama.generate( prompt_to_send, req.max_tokens, req.temperature, system )
 
-    ns = 1e9
+    ns             = 1e9
     prompt_eval_ns = data.get("prompt_eval_duration", 0)
-    eval_ns = data.get("eval_duration", 0)
-    eval_count = data.get("eval_count")
-    tps = (eval_count / (eval_ns / ns)) if eval_count and eval_ns else None
+    eval_ns        = data.get("eval_duration", 0)
+    eval_count     = data.get("eval_count")
+    tps            = (eval_count / (eval_ns / ns)) if eval_count and eval_ns else None
 
     return AskResponse(
-        answer=data.get("response", ""),
-        model=data.get("model", MODEL),
-        time_total_s=round(data["_wall_time"], 3),
-        time_to_first_token_s=round(prompt_eval_ns / ns, 3) if prompt_eval_ns else None,
-        tokens_generated=eval_count,
-        tokens_per_second=round(tps, 1) if tps else None,
-        rag_chunks_used=rag_chunks_used,
-        rag_chunks=rag_chunks,
+        answer               = data.get("response", ""),
+        model                = data.get("model", MODEL),
+        time_total_s         = round(data["_wall_time"], 3),
+        time_to_first_token_s= round(prompt_eval_ns / ns, 3) if prompt_eval_ns else None,
+        tokens_generated     = eval_count,
+        tokens_per_second    = round(tps, 1) if tps else None,
+        rag_chunks_used      = rag_chunks_used,
+        rag_chunks           = rag_chunks,
     )
 
 
