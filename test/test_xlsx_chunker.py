@@ -1,109 +1,140 @@
-#!/usr/bin/env python3
-"""
-cli_xlsx_chunker.py — testowanie XlsxChunker z linii poleceń.
-
-Użycie:
-    python cli_xlsx_chunker.py <plik.xlsx> <source_label> [--rows-per-chunk N]
-
-Przykład:
-    python cli_xlsx_chunker.py rejestry.xlsx "ORNO OR-WE-516" --rows-per-chunk 30
-"""
-
-import argparse
+import io
 import sys
+import openpyxl
 from pathlib import Path
 
-# xlsx_chunker.py znajduje się w katalogu api/ względem korzenia repo
-API_DIR = Path(__file__).resolve().parent.parent / "api"
-sys.path.insert(0, str(API_DIR))
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-try:
-    from xlsx_chunker import XlsxChunker, DEFAULT_ROWS_PER_CHUNK
-except ImportError:
-    print(f"Błąd: nie można zaimportować xlsx_chunker z {API_DIR}. Upewnij się, że plik xlsx_chunker.py istnieje w katalogu api/.")
-    sys.exit(1)
+from api.xlsx_chunker import XlsxChunker
 
 
-def parse_args():
-    parser = argparse.ArgumentParser(
-        description="Testowanie XlsxChunker — podgląd chunków bez zapisu do Qdrant.",
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog=__doc__,
-    )
-    parser.add_argument("file", help="Ścieżka do pliku XLSX")
-    parser.add_argument("source_label", help="Etykieta źródła (np. 'ORNO OR-WE-516')")
-    parser.add_argument(
-        "--rows-per-chunk",
-        type=int,
-        default=DEFAULT_ROWS_PER_CHUNK,
-        metavar="N",
-        help=f"Liczba wierszy na chunk (domyślnie: {DEFAULT_ROWS_PER_CHUNK})",
-    )
-    return parser.parse_args()
+def make_xlsx(sheets: dict[str, list[list]]) -> bytes:
+    """Helper — tworzy plik XLSX w pamięci ze słownika {nazwa_arkusza: [[nagłówki], [wiersz], ...]}"""
+    wb = openpyxl.Workbook()
+    wb.remove(wb.active)
+    for sheet_name, rows in sheets.items():
+        ws = wb.create_sheet(sheet_name)
+        for row in rows:
+            ws.append(row)
+    buf = io.BytesIO()
+    wb.save(buf)
+    return buf.getvalue()
 
 
-def format_separator(char="─", width=72):
-    return char * width
+# ── _load_sheets ───────────────────────────────────────────────────────────────
+
+def test_load_sheets_basic():
+    """Arkusz z nagłówkiem i jednym wierszem danych — powinien zostać załadowany."""
+    xlsx = make_xlsx({"Arkusz1": [["A", "B"], ["1", "2"]]})
+    chunker = XlsxChunker()
+    sheets = chunker._load_sheets(xlsx)
+    assert "Arkusz1" in sheets
+    assert len(sheets["Arkusz1"]) == 1  # jeden wiersz danych (bez nagłówka)
 
 
-def main():
-    args = parse_args()
-
-    path = Path(args.file)
-    if not path.exists():
-        print(f"Błąd: plik '{path}' nie istnieje.")
-        sys.exit(1)
-    if path.suffix.lower() not in (".xlsx", ".xlsm"):
-        print(f"Błąd: plik musi być w formacie XLSX (podano: '{path.suffix}').")
-        sys.exit(1)
-
-    file_bytes = path.read_bytes()
-
-    chunker = XlsxChunker(rows_per_chunk=args.rows_per_chunk)
-    try:
-        chunks = chunker.chunk(file_bytes, args.source_label)
-    except Exception as e:
-        print(f"Błąd podczas przetwarzania XLSX: {e}")
-        sys.exit(1)
-
-    if not chunks:
-        print("Plik XLSX nie zawiera danych.")
-        sys.exit(0)
-
-    sheet_names = list(dict.fromkeys(c["sheet"] for c in chunks))
-
-    # ── Nagłówek ──────────────────────────────────────────────────────────────
-    print()
-    print(format_separator("═"))
-    print(f"  Plik:          {path.name}")
-    print(f"  Source label:  {args.source_label}")
-    print(f"  Rows per chunk:{args.rows_per_chunk}")
-    print(f"  Arkusze:       {len(sheet_names)}  ({', '.join(sheet_names)})")
-    print(f"  Chunków łącznie: {len(chunks)}")
-    print(format_separator("═"))
-
-    # ── Chunki ────────────────────────────────────────────────────────────────
-    for i, chunk in enumerate(chunks):
-        text = chunk["text"]
-        char_count = len(text)
-        word_count = len(text.split())
-
-        print()
-        print(format_separator())
-        print(f"  Chunk #{i + 1}  |  Arkusz: {chunk['sheet']}  |  Część: {chunk['chunk']}")
-        print(f"  Znaki: {char_count}   Słowa: {word_count}")
-        print(format_separator())
-        print(text)
-
-    # ── Podsumowanie ─────────────────────────────────────────────────────────
-    print()
-    print(format_separator("═"))
-    total_chars = sum(len(c["text"]) for c in chunks)
-    total_words = sum(len(c["text"].split()) for c in chunks)
-    print(f"  Podsumowanie: {len(chunks)} chunków | {total_chars} znaków | {total_words} słów")
-    print(format_separator("═"))
-    print()
+def test_load_sheets_skips_empty():
+    """Arkusz zawierający wyłącznie nagłówek (zero wierszy danych) powinien być pomijany."""
+    xlsx = make_xlsx({
+        "Pełny": [["A", "B"], ["1", "2"]],
+        "Pusty": [["A", "B"]],
+    })
+    chunker = XlsxChunker()
+    sheets = chunker._load_sheets(xlsx)
+    assert "Pełny" in sheets
+    assert "Pusty" not in sheets
 
 
-if __name__ == "__main__":
-    main()
+def test_load_sheets_multiple():
+    """Plik z dwoma arkuszami — oba powinny zostać załadowane."""
+    xlsx = make_xlsx({
+        "Arkusz1": [["A"], ["1"]],
+        "Arkusz2": [["B"], ["2"]],
+    })
+    sheets = XlsxChunker()._load_sheets(xlsx)
+    assert len(sheets) == 2
+
+
+# ── _to_markdown ───────────────────────────────────────────────────────────────
+
+def test_to_markdown_structure():
+    """Markdown musi mieć nagłówek w pierwszej linii, separator w drugiej, dane w trzeciej."""
+    xlsx = make_xlsx({"S": [["Adres", "Nazwa"], ["0x0001", "U_L1"]]})
+    chunker = XlsxChunker()
+    df = chunker._load_sheets(xlsx)["S"]
+    rows = list(df.itertuples(index=False, name=None))
+    md = chunker._to_markdown(df, rows)
+    lines = md.split("\n")
+    assert lines[0] == "Adres | Nazwa"
+    assert lines[1] == "--- | ---"
+    assert lines[2] == "0x0001 | U_L1"
+
+
+# ── _chunk_sheet ───────────────────────────────────────────────────────────────
+
+def test_chunk_sheet_single_chunk():
+    """10 wierszy przy rows_per_chunk=50 — powinien powstać dokładnie 1 chunk."""
+    xlsx = make_xlsx({"S": [["A", "B"]] + [["x", "y"]] * 10})
+    chunker = XlsxChunker(rows_per_chunk=50)
+    df = chunker._load_sheets(xlsx)["S"]
+    chunks = chunker._chunk_sheet(df, "Dev / S", "Dev", "S")
+    assert len(chunks) == 1
+    assert chunks[0]["chunk"] == 1
+
+
+def test_chunk_sheet_multiple_chunks():
+    """100 wierszy przy rows_per_chunk=30 — powinny powstać 4 chunki (30+30+30+10)."""
+    xlsx = make_xlsx({"S": [["A"]] + [["x"]] * 100})
+    chunker = XlsxChunker(rows_per_chunk=30)
+    df = chunker._load_sheets(xlsx)["S"]
+    chunks = chunker._chunk_sheet(df, "Dev / S", "Dev", "S")
+    assert len(chunks) == 4
+
+
+def test_chunk_sheet_prefix_in_text():
+    """Tekst każdego chunku musi zaczynać się od prefiksu '{source_label} / {arkusz}'."""
+    xlsx = make_xlsx({"Rejestry": [["A"], ["1"]]})
+    chunker = XlsxChunker()
+    df = chunker._load_sheets(xlsx)["Rejestry"]
+    chunks = chunker._chunk_sheet(df, "ORNO / Rejestry", "ORNO", "Rejestry")
+    assert chunks[0]["text"].startswith("ORNO / Rejestry")
+
+
+def test_chunk_sheet_payload_fields():
+    """Każdy chunk musi zawierać pola: source_label, sheet, chunk z poprawnymi wartościami."""
+    xlsx = make_xlsx({"S": [["A"], ["1"]]})
+    chunker = XlsxChunker()
+    df = chunker._load_sheets(xlsx)["S"]
+    chunk = chunker._chunk_sheet(df, "Dev / S", "Dev", "S")[0]
+    assert chunk["source_label"] == "Dev"
+    assert chunk["sheet"] == "S"
+    assert chunk["chunk"] == 1
+
+
+# ── chunk (integracyjne) ───────────────────────────────────────────────────────
+
+def test_chunk_returns_all_sheets():
+    """Plik z dwoma arkuszami — chunki muszą pochodzić z obu arkuszy."""
+    xlsx = make_xlsx({
+        "Odczyt": [["A"], ["1"]],
+        "Zapis":  [["B"], ["2"]],
+    })
+    chunks = XlsxChunker().chunk(xlsx, "ORNO OR-WE-516")
+    sheets_in_chunks = {c["sheet"] for c in chunks}
+    assert sheets_in_chunks == {"Odczyt", "Zapis"}
+
+
+def test_chunk_header_repeated_in_every_chunk():
+    """Nagłówek i separator tabeli Markdown muszą być powtórzone w każdym chunku,
+    żeby każdy chunk był samowystarczalny bez znajomości poprzednich."""
+    xlsx = make_xlsx({"S": [["Adres", "Nazwa"]] + [["x", "y"]] * 60})
+    chunks = XlsxChunker(rows_per_chunk=30).chunk(xlsx, "Dev")
+    for chunk in chunks:
+        assert "Adres | Nazwa" in chunk["text"]
+        assert "--- | ---" in chunk["text"]
+
+
+def test_chunk_empty_file():
+    """Plik bez żadnych danych (tylko nagłówki) — powinien zwrócić pustą listę."""
+    xlsx = make_xlsx({"Pusty": [["A", "B"]]})
+    chunks = XlsxChunker().chunk(xlsx, "Dev")
+    assert chunks == []

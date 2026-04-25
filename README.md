@@ -21,7 +21,11 @@ bielik-runpod/
 │   ├── xlsx_chunker.py   ← parsowanie XLSX na chunki tekstowe
 │   └── requirements.txt
 ├── cli/
-│   └── cli_xlsx_chunker.py
+│   ├── cli_xlsx_chunker.py  ← podgląd chunków XLSX lokalnie (bez API)
+│   └── cli_golden_set.py    ← generowanie golden setu do ewaluacji RAG
+├── data/
+│   ├── arkusz.xlsx          ← przykładowy plik XLSX do testów
+│   └── golden_set.json      ← golden set (chunk_id, prompts[], text)
 ├── test/
 │   └── test_xlsx_chunker.py
 └── start.sh
@@ -103,7 +107,7 @@ Kolejne uruchomienia ~2 minuty — modele już są na Volume.
 
 ---
 
-## Test
+## Weryfikacja API
 
 URL Poda dostępny w panelu RunPod: **Connect → HTTP Service [Port 8000]**
 
@@ -133,11 +137,25 @@ Przykładowa odpowiedź:
 }
 ```
 
-**Zwykłe zapytanie:**
+**Zapytanie bez RAG:**
 ```bash
 curl -X POST https://{POD_ID}-8000.proxy.runpod.net/ask \
   -H "Content-Type: application/json" \
   -d '{"prompt": "Czym jest spółdzielnia energetyczna? Odpowiedz w 2 zdaniach."}'
+```
+
+Przykładowa odpowiedź:
+```json
+{
+  "answer": "Spółdzielnia energetyczna to...",
+  "model": "SpeakLeash/bielik-11b-v3.0-instruct:Q8_0",
+  "time_total_s": 12.1,
+  "time_to_first_token_s": 1.3,
+  "tokens_generated": 87,
+  "tokens_per_second": 7.2,
+  "rag_chunks_used": null,
+  "rag_chunks": null
+}
 ```
 
 **Wgranie XLSX do bazy wektorowej:**
@@ -168,6 +186,25 @@ curl -X POST https://{POD_ID}-8000.proxy.runpod.net/inspect/xlsx \
   -F "rows_per_chunk=50"
 ```
 
+Przykładowa odpowiedź:
+```json
+{
+  "filename": "rejestry.xlsx",
+  "sheets": 2,
+  "chunks": 4,
+  "items": [
+    {
+      "index": 1,
+      "sheet": "Rejestry odczytu",
+      "chunk": 1,
+      "text": "ORNO OR-WE-516 / Rejestry odczytu\n\nAdres | Nazwa | ...",
+      "char_count": 1842,
+      "word_count": 312
+    }
+  ]
+}
+```
+
 **Zapytanie z RAG:**
 ```bash
 curl -X POST https://{POD_ID}-8000.proxy.runpod.net/ask \
@@ -195,6 +232,68 @@ Przykładowa odpowiedź `/ask` z RAG:
     }
   ]
 }
+```
+
+**Lista kolekcji Qdrant:**
+```bash
+curl https://{POD_ID}-8000.proxy.runpod.net/collections
+```
+
+Przykładowa odpowiedź:
+```json
+[
+  {"name": "documents", "vectors_count": 6}
+]
+```
+
+**Usunięcie kolekcji:**
+```bash
+curl -X DELETE https://{POD_ID}-8000.proxy.runpod.net/collections/documents
+```
+
+Przykładowa odpowiedź:
+```json
+{"deleted": "documents"}
+```
+
+**Lista modeli Ollama:**
+```bash
+curl https://{POD_ID}-8000.proxy.runpod.net/models
+```
+
+Przykładowa odpowiedź:
+```json
+{
+  "models": [
+    {
+      "name": "SpeakLeash/bielik-11b-v3.0-instruct:Q8_0",
+      "size": 11800000000,
+      "digest": "sha256:..."
+    },
+    {
+      "name": "nomic-embed-text:latest",
+      "size": 274000000,
+      "digest": "sha256:..."
+    }
+  ]
+}
+```
+
+**Pobranie modelu przez Ollama:**
+```bash
+curl -X POST https://{POD_ID}-8000.proxy.runpod.net/pull \
+  -H "Content-Type: application/json" \
+  -d '{"model": "nomic-embed-text"}'
+```
+
+Bez ciała requestu pobiera domyślny model generowania (z `config.MODEL`):
+```bash
+curl -X POST https://{POD_ID}-8000.proxy.runpod.net/pull
+```
+
+Przykładowa odpowiedź:
+```json
+{"status": "pulled", "model": "nomic-embed-text"}
 ```
 
 Swagger UI: `https://{POD_ID}-8000.proxy.runpod.net/docs`
@@ -242,6 +341,32 @@ Adres | Nazwa | ...
 ════════════════════════════════════════════════════════════════════════
 ```
 
+### cli_golden_set.py
+
+Skrypt CLI do budowania golden setu dla ewaluacji RAG. Ładuje jeden lub więcej plików XLSX, chunkuje je i zapisuje do JSON z pustą listą `prompts` do ręcznego lub AI wypełnienia.
+
+```bash
+python cli/cli_golden_set.py <plik1.xlsx> <etykieta1> [plik2.xlsx <etykieta2> ...] [--rows-per-chunk N] [--output FILE] [--seed N]
+```
+
+Przykład:
+```bash
+python cli/cli_golden_set.py rejestry.xlsx "ORNO OR-WE-520" --output data/golden_set.json
+```
+
+Przykładowy output (`golden_set.json`):
+```json
+[
+  {
+    "chunk_id": 0,
+    "prompts": [],
+    "text": "ORNO OR-WE-520 / Rejestry odczytu\n\nAdres (hex) | Rejestr nr | ..."
+  }
+]
+```
+
+Pole `prompts` należy wypełnić listą pytań testowych (ręcznie lub przez AI), a następnie uruchomić ewaluator.
+
 ---
 
 ## Testy
@@ -259,6 +384,13 @@ pytest test/test_xlsx_chunker.py -v
 
 ### Jakość RAG
 - [ ] Reranking — hybrid search BM25 + cosine łączony przez RRF (Reciprocal Rank Fusion, k=60)
+- [ ] **Query routing / device resolution** (priorytet po rerankingu):
+  - Przed odpytaniem RAG wysyłaj osobny call LLM z listą znanych urządzeń (z pamięci/pliku, nie z Qdrant)
+  - LLM zwraca nazwę urządzenia z listy lub "UNKNOWN" (niski max_tokens, krótki prompt)
+  - Jeśli urządzenie rozpoznane → Qdrant payload filter na `source_label` + semantic search
+  - Jeśli UNKNOWN → fallback: semantic search bez filtra
+  - Lista urządzeń uzupełniana automatycznie przy każdym `/ingest`
+  - Uwaga: pytania cross-device ("które liczniki mają taryfę T4?") wymagają osobnej obsługi — dla UNKNOWN nie filtruj
 - [ ] Lepszy model embeddingów (np. `multilingual-e5-large`)
 - [ ] HyDE — model generuje hipotetyczną odpowiedź, jej embedding idzie do Qdrant
 - [ ] Osobne kolekcje per urządzenie
@@ -272,7 +404,8 @@ pytest test/test_xlsx_chunker.py -v
 
 ### Testy
 - [ ] Testy jednostkowe dla `RagRetriever`, `AskPipeline`, `XlsxIngester` — nowe klasy nie mają pokrycia testami
-- [ ] CLI do tworzenia golden setu — ładuje XLSX, chunkuje, dla każdego chunku (relevant) losuje jeden irrelevant i prosi użytkownika o wpisanie promptu; jeśli operator uzna że oba chunki dotyczą tego samego, może poprosić o ponowne losowanie irrelevant
+- [x] CLI do tworzenia golden setu (`cli_golden_set.py`) — ładuje XLSX, chunkuje, zapisuje JSON z `prompts: []`
+- [ ] Tryb interaktywny golden setu — dla każdego chunku losuje irrelevant i prosi operatora o wpisanie promptów; obsługa ponownego losowania gdy oba chunki są podobne
 - [ ] Testy ewaluacyjne embeddera — metryki jakości wyszukiwania (Recall@k, MRR) mierzone na golden secie; pozwolą ocenić czy zmiana modelu embeddingu (np. na `multilingual-e5-large`) realnie poprawia wyniki RAG
 
 ---
