@@ -1,6 +1,16 @@
 # bielik-runpod
 
-Stack: Ollama + Bielik 11B v3.0 Q8_0 + Qdrant (RAG) + Python REST API. Uruchamiany na RunPod przez on-start script.
+REST API do uruchamiania polskiego modelu językowego **Bielik 11B v3.0** z obsługą RAG (Retrieval-Augmented Generation). Projekt jest zoptymalizowany pod RunPod z GPU RTX 4090, ale działa też lokalnie.
+
+**Możliwości:**
+- Generowanie odpowiedzi w języku polskim przez Bielik 11B
+- RAG — odpowiedzi oparte na własnych dokumentach wgranych jako pliki XLSX
+- Automatyczne chunkowanie i indeksowanie XLSX do bazy wektorowej Qdrant
+- Wyszukiwanie semantyczne przez embeddingi `nomic-embed-text`
+- REST API z dokumentacją Swagger UI
+- Narzędzia lokalne do budowania i ewaluacji golden setu (Recall@k, MRR)
+
+**Stack:** Ollama + Bielik 11B v3.0 Q8_0 + Qdrant + FastAPI. Uruchamiany na RunPod przez on-start script.
 
 ---
 
@@ -27,7 +37,8 @@ bielik-runpod/
 │   ├── arkusz.xlsx          ← przykładowy plik XLSX do testów
 │   └── golden_set.json      ← golden set (chunk_id, prompts[], text)
 ├── test/
-│   └── test_xlsx_chunker.py
+│   ├── test_xlsx_chunker.py     ← testy jednostkowe XlsxChunker
+│   └── eval_embedder.py         ← ewaluacja jakości embeddera (Recall@k, MRR)
 └── start.sh
 ```
 
@@ -371,11 +382,83 @@ Pole `prompts` należy wypełnić listą pytań testowych (ręcznie lub przez AI
 
 ## Testy
 
+### Testy jednostkowe
+
 Testy jednostkowe dla klasy `XlsxChunker` znajdują się w `test/test_xlsx_chunker.py`.
 
 ```bash
 pip install pytest
 pytest test/test_xlsx_chunker.py -v
+```
+
+### Ewaluacja embeddera
+
+Skrypt `test/eval_embedder.py` mierzy jakość modelu embeddingu na golden secie — bez Qdrant, wyłącznie przez porównanie cosinusowe wektorów. Wyniki: Recall@1, Recall@2, Recall@3 i MRR.
+
+Działa na CPU — `nomic-embed-text` (~274 MB) nie wymaga GPU. Embedowanie będzie wolniejsze niż na karcie graficznej (kilka sekund na tekst), ale przy małym golden secie czas jest do przyjęcia.
+
+**Wymagania (jednorazowo):**
+
+1. Zainstaluj zależności Pythona:
+```bash
+pip install -r api/requirements.txt
+```
+
+2. Zainstaluj Ollama — pobierz installer ze strony [ollama.com](https://ollama.com/download) i uruchom.
+
+3. Pobierz model embeddingu:
+```bash
+ollama pull nomic-embed-text
+```
+
+**Uruchomienie:**
+
+4. Uruchom Ollama (jeśli nie działa jako serwis):
+```bash
+ollama serve
+```
+
+5. Uruchom ewaluator:
+```bash
+python test/eval_embedder.py data/golden_set.json
+```
+
+Opcjonalnie — wyższe k, tryb szczegółowy lub zdalny Pod:
+```bash
+python test/eval_embedder.py data/golden_set.json --k 5
+python test/eval_embedder.py data/golden_set.json --verbose
+python test/eval_embedder.py data/golden_set.json --ollama-url https://{POD_ID}-11434.proxy.runpod.net
+```
+
+Przykładowy output:
+```
+Embedowanie 3 chunków...
+  [1/3] chunk_id=0
+  [2/3] chunk_id=1
+  [3/3] chunk_id=2
+
+Ewaluacja...
+
+══════════════════════════════════════════════════
+  Chunków:             3
+  Par (prompt, chunk): 15
+  Recall@1:            0.533  (8/15)
+  Recall@2:            0.733  (11/15)
+  Recall@3:            1.000  (15/15)
+  MRR:                 0.722
+══════════════════════════════════════════════════
+```
+
+Przykładowy output z `--verbose`:
+```
+  ✓ [1] "napięcie L1 rejestr orno 520"
+       #1 chunk_id=0  (cosine: 0.8321) ← poprawny
+       #2 chunk_id=2  (cosine: 0.7102)
+       #3 chunk_id=1  (cosine: 0.6891)
+  ✗ [2] "reset licznika we520"
+       #1 chunk_id=0  (cosine: 0.8120)
+       #2 chunk_id=1  (cosine: 0.7240) ← poprawny
+       #3 chunk_id=2  (cosine: 0.6510)
 ```
 
 ---
@@ -404,9 +487,7 @@ pytest test/test_xlsx_chunker.py -v
 
 ### Testy
 - [ ] Testy jednostkowe dla `RagRetriever`, `AskPipeline`, `XlsxIngester` — nowe klasy nie mają pokrycia testami
-- [x] CLI do tworzenia golden setu (`cli_golden_set.py`) — ładuje XLSX, chunkuje, zapisuje JSON z `prompts: []`
 - [ ] Tryb interaktywny golden setu — dla każdego chunku losuje irrelevant i prosi operatora o wpisanie promptów; obsługa ponownego losowania gdy oba chunki są podobne
-- [ ] Testy ewaluacyjne embeddera — metryki jakości wyszukiwania (Recall@k, MRR) mierzone na golden secie; pozwolą ocenić czy zmiana modelu embeddingu (np. na `multilingual-e5-large`) realnie poprawia wyniki RAG
 
 ---
 
