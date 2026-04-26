@@ -34,8 +34,11 @@ bielik-runpod/
 │   ├── cli_xlsx_chunker.py  ← podgląd chunków XLSX lokalnie (bez API)
 │   └── cli_golden_set.py    ← generowanie golden setu do ewaluacji RAG
 ├── data/
-│   ├── arkusz.xlsx          ← przykładowy plik XLSX do testów
-│   └── golden_set.json      ← golden set (chunk_id, prompts[], text)
+│   ├── xlsx/
+│   │   ├── ORNO OR-WE-520.xlsx      ← mapa rejestrów Modbus licznika ORNO OR-WE-520
+│   │   └── EASTRON SDM630.xlsx      ← mapa rejestrów Modbus licznika EASTRON SDM630
+│   ├── golden_set.json              ← golden set z promptami ogólnymi (ORNO + EASTRON)
+│   └── golden_set_unique.json       ← golden set z promptami kierowanymi (ORNO + EASTRON)
 ├── test/
 │   ├── test_xlsx_chunker.py     ← testy jednostkowe XlsxChunker
 │   └── eval_embedder.py         ← ewaluacja jakości embeddera (Recall@k, MRR)
@@ -360,9 +363,17 @@ Skrypt CLI do budowania golden setu dla ewaluacji RAG. Ładuje jeden lub więcej
 python cli/cli_golden_set.py <plik1.xlsx> <etykieta1> [plik2.xlsx <etykieta2> ...] [--rows-per-chunk N] [--output FILE] [--seed N]
 ```
 
-Przykład:
+Przykład z jednym urządzeniem:
 ```bash
-python cli/cli_golden_set.py rejestry.xlsx "ORNO OR-WE-520" --output data/golden_set.json
+python cli/cli_golden_set.py "data/xlsx/ORNO OR-WE-520.xlsx" "ORNO OR-WE-520" --output data/golden_set.json
+```
+
+Przykład z dwoma urządzeniami (polecana forma — korpus lepiej testuje rozróżnianie urządzeń):
+```bash
+python cli/cli_golden_set.py \
+  "data/xlsx/ORNO OR-WE-520.xlsx" "ORNO OR-WE-520" \
+  "data/xlsx/EASTRON SDM630.xlsx" "EASTRON SDM630" \
+  --output data/golden_set.json
 ```
 
 Przykładowy output (`golden_set.json`):
@@ -377,6 +388,10 @@ Przykładowy output (`golden_set.json`):
 ```
 
 Pole `prompts` należy wypełnić listą pytań testowych (ręcznie lub przez AI), a następnie uruchomić ewaluator.
+
+Projekt zawiera dwa gotowe golden sety:
+- `golden_set.json` — prompty realistyczne (5 na chunk): sformułowane tak jak użytkownik mógłby naprawdę zapytać, często bez nazwy urządzenia lub rejestru; mierzą jakość RAG w warunkach zbliżonych do produkcji
+- `golden_set_unique.json` — prompty ukierunkowane na unikalność (2 na chunk): zawierają nazwę urządzenia, adres hex lub nazwę rejestru, które jednoznacznie wskazują na konkretny chunk; mierzą górną granicę możliwości embeddera — jeśli tu wynik jest słaby, problem leży w modelu lub chunkingu, nie w jakości pytań
 
 ---
 
@@ -423,29 +438,35 @@ ollama serve
 python test/eval_embedder.py data/golden_set.json
 ```
 
+Na obu golden setach:
+```bash
+python test/eval_embedder.py data/golden_set.json
+python test/eval_embedder.py data/golden_set_unique.json
+```
+
 Opcjonalnie — wyższe k, tryb szczegółowy lub zdalny Pod:
 ```bash
-python test/eval_embedder.py data/golden_set.json --k 5
+python test/eval_embedder.py data/golden_set.json --k 6
 python test/eval_embedder.py data/golden_set.json --verbose
 python test/eval_embedder.py data/golden_set.json --ollama-url https://{POD_ID}-11434.proxy.runpod.net
 ```
 
-Przykładowy output:
+Przykładowy output (6 chunków — ORNO OR-WE-520 + EASTRON SDM630):
 ```
-Embedowanie 3 chunków...
-  [1/3] chunk_id=0
-  [2/3] chunk_id=1
-  [3/3] chunk_id=2
+Embedowanie 6 chunków...
+  [1/6] chunk_id=0
+  ...
+  [6/6] chunk_id=5
 
 Ewaluacja...
 
 ══════════════════════════════════════════════════
-  Chunków:             3
-  Par (prompt, chunk): 15
-  Recall@1:            0.533  (8/15)
-  Recall@2:            0.733  (11/15)
-  Recall@3:            1.000  (15/15)
-  MRR:                 0.722
+  Chunków:             6
+  Par (prompt, chunk): 30
+  Recall@1:            0.700  (21/30)
+  Recall@2:            0.867  (26/30)
+  Recall@3:            0.933  (28/30)
+  MRR:                 0.789
 ══════════════════════════════════════════════════
 ```
 
