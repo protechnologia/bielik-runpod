@@ -45,7 +45,7 @@ class AskPipeline:
         # RAG: wyszukaj pasujące fragmenty i przepisz prompt — jeśli nie ma trafień, zostaje oryginał
         if req.rag:
             result = await self.rag_retriever.retrieve(
-                req.prompt, req.collection, req.rag_top_k, req.rag_score_threshold
+                req.prompt, req.collection, req.rag_top_k, req.rag_score_threshold, req.bm25_candidates
             )
             if result:
                 prompt = result.prompt

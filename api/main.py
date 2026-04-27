@@ -6,6 +6,7 @@ from config import MODEL, EMBED_MODEL, VECTOR_SIZE, DEFAULT_COLLECTION
 from fastapi import FastAPI, File, Form, UploadFile
 from ollama_client import OllamaClient
 from qdrant_store import QdrantStore
+from bm25_reranker import Bm25Reranker
 from rag_retriever import RagRetriever
 from ask_pipeline import AskPipeline
 from xlsx_chunker import DEFAULT_ROWS_PER_CHUNK
@@ -22,8 +23,10 @@ app = FastAPI(title="Bielik test API")
 store = QdrantStore(path=QDRANT_PATH, vector_size=VECTOR_SIZE)
 # embed i generacja tekstu
 ollama = OllamaClient(base_url=OLLAMA_URL, model=MODEL, embed_model=EMBED_MODEL)
+# reranker BM25 — używany opcjonalnie przez RagRetriever
+bm25 = Bm25Reranker()
 # wyszukiwanie kontekstu do promptu
-rag_retriever = RagRetriever(store, ollama)
+rag_retriever = RagRetriever(store, ollama, bm25)
 # walidacja, chunkowanie i indeksowanie plików XLSX
 xlsx_ingester = XlsxIngester(store, ollama)
 # pełny pipeline zapytania: RAG → generowanie → metryki
@@ -159,14 +162,17 @@ async def ask(req: AskRequest):
     """
     Wysyła prompt do modelu i zwraca odpowiedź wraz z metrykami czasu generowania.
     Przy rag=true wyszukuje najpierw kontekst w Qdrant i dokłada go do promptu.
+    Przy bm25_candidates > 0 pobiera więcej kandydatów z Qdrant i reankuje je przez BM25
+    przed obcięciem do rag_top_k — poprawia precyzję dla zapytań zawierających nazwy techniczne.
 
-    Przykład requestu (rag=true):
+    Przykład requestu (rag=true, z BM25):
         {
             "prompt": "Jakie jest napięcie znamionowe licznika ORNO OR-WE-516?",
             "rag": true,
             "collection": "documents",
             "rag_top_k": 3,
-            "rag_score_threshold": 0.3
+            "rag_score_threshold": 0.3,
+            "bm25_candidates": 20
         }
 
     Przykład odpowiedzi:
