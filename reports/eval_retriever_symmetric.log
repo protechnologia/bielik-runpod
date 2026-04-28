@@ -1,0 +1,1018 @@
+               matched: [co(2), max(1), rejestr(1)]
+       #6 chunk_id=23  (cosine: 0.4978 [rank_cos=12]  bm25: 3.3848 [rank_bm25=7]  rrf: 0.0292)
+               matched: [limit(2), moc(2), rejestr(1)]
+       #7 chunk_id=6  (cosine: 0.5204 [rank_cos=7]  bm25: 0.7407 [rank_bm25=15]  rrf: 0.0287)
+               matched: [moc(3), rejestr(1)]
+       #8 chunk_id=26  (cosine: 0.4926 [rank_cos=18]  bm25: 4.1878 [rank_bm25=5]  rrf: 0.0286)
+               matched: [limit(9), rejestr(1)]
+       #9 chunk_id=8  (cosine: 0.4953 [rank_cos=14]  bm25: 2.3563 [rank_bm25=10]  rrf: 0.0282)
+               matched: [max(2), moc(2), rejestr(1)]
+       #10 chunk_id=9  (cosine: 0.5029 [rank_cos=11]  bm25: 0.7491 [rank_bm25=14]  rrf: 0.0280)
+               matched: [rejestr(1)]
+  ✓ [2] "energia pv dzis today rejestr 0060 goodwe et-plus"
+         tokens: [energia, pv, dzis, today, rejestr, 0060, goodwe, et, plus, et-plus, etplus]
+       #1 chunk_id=23  (cosine: 0.6160 [rank_cos=2]  bm25: 2.9128 [rank_bm25=7]  rrf: 0.0315)
+               matched: [0060(1), rejestr(1)]
+     ► #2 chunk_id=25  (cosine: 0.5883 [rank_cos=15]  bm25: 21.5025 [rank_bm25=1]  rrf: 0.0302)
+               matched: [dzis(3), energia(6), et(1), et-plus(1), etplus(1), goodwe(1), plus(1), rejestr(1), today(3)]
+       #3 chunk_id=26  (cosine: 0.5897 [rank_cos=13]  bm25: 11.0535 [rank_bm25=4]  rrf: 0.0298)
+               matched: [et(1), et-plus(1), etplus(1), goodwe(1), plus(1), rejestr(1)]
+       #4 chunk_id=4  (cosine: 0.5965 [rank_cos=9]  bm25: 1.9429 [rank_bm25=8]  rrf: 0.0296)
+               matched: [energia(9), rejestr(1)]
+       #5 chunk_id=24  (cosine: 0.5667 [rank_cos=17]  bm25: 17.5934 [rank_bm25=2]  rrf: 0.0296)
+               matched: [0060(1), dzis(3), energia(6), et(1), et-plus(1), etplus(1), goodwe(1), plus(1), pv(24), rejestr(1), today(3)]
+       #6 chunk_id=7  (cosine: 0.6248 [rank_cos=1]  bm25: 0.7394 [rank_bm25=19]  rrf: 0.0295)
+               matched: [rejestr(1)]
+       #7 chunk_id=6  (cosine: 0.5903 [rank_cos=12]  bm25: 3.8514 [rank_bm25=6]  rrf: 0.0295)
+               matched: [0060(1), energia(4), rejestr(1)]
+       #8 chunk_id=0  (cosine: 0.6023 [rank_cos=6]  bm25: 1.5081 [rank_bm25=12]  rrf: 0.0295)
+               matched: [energia(13), rejestr(1)]
+       #9 chunk_id=22  (cosine: 0.5598 [rank_cos=19]  bm25: 12.0799 [rank_bm25=3]  rrf: 0.0289)
+               matched: [dzis(6), energia(9), pv(18), rejestr(1), today(6)]
+       #10 chunk_id=19  (cosine: 0.6086 [rank_cos=3]  bm25: 0.6623 [rank_bm25=25]  rrf: 0.0280)
+               matched: [rejestr(1)]
+  ✓ [5] "energia z sieci grid import total goodwe etplus adres"
+         tokens: [energia, sieci, grid, import, total, goodwe, etplus, adres]
+       #1 chunk_id=26  (cosine: 0.5903 [rank_cos=1]  bm25: 8.1816 [rank_bm25=2]  rrf: 0.0331)
+               matched: [adres(2), etplus(1), goodwe(1), grid(1), sieci(4)]
+       #2 chunk_id=24  (cosine: 0.5519 [rank_cos=4]  bm25: 7.5355 [rank_bm25=4]  rrf: 0.0317)
+               matched: [adres(2), energia(6), etplus(1), goodwe(1), grid(7), sieci(1), total(5)]
+       #3 chunk_id=4  (cosine: 0.5743 [rank_cos=2]  bm25: 5.3985 [rank_bm25=7]  rrf: 0.0315)
+               matched: [adres(1), energia(9), import(6), total(3)]
+       #4 chunk_id=22  (cosine: 0.5409 [rank_cos=8]  bm25: 7.8814 [rank_bm25=3]  rrf: 0.0311)
+               matched: [adres(2), energia(9), grid(13), import(2), sieci(5), total(6)]
+     ► #5 chunk_id=25  (cosine: 0.5338 [rank_cos=11]  bm25: 14.7810 [rank_bm25=1]  rrf: 0.0310)
+               matched: [adres(1), energia(6), etplus(1), goodwe(1), grid(4), import(2), sieci(4), total(3)]
+       #6 chunk_id=5  (cosine: 0.5540 [rank_cos=3]  bm25: 2.1325 [rank_bm25=13]  rrf: 0.0300)
+               matched: [adres(2), import(2)]
+       #7 chunk_id=23  (cosine: 0.5408 [rank_cos=9]  bm25: 3.4428 [rank_bm25=9]  rrf: 0.0294)
+               matched: [adres(2), grid(1), sieci(1)]
+       #8 chunk_id=0  (cosine: 0.5315 [rank_cos=14]  bm25: 6.1836 [rank_bm25=5]  rrf: 0.0293)
+               matched: [adres(2), energia(13), grid(1), import(5), sieci(1), total(9)]
+       #9 chunk_id=7  (cosine: 0.5515 [rank_cos=5]  bm25: 0.9580 [rank_bm25=20]  rrf: 0.0283)
+               matched: [adres(2)]
+       #10 chunk_id=11  (cosine: 0.5435 [rank_cos=7]  bm25: 0.9396 [rank_bm25=21]  rrf: 0.0277)
+               matched: [adres(2)]
+  ✓ [4] "energia obciazenia load energy total et-plus rejestr"
+         tokens: [energia, obciazenia, load, energy, total, et, plus, et-plus, etplus, rejestr]
+       #1 chunk_id=4  (cosine: 0.5502 [rank_cos=1]  bm25: 4.4526 [rank_bm25=5]  rrf: 0.0323)
+               matched: [energia(9), energy(9), rejestr(1), total(3)]
+       #2 chunk_id=26  (cosine: 0.5311 [rank_cos=3]  bm25: 8.9599 [rank_bm25=4]  rrf: 0.0320)
+               matched: [et(1), et-plus(1), etplus(1), plus(1), rejestr(1)]
+       #3 chunk_id=22  (cosine: 0.5094 [rank_cos=9]  bm25: 9.2447 [rank_bm25=3]  rrf: 0.0308)
+               matched: [energia(9), energy(3), load(5), obciazenia(4), rejestr(1), total(6)]
+     ► #4 chunk_id=25  (cosine: 0.5059 [rank_cos=14]  bm25: 20.7289 [rank_bm25=1]  rrf: 0.0304)
+               matched: [energia(6), energy(2), et(1), et-plus(1), etplus(1), load(2), obciazenia(1), plus(1), rejestr(1), total(3)]
+       #5 chunk_id=24  (cosine: 0.4994 [rank_cos=17]  bm25: 9.9400 [rank_bm25=2]  rrf: 0.0296)
+               matched: [energia(6), energy(2), et(1), et-plus(1), etplus(1), load(1), obciazenia(1), plus(1), rejestr(1), total(5)]
+       #6 chunk_id=5  (cosine: 0.5390 [rank_cos=2]  bm25: 1.0330 [rank_bm25=19]  rrf: 0.0292)
+               matched: [energy(1), rejestr(1)]
+       #7 chunk_id=7  (cosine: 0.5306 [rank_cos=4]  bm25: 1.4788 [rank_bm25=17]  rrf: 0.0290)
+               matched: [energy(1), rejestr(1)]
+       #8 chunk_id=0  (cosine: 0.5041 [rank_cos=15]  bm25: 3.9310 [rank_bm25=7]  rrf: 0.0287)
+               matched: [energia(13), energy(13), rejestr(1), total(9)]
+       #9 chunk_id=15  (cosine: 0.5264 [rank_cos=5]  bm25: 0.6727 [rank_bm25=24]  rrf: 0.0277)
+               matched: [rejestr(1)]
+       #10 chunk_id=21  (cosine: 0.5202 [rank_cos=7]  bm25: 0.6917 [rank_bm25=23]  rrf: 0.0273)
+               matched: [rejestr(1)]
+  ✓ [1] "energia oddana export today goodwe et plus hex"
+         tokens: [energia, oddana, export, today, goodwe, et, plus, hex]
+     ► #1 chunk_id=25  (cosine: 0.5710 [rank_cos=3]  bm25: 17.5962 [rank_bm25=1]  rrf: 0.0328)
+               matched: [energia(6), et(1), export(2), goodwe(1), hex(1), oddana(2), plus(1), today(3)]
+       #2 chunk_id=4  (cosine: 0.6307 [rank_cos=1]  bm25: 4.2324 [rank_bm25=6]  rrf: 0.0321)
+               matched: [energia(9), export(3), hex(1)]
+       #3 chunk_id=0  (cosine: 0.5862 [rank_cos=2]  bm25: 2.4817 [rank_bm25=9]  rrf: 0.0311)
+               matched: [energia(13), hex(1), oddana(1)]
+       #4 chunk_id=1  (cosine: 0.5673 [rank_cos=4]  bm25: 2.9547 [rank_bm25=8]  rrf: 0.0308)
+               matched: [energia(27), hex(1), oddana(1)]
+       #5 chunk_id=26  (cosine: 0.5434 [rank_cos=17]  bm25: 8.1533 [rank_bm25=2]  rrf: 0.0296)
+               matched: [et(1), export(1), goodwe(1), hex(1), plus(1)]
+       #6 chunk_id=3  (cosine: 0.5483 [rank_cos=14]  bm25: 5.0497 [rank_bm25=5]  rrf: 0.0293)
+               matched: [energia(15), export(5), hex(1), oddana(2)]
+       #7 chunk_id=22  (cosine: 0.5432 [rank_cos=18]  bm25: 6.9517 [rank_bm25=3]  rrf: 0.0291)
+               matched: [energia(9), export(2), hex(1), oddana(2), today(6)]
+       #8 chunk_id=6  (cosine: 0.5608 [rank_cos=9]  bm25: 1.6565 [rank_bm25=11]  rrf: 0.0290)
+               matched: [energia(4), hex(1)]
+       #9 chunk_id=23  (cosine: 0.5582 [rank_cos=10]  bm25: 2.0358 [rank_bm25=10]  rrf: 0.0290)
+               matched: [export(1), hex(1)]
+       #10 chunk_id=7  (cosine: 0.5670 [rank_cos=5]  bm25: 0.7394 [rank_bm25=19]  rrf: 0.0284)
+               matched: [hex(1)]
+  ✓ [5] "bat discharge energia rozladowana goodwe etplus rejestr"
+         tokens: [bat, discharge, energia, rozladowana, goodwe, etplus, rejestr]
+       #1 chunk_id=23  (cosine: 0.6110 [rank_cos=2]  bm25: 5.3859 [rank_bm25=4]  rrf: 0.0323)
+               matched: [bat(2), discharge(1), rejestr(1)]
+       #2 chunk_id=22  (cosine: 0.5901 [rank_cos=4]  bm25: 3.8697 [rank_bm25=5]  rrf: 0.0315)
+               matched: [discharge(1), energia(9), rejestr(1), rozladowana(1)]
+       #3 chunk_id=24  (cosine: 0.5801 [rank_cos=9]  bm25: 10.3778 [rank_bm25=1]  rrf: 0.0314)
+               matched: [bat(4), discharge(3), energia(6), etplus(1), goodwe(1), rejestr(1), rozladowana(2)]
+       #4 chunk_id=26  (cosine: 0.5801 [rank_cos=8]  bm25: 9.2157 [rank_bm25=2]  rrf: 0.0313)
+               matched: [bat(2), discharge(1), etplus(1), goodwe(1), rejestr(1)]
+     ► #5 chunk_id=25  (cosine: 0.5702 [rank_cos=14]  bm25: 7.1813 [rank_bm25=3]  rrf: 0.0298)
+               matched: [energia(6), etplus(1), goodwe(1), rejestr(1)]
+       #6 chunk_id=6  (cosine: 0.5778 [rank_cos=10]  bm25: 1.6565 [rank_bm25=9]  rrf: 0.0292)
+               matched: [energia(4), rejestr(1)]
+       #7 chunk_id=7  (cosine: 0.6059 [rank_cos=3]  bm25: 0.7394 [rank_bm25=19]  rrf: 0.0289)
+               matched: [rejestr(1)]
+       #8 chunk_id=4  (cosine: 0.5696 [rank_cos=15]  bm25: 1.9429 [rank_bm25=7]  rrf: 0.0287)
+               matched: [energia(9), rejestr(1)]
+       #9 chunk_id=5  (cosine: 0.6291 [rank_cos=1]  bm25: 0.5165 [rank_bm25=27]  rrf: 0.0283)
+               matched: [rejestr(1)]
+       #10 chunk_id=15  (cosine: 0.5856 [rank_cos=5]  bm25: 0.6727 [rank_bm25=23]  rrf: 0.0278)
+               matched: [rejestr(1)]
+  ✓ [1] "energia bierna import L1 sdm630 adres hex"
+         tokens: [energia, bierna, import, l1, sdm630, sdm, 630, adres, hex]
+     ► #1 chunk_id=4  (cosine: 0.6836 [rank_cos=1]  bm25: 17.7450 [rank_bm25=1]  rrf: 0.0333)
+               matched: [630(1), adres(1), bierna(9), energia(9), hex(1), import(6), l1(6), sdm(1), sdm630(1)]
+       #2 chunk_id=0  (cosine: 0.5773 [rank_cos=3]  bm25: 8.3828 [rank_bm25=5]  rrf: 0.0318)
+               matched: [adres(2), bierna(5), energia(13), hex(1), import(5), l1(22)]
+       #3 chunk_id=5  (cosine: 0.5667 [rank_cos=8]  bm25: 10.3151 [rank_bm25=3]  rrf: 0.0311)
+               matched: [630(1), adres(2), bierna(4), hex(1), import(2), sdm(1), sdm630(1)]
+       #4 chunk_id=1  (cosine: 0.5651 [rank_cos=10]  bm25: 9.1125 [rank_bm25=4]  rrf: 0.0304)
+               matched: [adres(1), bierna(15), energia(27), hex(1), import(7), l1(6)]
+       #5 chunk_id=3  (cosine: 0.5543 [rank_cos=16]  bm25: 12.8773 [rank_bm25=2]  rrf: 0.0297)
+               matched: [630(1), adres(1), bierna(7), energia(15), hex(1), import(10), l1(24), sdm(1), sdm630(1)]
+       #6 chunk_id=7  (cosine: 0.5894 [rank_cos=2]  bm25: 1.6974 [rank_bm25=18]  rrf: 0.0294)
+               matched: [adres(2), hex(1)]
+       #7 chunk_id=25  (cosine: 0.5593 [rank_cos=13]  bm25: 4.4237 [rank_bm25=8]  rrf: 0.0288)
+               matched: [adres(1), energia(6), hex(1), import(2)]
+       #8 chunk_id=6  (cosine: 0.5569 [rank_cos=15]  bm25: 2.5022 [rank_bm25=9]  rrf: 0.0282)
+               matched: [adres(2), energia(4), hex(1)]
+       #9 chunk_id=21  (cosine: 0.5722 [rank_cos=5]  bm25: 1.6087 [rank_bm25=21]  rrf: 0.0281)
+               matched: [adres(2), hex(1)]
+       #10 chunk_id=19  (cosine: 0.5751 [rank_cos=4]  bm25: 1.5530 [rank_bm25=24]  rrf: 0.0279)
+               matched: [adres(2), hex(1)]
+  ✓ [1] "rejestr eksport energia bierna fazy L2 eastron"
+         tokens: [rejestr, eksport, energia, bierna, fazy, l2, eastron]
+     ► #1 chunk_id=4  (cosine: 0.7213 [rank_cos=1]  bm25: 15.8244 [rank_bm25=1]  rrf: 0.0333)
+               matched: [bierna(9), eastron(1), eksport(3), energia(9), fazy(9), l2(6), rejestr(1)]
+       #2 chunk_id=5  (cosine: 0.6644 [rank_cos=2]  bm25: 6.1339 [rank_bm25=5]  rrf: 0.0320)
+               matched: [bierna(4), eastron(1), eksport(2), rejestr(1)]
+       #3 chunk_id=0  (cosine: 0.6401 [rank_cos=6]  bm25: 11.7811 [rank_bm25=3]  rrf: 0.0315)
+               matched: [bierna(5), eksport(5), energia(13), fazy(21), l2(22), rejestr(1)]
+       #4 chunk_id=3  (cosine: 0.6255 [rank_cos=10]  bm25: 13.4354 [rank_bm25=2]  rrf: 0.0309)
+               matched: [bierna(7), eastron(1), eksport(5), energia(15), fazy(21), l2(24), rejestr(1)]
+       #5 chunk_id=25  (cosine: 0.6276 [rank_cos=8]  bm25: 1.9257 [rank_bm25=8]  rrf: 0.0299)
+               matched: [energia(6), rejestr(1)]
+       #6 chunk_id=1  (cosine: 0.6074 [rank_cos=16]  bm25: 11.5489 [rank_bm25=4]  rrf: 0.0292)
+               matched: [bierna(15), eksport(7), energia(27), fazy(3), l2(6), rejestr(1)]
+       #7 chunk_id=7  (cosine: 0.6544 [rank_cos=3]  bm25: 0.7394 [rank_bm25=18]  rrf: 0.0291)
+               matched: [rejestr(1)]
+       #8 chunk_id=24  (cosine: 0.5964 [rank_cos=18]  bm25: 5.2972 [rank_bm25=6]  rrf: 0.0284)
+               matched: [bierna(1), eksport(2), energia(6), l2(8), rejestr(1)]
+       #9 chunk_id=22  (cosine: 0.5997 [rank_cos=17]  bm25: 3.4442 [rank_bm25=7]  rrf: 0.0283)
+               matched: [energia(9), l2(6), rejestr(1)]
+       #10 chunk_id=6  (cosine: 0.6086 [rank_cos=15]  bm25: 1.6565 [rank_bm25=9]  rrf: 0.0282)
+               matched: [energia(4), rejestr(1)]
+  ✓ [1] "L3 reactive energy kVArh adres 0166 sdm-630"
+         tokens: [l3, reactive, energy, kvarh, adres, 0166, sdm, 630, sdm-630, sdm630]
+     ► #1 chunk_id=4  (cosine: 0.5275 [rank_cos=8]  bm25: 22.8294 [rank_bm25=1]  rrf: 0.0316)
+               matched: [0166(1), 630(1), adres(1), energy(9), kvarh(9), l3(6), reactive(9), sdm(1), sdm630(1)]
+       #2 chunk_id=7  (cosine: 0.5740 [rank_cos=1]  bm25: 1.6974 [rank_bm25=10]  rrf: 0.0312)
+               matched: [adres(2), energy(1)]
+       #3 chunk_id=6  (cosine: 0.5416 [rank_cos=3]  bm25: 1.8886 [rank_bm25=8]  rrf: 0.0311)
+               matched: [adres(2), energy(4)]
+       #4 chunk_id=0  (cosine: 0.5231 [rank_cos=12]  bm25: 7.8479 [rank_bm25=4]  rrf: 0.0300)
+               matched: [adres(2), energy(13), kvarh(1), l3(22), reactive(5)]
+       #5 chunk_id=5  (cosine: 0.5191 [rank_cos=13]  bm25: 6.8077 [rank_bm25=5]  rrf: 0.0295)
+               matched: [630(1), adres(2), energy(1), sdm(1), sdm630(1)]
+       #6 chunk_id=1  (cosine: 0.4879 [rank_cos=18]  bm25: 10.8055 [rank_bm25=3]  rrf: 0.0291)
+               matched: [adres(1), energy(27), kvarh(15), l3(6), reactive(15)]
+       #7 chunk_id=25  (cosine: 0.5271 [rank_cos=9]  bm25: 1.6887 [rank_bm25=11]  rrf: 0.0290)
+               matched: [adres(1), energy(2)]
+       #8 chunk_id=2  (cosine: 0.5366 [rank_cos=5]  bm25: 1.2732 [rank_bm25=17]  rrf: 0.0288)
+               matched: [adres(2), energy(1)]
+       #9 chunk_id=21  (cosine: 0.5710 [rank_cos=2]  bm25: 0.9170 [rank_bm25=22]  rrf: 0.0287)
+               matched: [adres(2)]
+       #10 chunk_id=3  (cosine: 0.4629 [rank_cos=24]  bm25: 13.1087 [rank_bm25=2]  rrf: 0.0284)
+               matched: [630(1), adres(1), energy(15), kvarh(3), l3(24), reactive(7), sdm(1), sdm630(1)]
+  ✓ [1] "całkowita energia bierna fazy sdm630"
+         tokens: [calkowita, energia, bierna, fazy, sdm630, sdm, 630]
+     ► #1 chunk_id=4  (cosine: 0.6645 [rank_cos=1]  bm25: 19.0276 [rank_bm25=1]  rrf: 0.0333)
+               matched: [630(1), bierna(9), calkowita(3), energia(9), fazy(9), sdm(1), sdm630(1)]
+       #2 chunk_id=5  (cosine: 0.6470 [rank_cos=4]  bm25: 7.6660 [rank_bm25=4]  rrf: 0.0317)
+               matched: [630(1), bierna(4), sdm(1), sdm630(1)]
+       #3 chunk_id=0  (cosine: 0.6382 [rank_cos=6]  bm25: 9.9626 [rank_bm25=3]  rrf: 0.0315)
+               matched: [bierna(5), calkowita(5), energia(13), fazy(21)]
+       #4 chunk_id=6  (cosine: 0.6417 [rank_cos=5]  bm25: 1.0429 [rank_bm25=9]  rrf: 0.0303)
+               matched: [energia(4)]
+       #5 chunk_id=25  (cosine: 0.6290 [rank_cos=7]  bm25: 1.1911 [rank_bm25=7]  rrf: 0.0303)
+               matched: [energia(6)]
+       #6 chunk_id=24  (cosine: 0.6160 [rank_cos=12]  bm25: 1.6301 [rank_bm25=6]  rrf: 0.0295)
+               matched: [bierna(1), energia(6)]
+       #7 chunk_id=22  (cosine: 0.6174 [rank_cos=10]  bm25: 1.0394 [rank_bm25=10]  rrf: 0.0290)
+               matched: [energia(9)]
+       #8 chunk_id=3  (cosine: 0.5989 [rank_cos=23]  bm25: 14.7775 [rank_bm25=2]  rrf: 0.0286)
+               matched: [630(1), bierna(7), calkowita(8), energia(15), fazy(21), sdm(1), sdm630(1)]
+       #9 chunk_id=12  (cosine: 0.6039 [rank_cos=19]  bm25: 1.0527 [rank_bm25=8]  rrf: 0.0277)
+               matched: [energia(6)]
+       #10 chunk_id=10  (cosine: 0.6123 [rank_cos=15]  bm25: 0.8673 [rank_bm25=12]  rrf: 0.0276)
+               matched: [energia(3)]
+  ✓ [1] "import export reactive energy eastron rejestr"
+         tokens: [import, export, reactive, energy, eastron, rejestr]
+     ► #1 chunk_id=4  (cosine: 0.4632 [rank_cos=1]  bm25: 12.1435 [rank_bm25=1]  rrf: 0.0333)
+               matched: [eastron(1), energy(9), export(3), import(6), reactive(9), rejestr(1)]
+       #2 chunk_id=0  (cosine: 0.4202 [rank_cos=4]  bm25: 5.4698 [rank_bm25=5]  rrf: 0.0315)
+               matched: [energy(13), import(5), reactive(5), rejestr(1)]
+       #3 chunk_id=5  (cosine: 0.4147 [rank_cos=6]  bm25: 4.2643 [rank_bm25=6]  rrf: 0.0308)
+               matched: [eastron(1), energy(1), import(2), rejestr(1)]
+       #4 chunk_id=7  (cosine: 0.4354 [rank_cos=3]  bm25: 1.4788 [rank_bm25=13]  rrf: 0.0300)
+               matched: [energy(1), rejestr(1)]
+       #5 chunk_id=1  (cosine: 0.3932 [rank_cos=15]  bm25: 6.8433 [rank_bm25=3]  rrf: 0.0296)
+               matched: [energy(27), import(7), reactive(15), rejestr(1)]
+       #6 chunk_id=3  (cosine: 0.3817 [rank_cos=19]  bm25: 9.4414 [rank_bm25=2]  rrf: 0.0292)
+               matched: [eastron(1), energy(15), export(5), import(10), reactive(7), rejestr(1)]
+       #7 chunk_id=25  (cosine: 0.3909 [rank_cos=16]  bm25: 5.5497 [rank_bm25=4]  rrf: 0.0292)
+               matched: [energy(2), export(2), import(2), rejestr(1)]
+       #8 chunk_id=23  (cosine: 0.4006 [rank_cos=13]  bm25: 2.0358 [rank_bm25=8]  rrf: 0.0288)
+               matched: [export(1), rejestr(1)]
+       #9 chunk_id=8  (cosine: 0.4131 [rank_cos=9]  bm25: 1.6248 [rank_bm25=12]  rrf: 0.0288)
+               matched: [energy(3), rejestr(1)]
+       #10 chunk_id=6  (cosine: 0.4108 [rank_cos=11]  bm25: 1.6565 [rank_bm25=11]  rrf: 0.0286)
+               matched: [energy(4), rejestr(1)]
+  ✓ [4] "tryb sterowania control mode zapis wilo stratos-maxo"
+         tokens: [tryb, sterowania, control, mode, zapis, wilo, stratos, maxo, stratos-maxo, stratosmaxo]
+       #1 chunk_id=13  (cosine: 0.5503 [rank_cos=2]  bm25: 2.2069 [rank_bm25=7]  rrf: 0.0315)
+               matched: [mode(2), zapis(1)]
+       #2 chunk_id=19  (cosine: 0.5458 [rank_cos=4]  bm25: 2.6057 [rank_bm25=6]  rrf: 0.0313)
+               matched: [control(1), mode(2)]
+       #3 chunk_id=15  (cosine: 0.5746 [rank_cos=1]  bm25: 1.9159 [rank_bm25=10]  rrf: 0.0312)
+               matched: [mode(1), zapis(1)]
+     ► #4 chunk_id=21  (cosine: 0.5212 [rank_cos=11]  bm25: 17.2458 [rank_bm25=1]  rrf: 0.0310)
+               matched: [control(1), maxo(1), mode(1), stratos(1), stratos-maxo(1), stratosmaxo(1), wilo(1)]
+       #5 chunk_id=23  (cosine: 0.5355 [rank_cos=8]  bm25: 2.9128 [rank_bm25=4]  rrf: 0.0308)
+               matched: [mode(1), tryb(1)]
+       #6 chunk_id=5  (cosine: 0.5398 [rank_cos=7]  bm25: 2.8934 [rank_bm25=5]  rrf: 0.0308)
+               matched: [control(2), zapis(1)]
+       #7 chunk_id=2  (cosine: 0.5060 [rank_cos=12]  bm25: 3.5762 [rank_bm25=3]  rrf: 0.0302)
+               matched: [mode(2), tryb(1), zapis(1)]
+       #8 chunk_id=9  (cosine: 0.5484 [rank_cos=3]  bm25: 1.3846 [rank_bm25=13]  rrf: 0.0300)
+               matched: [zapis(1)]
+       #9 chunk_id=7  (cosine: 0.5339 [rank_cos=10]  bm25: 2.1061 [rank_bm25=9]  rrf: 0.0292)
+               matched: [mode(1), zapis(1)]
+       #10 chunk_id=17  (cosine: 0.5444 [rank_cos=5]  bm25: 0.6635 [rank_bm25=15]  rrf: 0.0291)
+               matched: [mode(1)]
+  ✓ [1] "zadana roznica cisnienia pressure setpoint stratosmaxo rejestr"
+         tokens: [zadana, roznica, cisnienia, pressure, setpoint, stratosmaxo, rejestr]
+     ► #1 chunk_id=21  (cosine: 0.6330 [rank_cos=1]  bm25: 9.8371 [rank_bm25=1]  rrf: 0.0333)
+               matched: [pressure(3), rejestr(1), roznica(1), setpoint(2), stratosmaxo(1), zadana(2)]
+       #2 chunk_id=19  (cosine: 0.5968 [rank_cos=2]  bm25: 5.6324 [rank_bm25=4]  rrf: 0.0323)
+               matched: [pressure(1), rejestr(1), roznica(1), setpoint(1), zadana(2)]
+       #3 chunk_id=20  (cosine: 0.5611 [rank_cos=7]  bm25: 7.5358 [rank_bm25=2]  rrf: 0.0315)
+               matched: [pressure(4), rejestr(1), roznica(1), setpoint(1), stratosmaxo(1), zadana(1)]
+       #4 chunk_id=15  (cosine: 0.5894 [rank_cos=3]  bm25: 2.6438 [rank_bm25=6]  rrf: 0.0315)
+               matched: [rejestr(1), setpoint(2), zadana(2)]
+       #5 chunk_id=13  (cosine: 0.5699 [rank_cos=5]  bm25: 2.9554 [rank_bm25=5]  rrf: 0.0312)
+               matched: [rejestr(1), setpoint(3), zadana(3)]
+       #6 chunk_id=17  (cosine: 0.5799 [rank_cos=4]  bm25: 2.6168 [rank_bm25=7]  rrf: 0.0310)
+               matched: [rejestr(1), setpoint(2), zadana(2)]
+       #7 chunk_id=16  (cosine: 0.5487 [rank_cos=10]  bm25: 2.2488 [rank_bm25=8]  rrf: 0.0294)
+               matched: [pressure(1), rejestr(1), setpoint(2)]
+       #8 chunk_id=11  (cosine: 0.5549 [rank_cos=8]  bm25: 1.3413 [rank_bm25=12]  rrf: 0.0290)
+               matched: [rejestr(1), setpoint(2)]
+       #9 chunk_id=18  (cosine: 0.5200 [rank_cos=21]  bm25: 5.7672 [rank_bm25=3]  rrf: 0.0286)
+               matched: [pressure(2), rejestr(1), roznica(2), setpoint(1), zadana(2)]
+       #10 chunk_id=9  (cosine: 0.5478 [rank_cos=11]  bm25: 0.7491 [rank_bm25=14]  rrf: 0.0280)
+               matched: [rejestr(1)]
+  ✓ [1] "reset bledu fault reset wilo stratos maxo zapis 0x0055"
+         tokens: [reset, bledu, fault, reset, wilo, stratos, maxo, zapis, 0x0055, 0055]
+     ► #1 chunk_id=21  (cosine: 0.5265 [rank_cos=7]  bm25: 18.2214 [rank_bm25=1]  rrf: 0.0318)
+               matched: [0055(1), 0x0055(1), bledu(1), fault(1), maxo(1), reset(1), stratos(1), wilo(1)]
+       #2 chunk_id=7  (cosine: 0.5371 [rank_cos=2]  bm25: 1.9514 [rank_bm25=6]  rrf: 0.0318)
+               matched: [reset(1), zapis(1)]
+       #3 chunk_id=15  (cosine: 0.5347 [rank_cos=5]  bm25: 3.2482 [rank_bm25=3]  rrf: 0.0318)
+               matched: [bledu(1), fault(1), reset(1), zapis(1)]
+       #4 chunk_id=23  (cosine: 0.5356 [rank_cos=3]  bm25: 1.4747 [rank_bm25=8]  rrf: 0.0311)
+               matched: [fault(1), reset(1)]
+       #5 chunk_id=13  (cosine: 0.5237 [rank_cos=8]  bm25: 2.2983 [rank_bm25=4]  rrf: 0.0308)
+               matched: [bledu(1), reset(1), zapis(1)]
+       #6 chunk_id=26  (cosine: 0.5394 [rank_cos=1]  bm25: 1.3563 [rank_bm25=13]  rrf: 0.0306)
+               matched: [fault(1), reset(1)]
+       #7 chunk_id=9  (cosine: 0.5175 [rank_cos=9]  bm25: 2.1486 [rank_bm25=5]  rrf: 0.0303)
+               matched: [reset(2), zapis(1)]
+       #8 chunk_id=17  (cosine: 0.5319 [rank_cos=6]  bm25: 1.2371 [rank_bm25=14]  rrf: 0.0291)
+               matched: [bledu(1), reset(3)]
+       #9 chunk_id=19  (cosine: 0.5349 [rank_cos=4]  bm25: 0.5237 [rank_bm25=18]  rrf: 0.0289)
+               matched: [reset(1)]
+       #10 chunk_id=16  (cosine: 0.4858 [rank_cos=12]  bm25: 1.3908 [rank_bm25=10]  rrf: 0.0286)
+               matched: [bledu(2), zapis(1)]
+  ✓ [3] "baud rate modbus adres 0049 wilo stratos-maxo konfiguracja"
+         tokens: [baud, rate, modbus, adres, 0049, wilo, stratos, maxo, stratos-maxo, stratosmaxo, konfiguracja]
+       #1 chunk_id=15  (cosine: 0.6421 [rank_cos=1]  bm25: 4.8874 [rank_bm25=3]  rrf: 0.0328)
+               matched: [0049(1), adres(2), baud(1), modbus(2), rate(1)]
+       #2 chunk_id=17  (cosine: 0.6353 [rank_cos=2]  bm25: 4.8292 [rank_bm25=4]  rrf: 0.0323)
+               matched: [0049(1), adres(2), baud(1), modbus(2), rate(1)]
+     ► #3 chunk_id=21  (cosine: 0.6085 [rank_cos=8]  bm25: 19.7714 [rank_bm25=1]  rrf: 0.0316)
+               matched: [0049(1), adres(2), baud(1), maxo(1), modbus(2), rate(1), stratos(1), stratos-maxo(1), stratosmaxo(1), wilo(1)]
+       #4 chunk_id=7  (cosine: 0.6345 [rank_cos=3]  bm25: 3.3949 [rank_bm25=7]  rrf: 0.0313)
+               matched: [adres(2), baud(1), modbus(1), rate(2)]
+       #5 chunk_id=19  (cosine: 0.6196 [rank_cos=5]  bm25: 4.8210 [rank_bm25=5]  rrf: 0.0312)
+               matched: [0049(1), adres(2), baud(1), modbus(2), rate(1)]
+       #6 chunk_id=9  (cosine: 0.6138 [rank_cos=6]  bm25: 3.4305 [rank_bm25=6]  rrf: 0.0308)
+               matched: [adres(2), baud(1), modbus(1), rate(2)]
+       #7 chunk_id=5  (cosine: 0.6199 [rank_cos=4]  bm25: 2.2982 [rank_bm25=15]  rrf: 0.0294)
+               matched: [adres(2), baud(1), modbus(1), rate(1)]
+       #8 chunk_id=2  (cosine: 0.6111 [rank_cos=7]  bm25: 2.5465 [rank_bm25=14]  rrf: 0.0289)
+               matched: [adres(2), baud(1), modbus(1), rate(2)]
+       #9 chunk_id=11  (cosine: 0.5986 [rank_cos=11]  bm25: 3.0928 [rank_bm25=10]  rrf: 0.0288)
+               matched: [adres(2), baud(1), modbus(1), rate(1)]
+       #10 chunk_id=23  (cosine: 0.5995 [rank_cos=10]  bm25: 3.0071 [rank_bm25=11]  rrf: 0.0288)
+               matched: [adres(2), baud(1), modbus(2), rate(1)]
+  ✓ [2] "start stop pompa stratos-maxo rejestr 0043 wilo"
+         tokens: [start, stop, pompa, stratos, maxo, stratos-maxo, stratosmaxo, rejestr, 0043, wilo]
+       #1 chunk_id=19  (cosine: 0.5098 [rank_cos=1]  bm25: 5.4798 [rank_bm25=3]  rrf: 0.0328)
+               matched: [0043(1), rejestr(1), start(1), stop(2)]
+     ► #2 chunk_id=21  (cosine: 0.4970 [rank_cos=4]  bm25: 21.0450 [rank_bm25=1]  rrf: 0.0325)
+               matched: [0043(1), maxo(1), rejestr(1), start(2), stop(2), stratos(1), stratos-maxo(1), stratosmaxo(1), wilo(1)]
+       #3 chunk_id=15  (cosine: 0.4991 [rank_cos=3]  bm25: 2.1517 [rank_bm25=8]  rrf: 0.0311)
+               matched: [0043(1), rejestr(1)]
+       #4 chunk_id=23  (cosine: 0.4734 [rank_cos=6]  bm25: 2.2844 [rank_bm25=6]  rrf: 0.0308)
+               matched: [rejestr(1), start(1)]
+       #5 chunk_id=17  (cosine: 0.4731 [rank_cos=7]  bm25: 2.1226 [rank_bm25=9]  rrf: 0.0299)
+               matched: [0043(1), rejestr(1)]
+       #6 chunk_id=13  (cosine: 0.4705 [rank_cos=10]  bm25: 2.2260 [rank_bm25=7]  rrf: 0.0296)
+               matched: [0043(1), rejestr(1)]
+       #7 chunk_id=7  (cosine: 0.4997 [rank_cos=2]  bm25: 0.7394 [rank_bm25=17]  rrf: 0.0296)
+               matched: [rejestr(1)]
+       #8 chunk_id=2  (cosine: 0.4660 [rank_cos=13]  bm25: 3.0301 [rank_bm25=5]  rrf: 0.0295)
+               matched: [rejestr(1), start(4)]
+       #9 chunk_id=26  (cosine: 0.4727 [rank_cos=8]  bm25: 2.1010 [rank_bm25=10]  rrf: 0.0294)
+               matched: [rejestr(1), start(1)]
+       #10 chunk_id=9  (cosine: 0.4787 [rank_cos=5]  bm25: 0.7491 [rank_bm25=16]  rrf: 0.0290)
+               matched: [rejestr(1)]
+  ✓ [1] "reset licznikow energia kamstrup multical-403 zapis 0x5A5A"
+         tokens: [reset, licznikow, energia, kamstrup, multical, 403, multical-403, multical403, zapis, 0x5a5a]
+     ► #1 chunk_id=7  (cosine: 0.7550 [rank_cos=1]  bm25: 21.5311 [rank_bm25=1]  rrf: 0.0333)
+               matched: [0x5a5a(2), 403(1), kamstrup(1), multical(1), multical-403(1), multical403(1), reset(1), zapis(1)]
+       #2 chunk_id=6  (cosine: 0.6944 [rank_cos=2]  bm25: 14.1405 [rank_bm25=2]  rrf: 0.0328)
+               matched: [403(1), energia(4), kamstrup(1), multical(1), multical-403(1), multical403(1)]
+       #3 chunk_id=9  (cosine: 0.6388 [rank_cos=5]  bm25: 5.7208 [rank_bm25=3]  rrf: 0.0318)
+               matched: [licznikow(1), reset(2), zapis(1)]
+       #4 chunk_id=2  (cosine: 0.6450 [rank_cos=4]  bm25: 4.3813 [rank_bm25=4]  rrf: 0.0317)
+               matched: [0x5a5a(2), reset(1), zapis(1)]
+       #5 chunk_id=15  (cosine: 0.6484 [rank_cos=3]  bm25: 1.5092 [rank_bm25=7]  rrf: 0.0313)
+               matched: [reset(1), zapis(1)]
+       #6 chunk_id=13  (cosine: 0.6245 [rank_cos=8]  bm25: 1.5613 [rank_bm25=6]  rrf: 0.0303)
+               matched: [reset(1), zapis(1)]
+       #7 chunk_id=5  (cosine: 0.6353 [rank_cos=6]  bm25: 1.1589 [rank_bm25=12]  rrf: 0.0295)
+               matched: [reset(1), zapis(1)]
+       #8 chunk_id=4  (cosine: 0.5903 [rank_cos=15]  bm25: 1.2341 [rank_bm25=9]  rrf: 0.0282)
+               matched: [energia(9)]
+       #9 chunk_id=16  (cosine: 0.5657 [rank_cos=21]  bm25: 1.7679 [rank_bm25=5]  rrf: 0.0281)
+               matched: [energia(3), zapis(1)]
+       #10 chunk_id=25  (cosine: 0.5892 [rank_cos=16]  bm25: 1.1911 [rank_bm25=10]  rrf: 0.0278)
+               matched: [energia(6)]
+  ✓ [1] "adres modbus meter id multical403 ustawienie rejestr"
+         tokens: [adres, modbus, meter, id, multical403, multical, 403, ustawienie, rejestr]
+     ► #1 chunk_id=7  (cosine: 0.5743 [rank_cos=1]  bm25: 13.7292 [rank_bm25=1]  rrf: 0.0333)
+               matched: [403(1), adres(2), id(1), meter(1), modbus(1), multical(1), multical403(1), rejestr(1)]
+       #2 chunk_id=6  (cosine: 0.5284 [rank_cos=3]  bm25: 11.4442 [rank_bm25=2]  rrf: 0.0325)
+               matched: [403(1), adres(2), id(1), meter(1), modbus(1), multical(1), multical403(1), rejestr(1)]
+       #3 chunk_id=9  (cosine: 0.5165 [rank_cos=7]  bm25: 4.3111 [rank_bm25=3]  rrf: 0.0313)
+               matched: [adres(2), id(1), meter(1), modbus(1), rejestr(1)]
+       #4 chunk_id=15  (cosine: 0.5392 [rank_cos=2]  bm25: 2.4729 [rank_bm25=10]  rrf: 0.0309)
+               matched: [adres(2), modbus(2), rejestr(1)]
+       #5 chunk_id=8  (cosine: 0.5032 [rank_cos=9]  bm25: 4.0672 [rank_bm25=5]  rrf: 0.0303)
+               matched: [adres(2), id(1), meter(2), modbus(1), rejestr(1)]
+       #6 chunk_id=2  (cosine: 0.5123 [rank_cos=8]  bm25: 3.0767 [rank_bm25=6]  rrf: 0.0303)
+               matched: [adres(2), id(1), meter(1), modbus(1), rejestr(1)]
+       #7 chunk_id=11  (cosine: 0.4955 [rank_cos=11]  bm25: 4.1445 [rank_bm25=4]  rrf: 0.0302)
+               matched: [adres(2), id(1), meter(1), modbus(1), rejestr(1)]
+       #8 chunk_id=21  (cosine: 0.5208 [rank_cos=6]  bm25: 2.5256 [rank_bm25=9]  rrf: 0.0301)
+               matched: [adres(2), modbus(2), rejestr(1)]
+       #9 chunk_id=19  (cosine: 0.5257 [rank_cos=4]  bm25: 2.4438 [rank_bm25=12]  rrf: 0.0300)
+               matched: [adres(2), modbus(2), rejestr(1)]
+       #10 chunk_id=17  (cosine: 0.5246 [rank_cos=5]  bm25: 2.4474 [rank_bm25=11]  rrf: 0.0299)
+               matched: [adres(2), modbus(2), rejestr(1)]
+  ✓ [1] "baud rate konfiguracja kamstrup multical 403 rejestr 0063"
+         tokens: [baud, rate, konfiguracja, kamstrup, multical, 403, rejestr, 0063]
+     ► #1 chunk_id=7  (cosine: 0.6304 [rank_cos=1]  bm25: 14.1529 [rank_bm25=1]  rrf: 0.0333)
+               matched: [0063(1), 403(1), baud(1), kamstrup(1), multical(1), rate(2), rejestr(1)]
+       #2 chunk_id=6  (cosine: 0.6272 [rank_cos=2]  bm25: 11.7959 [rank_bm25=2]  rrf: 0.0328)
+               matched: [0063(1), 403(1), baud(1), kamstrup(1), multical(1), rate(2), rejestr(1)]
+       #3 chunk_id=17  (cosine: 0.5687 [rank_cos=3]  bm25: 1.9906 [rank_bm25=10]  rrf: 0.0306)
+               matched: [baud(1), rate(1), rejestr(1)]
+       #4 chunk_id=9  (cosine: 0.5483 [rank_cos=10]  bm25: 2.4644 [rank_bm25=4]  rrf: 0.0304)
+               matched: [baud(1), rate(2), rejestr(1)]
+       #5 chunk_id=15  (cosine: 0.5655 [rank_cos=5]  bm25: 2.0180 [rank_bm25=9]  rrf: 0.0303)
+               matched: [baud(1), rate(1), rejestr(1)]
+       #6 chunk_id=21  (cosine: 0.5530 [rank_cos=7]  bm25: 2.0750 [rank_bm25=8]  rrf: 0.0301)
+               matched: [baud(1), rate(1), rejestr(1)]
+       #7 chunk_id=8  (cosine: 0.5474 [rank_cos=11]  bm25: 2.3351 [rank_bm25=5]  rrf: 0.0299)
+               matched: [baud(1), rate(4), rejestr(1)]
+       #8 chunk_id=23  (cosine: 0.5263 [rank_cos=16]  bm25: 3.8429 [rank_bm25=3]  rrf: 0.0295)
+               matched: [0063(1), baud(1), rate(1), rejestr(1)]
+       #9 chunk_id=0  (cosine: 0.5683 [rank_cos=4]  bm25: 1.4783 [rank_bm25=15]  rrf: 0.0294)
+               matched: [baud(1), rate(3), rejestr(1)]
+       #10 chunk_id=11  (cosine: 0.5406 [rank_cos=13]  bm25: 2.1532 [rank_bm25=6]  rrf: 0.0293)
+               matched: [baud(1), rate(1), rejestr(1)]
+  ✓ [1] "synchronizacja czasu time sync multical-403 rejestr 0202"
+         tokens: [synchronizacja, czasu, time, sync, multical, 403, multical-403, multical403, rejestr, 0202]
+     ► #1 chunk_id=7  (cosine: 0.6842 [rank_cos=1]  bm25: 21.9772 [rank_bm25=1]  rrf: 0.0333)
+               matched: [0202(1), 403(1), multical(1), multical-403(1), multical403(1), rejestr(1), sync(1), synchronizacja(1), time(1)]
+       #2 chunk_id=6  (cosine: 0.6362 [rank_cos=2]  bm25: 11.0917 [rank_bm25=2]  rrf: 0.0328)
+               matched: [403(1), multical(1), multical-403(1), multical403(1), rejestr(1)]
+       #3 chunk_id=2  (cosine: 0.6308 [rank_cos=3]  bm25: 7.0928 [rank_bm25=5]  rrf: 0.0318)
+               matched: [0202(1), rejestr(1), sync(1), synchronizacja(1), time(2)]
+       #4 chunk_id=9  (cosine: 0.6136 [rank_cos=7]  bm25: 8.9555 [rank_bm25=3]  rrf: 0.0313)
+               matched: [czasu(1), rejestr(1), sync(1), synchronizacja(1), time(1)]
+       #5 chunk_id=11  (cosine: 0.6171 [rank_cos=5]  bm25: 0.7177 [rank_bm25=9]  rrf: 0.0303)
+               matched: [rejestr(1)]
+       #6 chunk_id=0  (cosine: 0.6102 [rank_cos=8]  bm25: 1.2027 [rank_bm25=7]  rrf: 0.0301)
+               matched: [rejestr(1), time(1)]
+       #7 chunk_id=15  (cosine: 0.6235 [rank_cos=4]  bm25: 0.6727 [rank_bm25=13]  rrf: 0.0298)
+               matched: [rejestr(1)]
+       #8 chunk_id=23  (cosine: 0.5945 [rank_cos=13]  bm25: 8.1155 [rank_bm25=4]  rrf: 0.0298)
+               matched: [czasu(1), rejestr(1), sync(1), synchronizacja(1), time(2)]
+       #9 chunk_id=25  (cosine: 0.6035 [rank_cos=10]  bm25: 0.7347 [rank_bm25=8]  rrf: 0.0294)
+               matched: [rejestr(1)]
+       #10 chunk_id=26  (cosine: 0.5902 [rank_cos=14]  bm25: 6.9975 [rank_bm25=6]  rrf: 0.0291)
+               matched: [czasu(1), rejestr(1), sync(1), synchronizacja(1), time(1)]
+  ✓ [1] "haslo zabezpieczenie password kamstrup multical403 zapis"
+         tokens: [haslo, zabezpieczenie, password, kamstrup, multical403, multical, 403, zapis]
+     ► #1 chunk_id=7  (cosine: 0.6993 [rank_cos=1]  bm25: 19.2822 [rank_bm25=1]  rrf: 0.0333)
+               matched: [403(1), haslo(1), kamstrup(1), multical(1), multical403(1), password(1), zapis(1)]
+       #2 chunk_id=6  (cosine: 0.6652 [rank_cos=6]  bm25: 10.4780 [rank_bm25=2]  rrf: 0.0318)
+               matched: [403(1), kamstrup(1), multical(1), multical403(1)]
+       #3 chunk_id=15  (cosine: 0.6967 [rank_cos=2]  bm25: 1.2433 [rank_bm25=7]  rrf: 0.0315)
+               matched: [zapis(1)]
+       #4 chunk_id=13  (cosine: 0.6785 [rank_cos=3]  bm25: 1.2862 [rank_bm25=6]  rrf: 0.0315)
+               matched: [zapis(1)]
+       #5 chunk_id=9  (cosine: 0.6763 [rank_cos=5]  bm25: 1.3846 [rank_bm25=5]  rrf: 0.0312)
+               matched: [zapis(1)]
+       #6 chunk_id=5  (cosine: 0.6647 [rank_cos=7]  bm25: 4.6496 [rank_bm25=4]  rrf: 0.0310)
+               matched: [haslo(1), password(1), zapis(1)]
+       #7 chunk_id=2  (cosine: 0.6576 [rank_cos=10]  bm25: 4.6849 [rank_bm25=3]  rrf: 0.0306)
+               matched: [haslo(1), password(1), zapis(1)]
+       #8 chunk_id=16  (cosine: 0.6136 [rank_cos=17]  bm25: 0.9107 [rank_bm25=8]  rrf: 0.0281)
+               matched: [zapis(1)]
+       #9 chunk_id=11  (cosine: 0.6774 [rank_cos=4]  bm25: 0.0000 [rank_bm25=None]  rrf: 0.0159)
+               matched: []
+       #10 chunk_id=23  (cosine: 0.6623 [rank_cos=8]  bm25: 0.0000 [rank_bm25=None]  rrf: 0.0149)
+               matched: []
+  ✓ [1] "moc cieplna thermal power rejestr sontex supercal 539"
+         tokens: [moc, cieplna, thermal, power, rejestr, sontex, supercal, 539]
+     ► #1 chunk_id=8  (cosine: 0.6132 [rank_cos=1]  bm25: 15.7075 [rank_bm25=1]  rrf: 0.0333)
+               matched: [539(1), cieplna(3), moc(2), power(2), rejestr(1), sontex(1), supercal(1), thermal(1)]
+       #2 chunk_id=9  (cosine: 0.6033 [rank_cos=2]  bm25: 10.3428 [rank_bm25=2]  rrf: 0.0328)
+               matched: [539(1), rejestr(1), sontex(1), supercal(1)]
+       #3 chunk_id=17  (cosine: 0.5920 [rank_cos=3]  bm25: 1.6726 [rank_bm25=9]  rrf: 0.0308)
+               matched: [moc(2), power(2), rejestr(1)]
+       #4 chunk_id=6  (cosine: 0.5479 [rank_cos=10]  bm25: 3.8984 [rank_bm25=3]  rrf: 0.0306)
+               matched: [cieplna(2), moc(3), power(3), rejestr(1)]
+       #5 chunk_id=0  (cosine: 0.5677 [rank_cos=7]  bm25: 1.6915 [rank_bm25=8]  rrf: 0.0301)
+               matched: [moc(12), power(16), rejestr(1)]
+       #6 chunk_id=7  (cosine: 0.5792 [rank_cos=4]  bm25: 0.7394 [rank_bm25=18]  rrf: 0.0289)
+               matched: [rejestr(1)]
+       #7 chunk_id=23  (cosine: 0.5304 [rank_cos=16]  bm25: 1.6174 [rank_bm25=10]  rrf: 0.0278)
+               matched: [moc(2), power(2), rejestr(1)]
+       #8 chunk_id=26  (cosine: 0.5422 [rank_cos=13]  bm25: 1.5290 [rank_bm25=13]  rrf: 0.0278)
+               matched: [power(3), rejestr(1)]
+       #9 chunk_id=15  (cosine: 0.5765 [rank_cos=5]  bm25: 0.6727 [rank_bm25=24]  rrf: 0.0277)
+               matched: [rejestr(1)]
+       #10 chunk_id=14  (cosine: 0.4946 [rank_cos=24]  bm25: 2.9235 [rank_bm25=5]  rrf: 0.0277)
+               matched: [cieplna(2), moc(1), power(1), rejestr(1)]
+  ✓ [2] "temperatura zasilania powrotu supercal-539 odczyt"
+         tokens: [temperatura, zasilania, powrotu, supercal, 539, supercal-539, supercal539, odczyt]
+       #1 chunk_id=9  (cosine: 0.6786 [rank_cos=2]  bm25: 12.7916 [rank_bm25=1]  rrf: 0.0331)
+               matched: [539(1), supercal(1), supercal-539(1), supercal539(1)]
+     ► #2 chunk_id=8  (cosine: 0.6875 [rank_cos=1]  bm25: 11.0015 [rank_bm25=2]  rrf: 0.0331)
+               matched: [539(1), supercal(1), supercal-539(1), supercal539(1), temperatura(2)]
+       #3 chunk_id=6  (cosine: 0.6378 [rank_cos=6]  bm25: 2.7272 [rank_bm25=3]  rrf: 0.0315)
+               matched: [powrotu(1), temperatura(2), zasilania(1)]
+       #4 chunk_id=15  (cosine: 0.6660 [rank_cos=3]  bm25: 0.9423 [rank_bm25=8]  rrf: 0.0311)
+               matched: [temperatura(2), zasilania(1)]
+       #5 chunk_id=17  (cosine: 0.6494 [rank_cos=5]  bm25: 0.9300 [rank_bm25=9]  rrf: 0.0303)
+               matched: [temperatura(2), zasilania(1)]
+       #6 chunk_id=16  (cosine: 0.5836 [rank_cos=17]  bm25: 2.5155 [rank_bm25=5]  rrf: 0.0288)
+               matched: [powrotu(1), temperatura(5), zasilania(2)]
+       #7 chunk_id=13  (cosine: 0.6270 [rank_cos=9]  bm25: 0.0914 [rank_bm25=13]  rrf: 0.0286)
+               matched: [temperatura(1)]
+       #8 chunk_id=11  (cosine: 0.6014 [rank_cos=12]  bm25: 0.8793 [rank_bm25=10]  rrf: 0.0286)
+               matched: [zasilania(1)]
+       #9 chunk_id=20  (cosine: 0.5786 [rank_cos=18]  bm25: 1.0211 [rank_bm25=7]  rrf: 0.0281)
+               matched: [temperatura(2), zasilania(2)]
+       #10 chunk_id=10  (cosine: 0.5696 [rank_cos=23]  bm25: 2.5800 [rank_bm25=4]  rrf: 0.0281)
+               matched: [powrotu(1), temperatura(10), zasilania(2)]
+  ✓ [1] "energia cieplna heat energy adres 001c supercal539"
+         tokens: [energia, cieplna, heat, energy, adres, 001c, 001, supercal539, supercal, 539]
+     ► #1 chunk_id=8  (cosine: 0.5614 [rank_cos=4]  bm25: 16.0612 [rank_bm25=1]  rrf: 0.0325)
+               matched: [001(3), 001c(1), 539(1), adres(2), cieplna(3), energia(3), energy(3), heat(2), supercal(1), supercal539(1)]
+       #2 chunk_id=9  (cosine: 0.5573 [rank_cos=7]  bm25: 10.5598 [rank_bm25=2]  rrf: 0.0315)
+               matched: [539(1), adres(2), supercal(1), supercal539(1)]
+       #3 chunk_id=4  (cosine: 0.5707 [rank_cos=1]  bm25: 3.1770 [rank_bm25=11]  rrf: 0.0310)
+               matched: [adres(1), energia(9), energy(9)]
+       #4 chunk_id=0  (cosine: 0.5581 [rank_cos=6]  bm25: 3.6011 [rank_bm25=7]  rrf: 0.0305)
+               matched: [001(3), 001c(1), adres(2), energia(13), energy(13)]
+       #5 chunk_id=6  (cosine: 0.5529 [rank_cos=10]  bm25: 6.4123 [rank_bm25=5]  rrf: 0.0301)
+               matched: [adres(2), cieplna(2), energia(4), energy(4), heat(2)]
+       #6 chunk_id=15  (cosine: 0.5648 [rank_cos=3]  bm25: 2.2740 [rank_bm25=17]  rrf: 0.0293)
+               matched: [adres(2), heat(2)]
+       #7 chunk_id=7  (cosine: 0.5707 [rank_cos=2]  bm25: 1.6974 [rank_bm25=20]  rrf: 0.0291)
+               matched: [adres(2), energy(1)]
+       #8 chunk_id=14  (cosine: 0.4987 [rank_cos=22]  bm25: 6.5963 [rank_bm25=4]  rrf: 0.0282)
+               matched: [001(4), 001c(1), adres(2), cieplna(2), energia(3), energy(3), heat(3)]
+       #9 chunk_id=12  (cosine: 0.4823 [rank_cos=27]  bm25: 6.6519 [rank_bm25=3]  rrf: 0.0278)
+               matched: [001(3), 001c(1), adres(2), cieplna(2), energia(6), energy(4), heat(2)]
+       #10 chunk_id=16  (cosine: 0.5046 [rank_cos=19]  bm25: 3.4711 [rank_bm25=8]  rrf: 0.0277)
+               matched: [001(7), 001c(1), adres(2), energia(3), energy(3)]
+  ✓ [1] "przeplyw chwilowy flow rate rejestr sontex 539"
+         tokens: [przeplyw, chwilowy, flow, rate, rejestr, sontex, 539]
+     ► #1 chunk_id=8  (cosine: 0.7345 [rank_cos=1]  bm25: 13.5015 [rank_bm25=1]  rrf: 0.0333)
+               matched: [539(1), chwilowy(1), flow(4), przeplyw(3), rate(4), rejestr(1), sontex(1)]
+       #2 chunk_id=9  (cosine: 0.6938 [rank_cos=2]  bm25: 8.1110 [rank_bm25=2]  rrf: 0.0328)
+               matched: [539(1), rate(2), rejestr(1), sontex(1)]
+       #3 chunk_id=19  (cosine: 0.6558 [rank_cos=3]  bm25: 2.5485 [rank_bm25=6]  rrf: 0.0315)
+               matched: [flow(1), rate(1), rejestr(1)]
+       #4 chunk_id=6  (cosine: 0.6549 [rank_cos=5]  bm25: 5.8072 [rank_bm25=4]  rrf: 0.0315)
+               matched: [chwilowy(1), flow(1), przeplyw(1), rate(2), rejestr(1)]
+       #5 chunk_id=7  (cosine: 0.6526 [rank_cos=6]  bm25: 1.6974 [rank_bm25=8]  rrf: 0.0303)
+               matched: [rate(2), rejestr(1)]
+       #6 chunk_id=18  (cosine: 0.6263 [rank_cos=12]  bm25: 6.2709 [rank_bm25=3]  rrf: 0.0302)
+               matched: [chwilowy(1), flow(3), przeplyw(2), rate(1), rejestr(1)]
+       #7 chunk_id=20  (cosine: 0.6288 [rank_cos=10]  bm25: 4.2080 [rank_bm25=5]  rrf: 0.0301)
+               matched: [chwilowy(1), flow(1), przeplyw(1), rejestr(1)]
+       #8 chunk_id=21  (cosine: 0.6552 [rank_cos=4]  bm25: 1.3833 [rank_bm25=14]  rrf: 0.0296)
+               matched: [rate(1), rejestr(1)]
+       #9 chunk_id=2  (cosine: 0.6416 [rank_cos=7]  bm25: 1.2732 [rank_bm25=17]  rrf: 0.0283)
+               matched: [rate(2), rejestr(1)]
+       #10 chunk_id=17  (cosine: 0.6263 [rank_cos=11]  bm25: 1.3271 [rank_bm25=16]  rrf: 0.0276)
+               matched: [rate(1), rejestr(1)]
+  ✓ [1] "alarm status slowo alarmowe supercal 539 hex"
+         tokens: [alarm, status, slowo, alarmowe, supercal, 539, hex]
+     ► #1 chunk_id=8  (cosine: 0.6103 [rank_cos=1]  bm25: 11.9595 [rank_bm25=1]  rrf: 0.0333)
+               matched: [539(1), alarm(1), alarmowe(1), hex(1), slowo(1), status(1), supercal(1)]
+       #2 chunk_id=9  (cosine: 0.5913 [rank_cos=2]  bm25: 8.7921 [rank_bm25=2]  rrf: 0.0328)
+               matched: [539(1), alarm(1), hex(1), supercal(1)]
+       #3 chunk_id=19  (cosine: 0.5683 [rank_cos=3]  bm25: 2.1185 [rank_bm25=6]  rrf: 0.0315)
+               matched: [alarm(1), hex(1)]
+       #4 chunk_id=11  (cosine: 0.5487 [rank_cos=7]  bm25: 2.2960 [rank_bm25=5]  rrf: 0.0308)
+               matched: [alarm(1), hex(1)]
+       #5 chunk_id=7  (cosine: 0.5532 [rank_cos=5]  bm25: 0.7394 [rank_bm25=13]  rrf: 0.0295)
+               matched: [hex(1)]
+       #6 chunk_id=21  (cosine: 0.5603 [rank_cos=4]  bm25: 0.6917 [rank_bm25=17]  rrf: 0.0290)
+               matched: [hex(1)]
+       #7 chunk_id=10  (cosine: 0.4875 [rank_cos=18]  bm25: 2.9922 [rank_bm25=4]  rrf: 0.0289)
+               matched: [alarm(1), hex(1), slowo(1), status(1)]
+       #8 chunk_id=18  (cosine: 0.4836 [rank_cos=21]  bm25: 6.0564 [rank_bm25=3]  rrf: 0.0286)
+               matched: [alarm(1), alarmowe(1), hex(1), slowo(3), status(1)]
+       #9 chunk_id=25  (cosine: 0.5326 [rank_cos=8]  bm25: 0.7347 [rank_bm25=14]  rrf: 0.0286)
+               matched: [hex(1)]
+       #10 chunk_id=0  (cosine: 0.5236 [rank_cos=12]  bm25: 1.8396 [rank_bm25=10]  rrf: 0.0286)
+               matched: [hex(1), slowo(1), status(3)]
+  ✓ [1] "minimalne soc baterii battery min soc sofar hyd6000-es zapis"
+         tokens: [minimalne, soc, baterii, battery, min, soc, sofar, hyd6000, hyd, 6000, es, hyd6000-es, hyd6000es, zapis]
+     ► #1 chunk_id=23  (cosine: 0.5354 [rank_cos=5]  bm25: 36.2025 [rank_bm25=1]  rrf: 0.0323)
+               matched: [6000(4), baterii(3), battery(2), es(1), hyd(1), hyd6000(1), hyd6000-es(1), hyd6000es(1), min(1), minimalne(1), soc(4), sofar(1)]
+       #2 chunk_id=15  (cosine: 0.5464 [rank_cos=2]  bm25: 1.8749 [rank_bm25=5]  rrf: 0.0320)
+               matched: [min(1), zapis(1)]
+       #3 chunk_id=26  (cosine: 0.5154 [rank_cos=8]  bm25: 14.0843 [rank_bm25=3]  rrf: 0.0311)
+               matched: [baterii(1), battery(2), min(1), minimalne(1), soc(6)]
+       #4 chunk_id=17  (cosine: 0.5526 [rank_cos=1]  bm25: 0.8375 [rank_bm25=13]  rrf: 0.0306)
+               matched: [min(2)]
+       #5 chunk_id=9  (cosine: 0.5351 [rank_cos=6]  bm25: 1.3846 [rank_bm25=7]  rrf: 0.0305)
+               matched: [zapis(1)]
+       #6 chunk_id=19  (cosine: 0.5413 [rank_cos=3]  bm25: 0.9451 [rank_bm25=11]  rrf: 0.0304)
+               matched: [min(3)]
+       #7 chunk_id=2  (cosine: 0.5150 [rank_cos=9]  bm25: 1.4506 [rank_bm25=6]  rrf: 0.0301)
+               matched: [min(1), zapis(1)]
+       #8 chunk_id=7  (cosine: 0.5326 [rank_cos=7]  bm25: 1.3667 [rank_bm25=8]  rrf: 0.0301)
+               matched: [zapis(1)]
+       #9 chunk_id=22  (cosine: 0.4543 [rank_cos=17]  bm25: 19.0679 [rank_bm25=2]  rrf: 0.0296)
+               matched: [6000(1), baterii(7), battery(9), es(1), hyd(1), hyd6000(1), hyd6000-es(1), hyd6000es(1), soc(1), sofar(1)]
+       #10 chunk_id=21  (cosine: 0.5389 [rank_cos=4]  bm25: 0.6494 [rank_bm25=15]  rrf: 0.0294)
+               matched: [min(1)]
+  ✓ [2] "limit eksportu grid export limit hyd6000es rejestr 0063"
+         tokens: [limit, eksportu, grid, export, limit, hyd6000es, hyd, 6000, es, rejestr, 0063]
+       #1 chunk_id=26  (cosine: 0.5783 [rank_cos=1]  bm25: 12.8632 [rank_bm25=2]  rrf: 0.0331)
+               matched: [eksportu(1), export(1), grid(1), limit(9), rejestr(1)]
+     ► #2 chunk_id=23  (cosine: 0.5418 [rank_cos=6]  bm25: 26.0260 [rank_bm25=1]  rrf: 0.0321)
+               matched: [0063(1), 6000(4), eksportu(1), es(1), export(1), grid(1), hyd(1), hyd6000es(1), limit(2), rejestr(1)]
+       #3 chunk_id=19  (cosine: 0.5532 [rank_cos=4]  bm25: 6.0751 [rank_bm25=5]  rrf: 0.0315)
+               matched: [limit(2), rejestr(1)]
+       #4 chunk_id=21  (cosine: 0.5445 [rank_cos=5]  bm25: 6.2638 [rank_bm25=4]  rrf: 0.0315)
+               matched: [limit(2), rejestr(1)]
+       #5 chunk_id=4  (cosine: 0.5614 [rank_cos=2]  bm25: 2.9983 [rank_bm25=8]  rrf: 0.0313)
+               matched: [export(3), rejestr(1)]
+       #6 chunk_id=0  (cosine: 0.5569 [rank_cos=3]  bm25: 1.2027 [rank_bm25=12]  rrf: 0.0302)
+               matched: [grid(1), rejestr(1)]
+       #7 chunk_id=7  (cosine: 0.5395 [rank_cos=7]  bm25: 2.9860 [rank_bm25=9]  rrf: 0.0299)
+               matched: [0063(1), rejestr(1)]
+       #8 chunk_id=24  (cosine: 0.5317 [rank_cos=10]  bm25: 3.4199 [rank_bm25=7]  rrf: 0.0296)
+               matched: [0063(1), grid(7), rejestr(1)]
+       #9 chunk_id=6  (cosine: 0.5378 [rank_cos=8]  bm25: 2.4780 [rank_bm25=10]  rrf: 0.0294)
+               matched: [0063(1), rejestr(1)]
+       #10 chunk_id=22  (cosine: 0.4911 [rank_cos=22]  bm25: 10.2268 [rank_bm25=3]  rrf: 0.0285)
+               matched: [6000(1), es(1), export(2), grid(13), hyd(1), hyd6000es(1), rejestr(1)]
+  ✓ [1] "tryb pracy operating mode zapis sofar hyd6000 rejestr 0060"
+         tokens: [tryb, pracy, operating, mode, zapis, sofar, hyd6000, hyd, 6000, rejestr, 0060]
+     ► #1 chunk_id=23  (cosine: 0.6363 [rank_cos=3]  bm25: 18.5805 [rank_bm25=1]  rrf: 0.0328)
+               matched: [0060(1), 6000(4), hyd(1), hyd6000(1), mode(1), operating(1), rejestr(1), sofar(1), tryb(1)]
+       #2 chunk_id=15  (cosine: 0.6356 [rank_cos=4]  bm25: 2.6769 [rank_bm25=8]  rrf: 0.0308)
+               matched: [mode(1), operating(1), rejestr(1), zapis(1)]
+       #3 chunk_id=7  (cosine: 0.6348 [rank_cos=5]  bm25: 2.8455 [rank_bm25=7]  rrf: 0.0308)
+               matched: [mode(1), rejestr(1), zapis(1)]
+       #4 chunk_id=13  (cosine: 0.6197 [rank_cos=7]  bm25: 2.9027 [rank_bm25=6]  rrf: 0.0305)
+               matched: [mode(2), rejestr(1), zapis(1)]
+       #5 chunk_id=19  (cosine: 0.6497 [rank_cos=1]  bm25: 1.6400 [rank_bm25=15]  rrf: 0.0302)
+               matched: [mode(2), operating(1), rejestr(1)]
+       #6 chunk_id=2  (cosine: 0.5939 [rank_cos=14]  bm25: 4.5853 [rank_bm25=3]  rrf: 0.0298)
+               matched: [mode(2), pracy(1), rejestr(1), tryb(1), zapis(1)]
+       #7 chunk_id=6  (cosine: 0.5955 [rank_cos=13]  bm25: 3.4653 [rank_bm25=5]  rrf: 0.0295)
+               matched: [0060(1), operating(1), pracy(1), rejestr(1)]
+       #8 chunk_id=9  (cosine: 0.6172 [rank_cos=8]  bm25: 2.1337 [rank_bm25=10]  rrf: 0.0294)
+               matched: [rejestr(1), zapis(1)]
+       #9 chunk_id=16  (cosine: 0.6155 [rank_cos=9]  bm25: 2.6402 [rank_bm25=9]  rrf: 0.0294)
+               matched: [mode(1), operating(1), pracy(2), rejestr(1), zapis(1)]
+       #10 chunk_id=24  (cosine: 0.5700 [rank_cos=15]  bm25: 3.5616 [rank_bm25=4]  rrf: 0.0294)
+               matched: [0060(1), mode(2), pracy(1), rejestr(1), tryb(1)]
+  ✓ [6] "baud rate modbus adres 0068 sofar hyd6000-es konfiguracja"
+         tokens: [baud, rate, modbus, adres, 0068, sofar, hyd6000, hyd, 6000, es, hyd6000-es, hyd6000es, konfiguracja]
+       #1 chunk_id=7  (cosine: 0.6013 [rank_cos=3]  bm25: 3.3949 [rank_bm25=4]  rrf: 0.0320)
+               matched: [adres(2), baud(1), modbus(1), rate(2)]
+       #2 chunk_id=17  (cosine: 0.6100 [rank_cos=1]  bm25: 3.1109 [rank_bm25=9]  rrf: 0.0314)
+               matched: [adres(2), baud(1), modbus(2), rate(1)]
+       #3 chunk_id=15  (cosine: 0.6099 [rank_cos=2]  bm25: 3.1456 [rank_bm25=8]  rrf: 0.0313)
+               matched: [adres(2), baud(1), modbus(2), rate(1)]
+       #4 chunk_id=9  (cosine: 0.5820 [rank_cos=7]  bm25: 3.4305 [rank_bm25=3]  rrf: 0.0313)
+               matched: [adres(2), baud(1), modbus(1), rate(2)]
+       #5 chunk_id=21  (cosine: 0.5924 [rank_cos=5]  bm25: 3.2173 [rank_bm25=6]  rrf: 0.0310)
+               matched: [adres(2), baud(1), modbus(2), rate(1)]
+     ► #6 chunk_id=23  (cosine: 0.5703 [rank_cos=11]  bm25: 27.1882 [rank_bm25=1]  rrf: 0.0310)
+               matched: [0068(1), 6000(4), adres(2), baud(1), es(1), hyd(1), hyd6000(1), hyd6000-es(1), hyd6000es(1), modbus(2), rate(1), sofar(1)]
+       #7 chunk_id=19  (cosine: 0.5945 [rank_cos=4]  bm25: 3.1060 [rank_bm25=10]  rrf: 0.0304)
+               matched: [adres(2), baud(1), modbus(2), rate(1)]
+       #8 chunk_id=22  (cosine: 0.5478 [rank_cos=18]  bm25: 11.9015 [rank_bm25=2]  rrf: 0.0294)
+               matched: [6000(1), adres(2), es(1), hyd(1), hyd6000(1), hyd6000-es(1), hyd6000es(1), modbus(2), sofar(1)]
+       #9 chunk_id=5  (cosine: 0.5868 [rank_cos=6]  bm25: 2.2982 [rank_bm25=15]  rrf: 0.0289)
+               matched: [adres(2), baud(1), modbus(1), rate(1)]
+       #10 chunk_id=2  (cosine: 0.5766 [rank_cos=8]  bm25: 2.5465 [rank_bm25=14]  rrf: 0.0286)
+               matched: [adres(2), baud(1), modbus(1), rate(2)]
+  ✓ [1] "reset bledow fault reset hyd6000es zapis 0x00FF"
+         tokens: [reset, bledow, fault, reset, hyd6000es, hyd, 6000, es, zapis, 0x00ff, 00, ff]
+     ► #1 chunk_id=23  (cosine: 0.5450 [rank_cos=2]  bm25: 25.2296 [rank_bm25=1]  rrf: 0.0331)
+               matched: [00(1), 0x00ff(1), 6000(4), bledow(1), es(1), fault(1), ff(1), hyd(1), hyd6000es(1), reset(1)]
+       #2 chunk_id=15  (cosine: 0.5399 [rank_cos=4]  bm25: 2.8019 [rank_bm25=4]  rrf: 0.0317)
+               matched: [fault(1), reset(1), zapis(1)]
+       #3 chunk_id=7  (cosine: 0.5788 [rank_cos=1]  bm25: 1.9514 [rank_bm25=9]  rrf: 0.0314)
+               matched: [reset(1), zapis(1)]
+       #4 chunk_id=26  (cosine: 0.5287 [rank_cos=8]  bm25: 5.3707 [rank_bm25=3]  rrf: 0.0311)
+               matched: [00(1), bledow(1), fault(1), reset(1)]
+       #5 chunk_id=17  (cosine: 0.5363 [rank_cos=5]  bm25: 2.5150 [rank_bm25=7]  rrf: 0.0308)
+               matched: [00(1), reset(3)]
+       #6 chunk_id=9  (cosine: 0.5357 [rank_cos=6]  bm25: 2.1486 [rank_bm25=8]  rrf: 0.0303)
+               matched: [reset(2), zapis(1)]
+       #7 chunk_id=5  (cosine: 0.5162 [rank_cos=10]  bm25: 2.7006 [rank_bm25=6]  rrf: 0.0299)
+               matched: [00(1), reset(1), zapis(1)]
+       #8 chunk_id=13  (cosine: 0.5336 [rank_cos=7]  bm25: 1.8365 [rank_bm25=10]  rrf: 0.0296)
+               matched: [reset(1), zapis(1)]
+       #9 chunk_id=19  (cosine: 0.5403 [rank_cos=3]  bm25: 0.5237 [rank_bm25=17]  rrf: 0.0293)
+               matched: [reset(1)]
+       #10 chunk_id=22  (cosine: 0.4462 [rank_cos=20]  bm25: 7.2281 [rank_bm25=2]  rrf: 0.0291)
+               matched: [6000(1), es(1), fault(3), hyd(1), hyd6000es(1)]
+  ✓ [5] "energia bierna taryfa t1 t2 orwe520 adres hex"
+         tokens: [energia, bierna, taryfa, t1, t2, orwe520, orwe, 520, adres, hex]
+       #1 chunk_id=1  (cosine: 0.6312 [rank_cos=2]  bm25: 20.1702 [rank_bm25=1]  rrf: 0.0331)
+               matched: [520(1), adres(1), bierna(15), energia(27), hex(1), orwe520(1), t1(10), t2(10), taryfa(20)]
+       #2 chunk_id=4  (cosine: 0.6532 [rank_cos=1]  bm25: 5.3654 [rank_bm25=5]  rrf: 0.0323)
+               matched: [adres(1), bierna(9), energia(9), hex(1)]
+       #3 chunk_id=2  (cosine: 0.6287 [rank_cos=4]  bm25: 11.9629 [rank_bm25=2]  rrf: 0.0323)
+               matched: [520(1), adres(2), hex(1), orwe520(1), t1(2), t2(2), taryfa(1)]
+       #4 chunk_id=6  (cosine: 0.5982 [rank_cos=6]  bm25: 9.4615 [rank_bm25=3]  rrf: 0.0315)
+               matched: [adres(2), energia(4), hex(1), t1(1), t2(1), taryfa(2)]
+     ► #5 chunk_id=0  (cosine: 0.6015 [rank_cos=5]  bm25: 6.7498 [rank_bm25=4]  rrf: 0.0315)
+               matched: [520(1), adres(2), bierna(5), energia(13), hex(1), orwe520(1)]
+       #6 chunk_id=7  (cosine: 0.6292 [rank_cos=3]  bm25: 3.9440 [rank_bm25=7]  rrf: 0.0313)
+               matched: [adres(2), hex(1), taryfa(1)]
+       #7 chunk_id=5  (cosine: 0.5728 [rank_cos=15]  bm25: 3.3888 [rank_bm25=8]  rrf: 0.0284)
+               matched: [adres(2), bierna(4), hex(1)]
+       #8 chunk_id=8  (cosine: 0.5826 [rank_cos=12]  bm25: 2.4930 [rank_bm25=11]  rrf: 0.0284)
+               matched: [adres(2), energia(3), hex(1)]
+       #9 chunk_id=3  (cosine: 0.5403 [rank_cos=21]  bm25: 4.1046 [rank_bm25=6]  rrf: 0.0279)
+               matched: [adres(1), bierna(7), energia(15), hex(1)]
+       #10 chunk_id=9  (cosine: 0.5947 [rank_cos=8]  bm25: 1.7152 [rank_bm25=19]  rrf: 0.0277)
+               matched: [adres(2), hex(1)]
+  ✓ [3] "rejestr taryfa t4 kvarh 520"
+         tokens: [rejestr, taryfa, t4, kvarh, 520]
+       #1 chunk_id=1  (cosine: 0.6792 [rank_cos=1]  bm25: 14.4684 [rank_bm25=1]  rrf: 0.0333)
+               matched: [520(1), kvarh(15), rejestr(1), t4(10), taryfa(20)]
+       #2 chunk_id=2  (cosine: 0.6254 [rank_cos=2]  bm25: 7.1768 [rank_bm25=2]  rrf: 0.0328)
+               matched: [520(1), rejestr(1), t4(2), taryfa(1)]
+     ► #3 chunk_id=0  (cosine: 0.6180 [rank_cos=3]  bm25: 2.8631 [rank_bm25=6]  rrf: 0.0315)
+               matched: [520(1), kvarh(1), rejestr(1)]
+       #4 chunk_id=7  (cosine: 0.5802 [rank_cos=4]  bm25: 2.9860 [rank_bm25=5]  rrf: 0.0315)
+               matched: [rejestr(1), taryfa(1)]
+       #5 chunk_id=9  (cosine: 0.5716 [rank_cos=6]  bm25: 0.7491 [rank_bm25=8]  rrf: 0.0303)
+               matched: [rejestr(1)]
+       #6 chunk_id=6  (cosine: 0.5572 [rank_cos=11]  bm25: 3.1831 [rank_bm25=4]  rrf: 0.0302)
+               matched: [rejestr(1), taryfa(2)]
+       #7 chunk_id=15  (cosine: 0.5740 [rank_cos=5]  bm25: 0.6727 [rank_bm25=13]  rrf: 0.0295)
+               matched: [rejestr(1)]
+       #8 chunk_id=4  (cosine: 0.5258 [rank_cos=16]  bm25: 4.4584 [rank_bm25=3]  rrf: 0.0295)
+               matched: [kvarh(9), rejestr(1)]
+       #9 chunk_id=13  (cosine: 0.5653 [rank_cos=8]  bm25: 0.6959 [rank_bm25=11]  rrf: 0.0292)
+               matched: [rejestr(1)]
+       #10 chunk_id=21  (cosine: 0.5614 [rank_cos=9]  bm25: 0.6917 [rank_bm25=12]  rrf: 0.0288)
+               matched: [rejestr(1)]
+  ✓ [1] "forward reverse reactive energy rejestr or-we-520"
+         tokens: [forward, reverse, reactive, energy, rejestr, or, we, 520, or-we-520, orwe520]
+     ► #1 chunk_id=0  (cosine: 0.5297 [rank_cos=1]  bm25: 17.5627 [rank_bm25=2]  rrf: 0.0331)
+               matched: [520(1), energy(13), forward(4), or(1), or-we-520(1), orwe520(1), reactive(5), rejestr(1), reverse(4), we(1)]
+       #2 chunk_id=2  (cosine: 0.5206 [rank_cos=2]  bm25: 12.0108 [rank_bm25=3]  rrf: 0.0325)
+               matched: [520(1), energy(1), or(2), or-we-520(1), orwe520(1), rejestr(1), we(2)]
+       #3 chunk_id=1  (cosine: 0.4929 [rank_cos=5]  bm25: 22.6403 [rank_bm25=1]  rrf: 0.0323)
+               matched: [520(1), energy(27), forward(8), or(1), or-we-520(1), orwe520(1), reactive(15), rejestr(1), reverse(8), we(1)]
+       #4 chunk_id=4  (cosine: 0.4724 [rank_cos=10]  bm25: 5.1386 [rank_bm25=4]  rrf: 0.0304)
+               matched: [energy(9), reactive(9), rejestr(1)]
+       #5 chunk_id=7  (cosine: 0.5084 [rank_cos=4]  bm25: 1.4788 [rank_bm25=10]  rrf: 0.0304)
+               matched: [energy(1), rejestr(1)]
+       #6 chunk_id=6  (cosine: 0.4783 [rank_cos=7]  bm25: 1.6565 [rank_bm25=8]  rrf: 0.0301)
+               matched: [energy(4), rejestr(1)]
+       #7 chunk_id=25  (cosine: 0.4574 [rank_cos=15]  bm25: 1.6887 [rank_bm25=7]  rrf: 0.0287)
+               matched: [energy(2), rejestr(1)]
+       #8 chunk_id=21  (cosine: 0.5121 [rank_cos=3]  bm25: 0.6917 [rank_bm25=22]  rrf: 0.0285)
+               matched: [rejestr(1)]
+       #9 chunk_id=3  (cosine: 0.4023 [rank_cos=21]  bm25: 4.1130 [rank_bm25=5]  rrf: 0.0281)
+               matched: [energy(15), reactive(7), rejestr(1)]
+       #10 chunk_id=24  (cosine: 0.4067 [rank_cos=20]  bm25: 1.7297 [rank_bm25=6]  rrf: 0.0280)
+               matched: [energy(2), reactive(1), rejestr(1)]
+  ✓ [2] "energia eksport L1 L2 L3 rejestr or-we-520"
+         tokens: [energia, eksport, l1, l2, l3, rejestr, or, we, 520, or-we-520, orwe520]
+       #1 chunk_id=1  (cosine: 0.6474 [rank_cos=2]  bm25: 19.2972 [rank_bm25=1]  rrf: 0.0331)
+               matched: [520(1), eksport(7), energia(27), l1(6), l2(6), l3(6), or(1), or-we-520(1), orwe520(1), rejestr(1), we(1)]
+     ► #2 chunk_id=0  (cosine: 0.6764 [rank_cos=1]  bm25: 18.2130 [rank_bm25=2]  rrf: 0.0331)
+               matched: [520(1), eksport(5), energia(13), l1(22), l2(22), l3(22), or(1), or-we-520(1), orwe520(1), rejestr(1), we(1)]
+       #3 chunk_id=2  (cosine: 0.6466 [rank_cos=3]  bm25: 11.4903 [rank_bm25=5]  rrf: 0.0318)
+               matched: [520(1), or(2), or-we-520(1), orwe520(1), rejestr(1), we(2)]
+       #4 chunk_id=4  (cosine: 0.6138 [rank_cos=5]  bm25: 12.0129 [rank_bm25=3]  rrf: 0.0318)
+               matched: [eksport(3), energia(9), l1(6), l2(6), l3(6), rejestr(1)]
+       #5 chunk_id=6  (cosine: 0.5949 [rank_cos=6]  bm25: 1.6565 [rank_bm25=10]  rrf: 0.0299)
+               matched: [energia(4), rejestr(1)]
+       #6 chunk_id=5  (cosine: 0.5861 [rank_cos=10]  bm25: 2.1628 [rank_bm25=8]  rrf: 0.0294)
+               matched: [eksport(2), rejestr(1)]
+       #7 chunk_id=7  (cosine: 0.6199 [rank_cos=4]  bm25: 0.7394 [rank_bm25=19]  rrf: 0.0287)
+               matched: [rejestr(1)]
+       #8 chunk_id=3  (cosine: 0.5349 [rank_cos=19]  bm25: 11.6128 [rank_bm25=4]  rrf: 0.0287)
+               matched: [eksport(5), energia(15), l1(24), l2(24), l3(24), rejestr(1)]
+       #9 chunk_id=24  (cosine: 0.5268 [rank_cos=20]  bm25: 8.8816 [rank_bm25=6]  rrf: 0.0280)
+               matched: [eksport(2), energia(6), l1(8), l2(8), l3(8), rejestr(1)]
+       #10 chunk_id=9  (cosine: 0.5891 [rank_cos=8]  bm25: 0.7491 [rank_bm25=18]  rrf: 0.0279)
+               matched: [rejestr(1)]
+  ✓ [2] "moc zapotrzebowania demand power taryfa or-we-520"
+         tokens: [moc, zapotrzebowania, demand, power, taryfa, or, we, 520, or-we-520, orwe520]
+       #1 chunk_id=2  (cosine: 0.7052 [rank_cos=1]  bm25: 16.9945 [rank_bm25=2]  rrf: 0.0331)
+               matched: [520(1), demand(1), or(2), or-we-520(1), orwe520(1), taryfa(1), we(2), zapotrzebowania(1)]
+     ► #2 chunk_id=0  (cosine: 0.6637 [rank_cos=3]  bm25: 8.0395 [rank_bm25=3]  rrf: 0.0323)
+               matched: [520(1), moc(12), or(1), or-we-520(1), orwe520(1), power(16), we(1)]
+       #3 chunk_id=7  (cosine: 0.6659 [rank_cos=2]  bm25: 2.2466 [rank_bm25=5]  rrf: 0.0320)
+               matched: [taryfa(1)]
+       #4 chunk_id=6  (cosine: 0.6547 [rank_cos=4]  bm25: 3.6643 [rank_bm25=4]  rrf: 0.0317)
+               matched: [moc(3), power(3), taryfa(2)]
+       #5 chunk_id=1  (cosine: 0.6376 [rank_cos=8]  bm25: 21.0811 [rank_bm25=1]  rrf: 0.0316)
+               matched: [520(1), demand(4), moc(4), or(1), or-we-520(1), orwe520(1), power(4), taryfa(20), we(1), zapotrzebowania(4)]
+       #6 chunk_id=17  (cosine: 0.6390 [rank_cos=7]  bm25: 1.0091 [rank_bm25=9]  rrf: 0.0299)
+               matched: [moc(2), power(2)]
+       #7 chunk_id=22  (cosine: 0.5968 [rank_cos=17]  bm25: 1.2496 [rank_bm25=7]  rrf: 0.0283)
+               matched: [moc(12), power(12)]
+       #8 chunk_id=23  (cosine: 0.6172 [rank_cos=13]  bm25: 0.9810 [rank_bm25=11]  rrf: 0.0282)
+               matched: [moc(2), power(2)]
+       #9 chunk_id=8  (cosine: 0.5985 [rank_cos=16]  bm25: 0.9822 [rank_bm25=10]  rrf: 0.0278)
+               matched: [moc(2), power(2)]
+       #10 chunk_id=24  (cosine: 0.5817 [rank_cos=19]  bm25: 1.2240 [rank_bm25=8]  rrf: 0.0277)
+               matched: [moc(12), power(12)]
+  ✓ [5] "napięcie L1 L2 L3 adres 0000 sdm-630 eastron"
+         tokens: [napiecie, l1, l2, l3, adres, 0000, sdm, 630, sdm-630, sdm630, eastron]
+       #1 chunk_id=0  (cosine: 0.5138 [rank_cos=5]  bm25: 10.8379 [rank_bm25=3]  rrf: 0.0318)
+               matched: [0000(1), adres(2), l1(22), l2(22), l3(22), napiecie(6)]
+       #2 chunk_id=9  (cosine: 0.5310 [rank_cos=2]  bm25: 0.9661 [rank_bm25=11]  rrf: 0.0307)
+               matched: [adres(2)]
+       #3 chunk_id=7  (cosine: 0.5464 [rank_cos=1]  bm25: 0.9580 [rank_bm25=13]  rrf: 0.0306)
+               matched: [adres(2)]
+       #4 chunk_id=4  (cosine: 0.4865 [rank_cos=14]  bm25: 18.6308 [rank_bm25=1]  rrf: 0.0304)
+               matched: [630(1), adres(1), eastron(1), l1(6), l2(6), l3(6), sdm(1), sdm630(1)]
+     ► #5 chunk_id=3  (cosine: 0.4613 [rank_cos=19]  bm25: 16.3241 [rank_bm25=2]  rrf: 0.0292)
+               matched: [0000(1), 630(1), adres(1), eastron(1), l1(24), l2(24), l3(24), napiecie(8), sdm(1), sdm630(1)]
+       #6 chunk_id=8  (cosine: 0.5021 [rank_cos=9]  bm25: 1.1203 [rank_bm25=10]  rrf: 0.0292)
+               matched: [0000(1), adres(2)]
+       #7 chunk_id=21  (cosine: 0.5262 [rank_cos=3]  bm25: 0.9170 [rank_bm25=19]  rrf: 0.0289)
+               matched: [adres(2)]
+       #8 chunk_id=1  (cosine: 0.4862 [rank_cos=15]  bm25: 7.2840 [rank_bm25=7]  rrf: 0.0287)
+               matched: [adres(1), l1(6), l2(6), l3(6)]
+       #9 chunk_id=24  (cosine: 0.4556 [rank_cos=21]  bm25: 9.4263 [rank_bm25=4]  rrf: 0.0284)
+               matched: [0000(1), adres(2), l1(8), l2(8), l3(8), napiecie(10)]
+       #10 chunk_id=5  (cosine: 0.4649 [rank_cos=18]  bm25: 8.1386 [rank_bm25=6]  rrf: 0.0284)
+               matched: [630(1), adres(2), eastron(1), sdm(1), sdm630(1)]
+  ✓ [2] "prąd fazowy L1 current rejestr 0006 sdm630"
+         tokens: [prad, fazowy, l1, current, rejestr, 0006, sdm630, sdm, 630]
+       #1 chunk_id=0  (cosine: 0.7019 [rank_cos=2]  bm25: 10.4392 [rank_bm25=3]  rrf: 0.0325)
+               matched: [0006(1), current(3), fazowy(3), l1(22), prad(3), rejestr(1)]
+     ► #2 chunk_id=3  (cosine: 0.6864 [rank_cos=7]  bm25: 16.4804 [rank_bm25=1]  rrf: 0.0318)
+               matched: [0006(1), 630(1), current(5), fazowy(8), l1(24), prad(5), rejestr(1), sdm(1), sdm630(1)]
+       #3 chunk_id=5  (cosine: 0.6919 [rank_cos=5]  bm25: 6.0590 [rank_bm25=4]  rrf: 0.0315)
+               matched: [630(1), rejestr(1), sdm(1), sdm630(1)]
+       #4 chunk_id=7  (cosine: 0.7196 [rank_cos=1]  bm25: 0.7394 [rank_bm25=12]  rrf: 0.0308)
+               matched: [rejestr(1)]
+       #5 chunk_id=9  (cosine: 0.6956 [rank_cos=4]  bm25: 0.7491 [rank_bm25=11]  rrf: 0.0302)
+               matched: [rejestr(1)]
+       #6 chunk_id=4  (cosine: 0.6597 [rank_cos=15]  bm25: 10.9085 [rank_bm25=2]  rrf: 0.0299)
+               matched: [630(1), l1(6), rejestr(1), sdm(1), sdm630(1)]
+       #7 chunk_id=24  (cosine: 0.6613 [rank_cos=14]  bm25: 5.9804 [rank_bm25=5]  rrf: 0.0293)
+               matched: [current(7), l1(8), prad(7), rejestr(1)]
+       #8 chunk_id=25  (cosine: 0.6903 [rank_cos=6]  bm25: 0.7347 [rank_bm25=13]  rrf: 0.0293)
+               matched: [rejestr(1)]
+       #9 chunk_id=11  (cosine: 0.6798 [rank_cos=8]  bm25: 0.7177 [rank_bm25=14]  rrf: 0.0286)
+               matched: [rejestr(1)]
+       #10 chunk_id=22  (cosine: 0.6582 [rank_cos=17]  bm25: 5.0159 [rank_bm25=6]  rrf: 0.0285)
+               matched: [current(3), l1(6), prad(3), rejestr(1)]
+  ✓ [6] "active power moc czynna rejestr 000C eastron sdm630"
+         tokens: [active, power, moc, czynna, rejestr, 000c, 000, eastron, sdm630, sdm, 630]
+       #1 chunk_id=5  (cosine: 0.6433 [rank_cos=2]  bm25: 7.9065 [rank_bm25=4]  rrf: 0.0323)
+               matched: [630(1), eastron(1), rejestr(1), sdm(1), sdm630(1)]
+       #2 chunk_id=0  (cosine: 0.6304 [rank_cos=4]  bm25: 10.7807 [rank_bm25=3]  rrf: 0.0320)
+               matched: [000(3), active(16), czynna(10), moc(12), power(16), rejestr(1)]
+       #3 chunk_id=24  (cosine: 0.6201 [rank_cos=8]  bm25: 5.8768 [rank_bm25=6]  rrf: 0.0303)
+               matched: [000(3), 000c(1), active(1), moc(12), power(12), rejestr(1)]
+       #4 chunk_id=17  (cosine: 0.6268 [rank_cos=5]  bm25: 1.6726 [rank_bm25=10]  rrf: 0.0301)
+               matched: [moc(2), power(2), rejestr(1)]
+       #5 chunk_id=4  (cosine: 0.6032 [rank_cos=17]  bm25: 10.8503 [rank_bm25=2]  rrf: 0.0296)
+               matched: [630(1), eastron(1), rejestr(1), sdm(1), sdm630(1)]
+     ► #6 chunk_id=3  (cosine: 0.5981 [rank_cos=20]  bm25: 17.8438 [rank_bm25=1]  rrf: 0.0293)
+               matched: [000(3), 000c(1), 630(1), active(15), czynna(10), eastron(1), moc(12), power(16), rejestr(1), sdm(1), sdm630(1)]
+       #7 chunk_id=23  (cosine: 0.6241 [rank_cos=7]  bm25: 1.6174 [rank_bm25=12]  rrf: 0.0292)
+               matched: [moc(2), power(2), rejestr(1)]
+       #8 chunk_id=7  (cosine: 0.6526 [rank_cos=1]  bm25: 0.7394 [rank_bm25=21]  rrf: 0.0292)
+               matched: [rejestr(1)]
+       #9 chunk_id=2  (cosine: 0.6179 [rank_cos=12]  bm25: 2.1017 [rank_bm25=8]  rrf: 0.0290)
+               matched: [000(1), rejestr(1)]
+       #10 chunk_id=25  (cosine: 0.6315 [rank_cos=3]  bm25: 0.7347 [rank_bm25=22]  rrf: 0.0285)
+               matched: [rejestr(1)]
+  ✓ [8] "frequency 003C częstotliwość sieci sdm630"
+         tokens: [frequency, 003c, 003, czestotliwosc, sieci, sdm630, sdm, 630]
+       #1 chunk_id=25  (cosine: 0.5648 [rank_cos=6]  bm25: 2.0727 [rank_bm25=9]  rrf: 0.0301)
+               matched: [sieci(4)]
+       #2 chunk_id=5  (cosine: 0.5373 [rank_cos=13]  bm25: 5.5425 [rank_bm25=3]  rrf: 0.0300)
+               matched: [630(1), sdm(1), sdm630(1)]
+       #3 chunk_id=4  (cosine: 0.4957 [rank_cos=20]  bm25: 7.6061 [rank_bm25=2]  rrf: 0.0291)
+               matched: [630(1), sdm(1), sdm630(1)]
+       #4 chunk_id=23  (cosine: 0.5482 [rank_cos=9]  bm25: 1.1763 [rank_bm25=11]  rrf: 0.0290)
+               matched: [sieci(1)]
+       #5 chunk_id=26  (cosine: 0.5480 [rank_cos=10]  bm25: 1.8888 [rank_bm25=10]  rrf: 0.0290)
+               matched: [sieci(4)]
+       #6 chunk_id=0  (cosine: 0.5125 [rank_cos=18]  bm25: 5.4371 [rank_bm25=4]  rrf: 0.0289)
+               matched: [003(3), 003c(1), czestotliwosc(1), frequency(1), sieci(1)]
+       #7 chunk_id=22  (cosine: 0.5224 [rank_cos=15]  bm25: 3.3409 [rank_bm25=7]  rrf: 0.0287)
+               matched: [czestotliwosc(1), frequency(1), sieci(5)]
+     ► #8 chunk_id=3  (cosine: 0.4732 [rank_cos=26]  bm25: 9.2583 [rank_bm25=1]  rrf: 0.0284)
+               matched: [003(2), 003c(1), 630(1), czestotliwosc(1), frequency(1), sdm(1), sdm630(1), sieci(1)]
+       #9 chunk_id=24  (cosine: 0.5155 [rank_cos=17]  bm25: 2.2092 [rank_bm25=8]  rrf: 0.0281)
+               matched: [czestotliwosc(1), frequency(1), sieci(1)]
+       #10 chunk_id=16  (cosine: 0.5306 [rank_cos=14]  bm25: 1.0835 [rank_bm25=12]  rrf: 0.0278)
+               matched: [003(1)]
+  ✓ [7] "power factor współczynnik mocy L3 sdm630"
+         tokens: [power, factor, wspolczynnik, mocy, l3, sdm630, sdm, 630]
+       #1 chunk_id=17  (cosine: 0.5728 [rank_cos=1]  bm25: 1.7294 [rank_bm25=11]  rrf: 0.0310)
+               matched: [mocy(2), power(2)]
+       #2 chunk_id=5  (cosine: 0.5350 [rank_cos=10]  bm25: 5.5425 [rank_bm25=4]  rrf: 0.0304)
+               matched: [630(1), sdm(1), sdm630(1)]
+       #3 chunk_id=24  (cosine: 0.5274 [rank_cos=13]  bm25: 3.2400 [rank_bm25=6]  rrf: 0.0293)
+               matched: [l3(8), power(12)]
+       #4 chunk_id=0  (cosine: 0.5169 [rank_cos=18]  bm25: 10.0518 [rank_bm25=3]  rrf: 0.0291)
+               matched: [factor(4), l3(22), mocy(4), power(16), wspolczynnik(4)]
+       #5 chunk_id=6  (cosine: 0.5454 [rank_cos=7]  bm25: 0.9677 [rank_bm25=14]  rrf: 0.0289)
+               matched: [power(3)]
+       #6 chunk_id=23  (cosine: 0.5353 [rank_cos=9]  bm25: 1.4647 [rank_bm25=12]  rrf: 0.0288)
+               matched: [mocy(1), power(2)]
+     ► #7 chunk_id=3  (cosine: 0.4764 [rank_cos=26]  bm25: 14.1899 [rank_bm25=1]  rrf: 0.0284)
+               matched: [630(1), factor(4), l3(24), mocy(4), power(16), sdm(1), sdm630(1), wspolczynnik(4)]
+       #8 chunk_id=4  (cosine: 0.4962 [rank_cos=25]  bm25: 10.1996 [rank_bm25=2]  rrf: 0.0283)
+               matched: [630(1), l3(6), sdm(1), sdm630(1)]
+       #9 chunk_id=20  (cosine: 0.5055 [rank_cos=20]  bm25: 5.1577 [rank_bm25=5]  rrf: 0.0283)
+               matched: [factor(1), mocy(3), power(3), wspolczynnik(1)]
+       #10 chunk_id=22  (cosine: 0.5180 [rank_cos=17]  bm25: 3.1491 [rank_bm25=8]  rrf: 0.0281)
+               matched: [l3(6), power(12)]
+  ✓ [4] "predkosc pompy actual speed rejestr wilo stratos-maxo"
+         tokens: [predkosc, pompy, actual, speed, rejestr, wilo, stratos, maxo, stratos-maxo, stratosmaxo]
+       #1 chunk_id=21  (cosine: 0.6276 [rank_cos=3]  bm25: 18.7396 [rank_bm25=1]  rrf: 0.0328)
+               matched: [maxo(1), predkosc(3), rejestr(1), speed(4), stratos(1), stratos-maxo(1), stratosmaxo(1), wilo(1)]
+       #2 chunk_id=19  (cosine: 0.6407 [rank_cos=1]  bm25: 3.4632 [rank_bm25=5]  rrf: 0.0323)
+               matched: [predkosc(1), rejestr(1), speed(4)]
+       #3 chunk_id=15  (cosine: 0.6328 [rank_cos=2]  bm25: 2.4145 [rank_bm25=8]  rrf: 0.0313)
+               matched: [pompy(1), rejestr(1)]
+     ► #4 chunk_id=20  (cosine: 0.5615 [rank_cos=16]  bm25: 18.1594 [rank_bm25=2]  rrf: 0.0297)
+               matched: [actual(2), maxo(1), predkosc(2), rejestr(1), speed(3), stratos(1), stratos-maxo(1), stratosmaxo(1), wilo(1)]
+       #5 chunk_id=7  (cosine: 0.5986 [rank_cos=7]  bm25: 0.7394 [rank_bm25=13]  rrf: 0.0290)
+               matched: [rejestr(1)]
+       #6 chunk_id=9  (cosine: 0.5958 [rank_cos=8]  bm25: 0.7491 [rank_bm25=12]  rrf: 0.0290)
+               matched: [rejestr(1)]
+       #7 chunk_id=16  (cosine: 0.5736 [rank_cos=14]  bm25: 3.2831 [rank_bm25=7]  rrf: 0.0289)
+               matched: [pompy(1), predkosc(1), rejestr(1), speed(1)]
+       #8 chunk_id=17  (cosine: 0.6000 [rank_cos=5]  bm25: 0.6635 [rank_bm25=18]  rrf: 0.0286)
+               matched: [rejestr(1)]
+       #9 chunk_id=13  (cosine: 0.5987 [rank_cos=6]  bm25: 0.6959 [rank_bm25=17]  rrf: 0.0285)
+               matched: [rejestr(1)]
+       #10 chunk_id=10  (cosine: 0.5474 [rank_cos=23]  bm25: 5.4142 [rank_bm25=3]  rrf: 0.0283)
+               matched: [pompy(3), predkosc(3), rejestr(1), speed(3)]
+  ✓ [3] "roznica cisnienia differential pressure adres 0015 stratos maxo"
+         tokens: [roznica, cisnienia, differential, pressure, adres, 0015, stratos, maxo]
+       #1 chunk_id=21  (cosine: 0.6101 [rank_cos=1]  bm25: 11.0069 [rank_bm25=2]  rrf: 0.0331)
+               matched: [adres(2), maxo(1), pressure(3), roznica(1), stratos(1)]
+       #2 chunk_id=19  (cosine: 0.5704 [rank_cos=2]  bm25: 4.0619 [rank_bm25=4]  rrf: 0.0323)
+               matched: [adres(2), pressure(1), roznica(1)]
+     ► #3 chunk_id=20  (cosine: 0.5326 [rank_cos=12]  bm25: 12.5592 [rank_bm25=1]  rrf: 0.0308)
+               matched: [0015(1), adres(2), differential(1), maxo(1), pressure(4), roznica(1), stratos(1)]
+       #4 chunk_id=8  (cosine: 0.5355 [rank_cos=11]  bm25: 2.2702 [rank_bm25=6]  rrf: 0.0297)
+               matched: [adres(2), roznica(1)]
+       #5 chunk_id=15  (cosine: 0.5527 [rank_cos=3]  bm25: 0.9001 [rank_bm25=16]  rrf: 0.0295)
+               matched: [adres(2)]
+       #6 chunk_id=7  (cosine: 0.5482 [rank_cos=6]  bm25: 0.9580 [rank_bm25=13]  rrf: 0.0293)
+               matched: [adres(2)]
+       #7 chunk_id=9  (cosine: 0.5390 [rank_cos=7]  bm25: 0.9661 [rank_bm25=12]  rrf: 0.0292)
+               matched: [adres(2)]
+       #8 chunk_id=6  (cosine: 0.5326 [rank_cos=13]  bm25: 2.1950 [rank_bm25=7]  rrf: 0.0290)
+               matched: [adres(2), roznica(1)]
+       #9 chunk_id=17  (cosine: 0.5502 [rank_cos=5]  bm25: 0.8919 [rank_bm25=17]  rrf: 0.0288)
+               matched: [adres(2)]
+       #10 chunk_id=18  (cosine: 0.5060 [rank_cos=21]  bm25: 5.4606 [rank_bm25=3]  rrf: 0.0286)
+               matched: [0015(1), adres(2), pressure(2), roznica(2)]
+  ✓ [8] "pobor mocy power input rejestr 0018 wilo stratos-maxo"
+         tokens: [pobor, mocy, power, input, rejestr, 0018, wilo, stratos, maxo, stratos-maxo, stratosmaxo]
+       #1 chunk_id=21  (cosine: 0.5809 [rank_cos=9]  bm25: 15.4547 [rank_bm25=2]  rrf: 0.0311)
+               matched: [maxo(1), rejestr(1), stratos(1), stratos-maxo(1), stratosmaxo(1), wilo(1)]
+       #2 chunk_id=17  (cosine: 0.5909 [rank_cos=4]  bm25: 2.3930 [rank_bm25=10]  rrf: 0.0304)
+               matched: [mocy(2), power(2), rejestr(1)]
+       #3 chunk_id=26  (cosine: 0.5847 [rank_cos=6]  bm25: 2.4152 [rank_bm25=9]  rrf: 0.0301)
+               matched: [mocy(3), power(3), rejestr(1)]
+       #4 chunk_id=7  (cosine: 0.6013 [rank_cos=1]  bm25: 0.7394 [rank_bm25=20]  rrf: 0.0293)
+               matched: [rejestr(1)]
+       #5 chunk_id=23  (cosine: 0.5839 [rank_cos=7]  bm25: 2.1011 [rank_bm25=12]  rrf: 0.0292)
+               matched: [mocy(1), power(2), rejestr(1)]
+       #6 chunk_id=0  (cosine: 0.5657 [rank_cos=13]  bm25: 2.7773 [rank_bm25=8]  rrf: 0.0288)
+               matched: [0018(1), mocy(4), power(16), rejestr(1)]
+       #7 chunk_id=22  (cosine: 0.5523 [rank_cos=17]  bm25: 3.9849 [rank_bm25=5]  rrf: 0.0288)
+               matched: [0018(1), pobor(4), power(12), rejestr(1)]
+     ► #8 chunk_id=20  (cosine: 0.5178 [rank_cos=25]  bm25: 17.7922 [rank_bm25=1]  rrf: 0.0286)
+               matched: [0018(1), input(1), maxo(1), mocy(3), pobor(2), power(3), rejestr(1), stratos(1), stratos-maxo(1), stratosmaxo(1), wilo(1)]
+       #9 chunk_id=12  (cosine: 0.5250 [rank_cos=23]  bm25: 5.1049 [rank_bm25=3]  rrf: 0.0283)
+               matched: [0018(1), input(1), mocy(1), pobor(1), power(1), rejestr(1)]
+       #10 chunk_id=15  (cosine: 0.5986 [rank_cos=2]  bm25: 0.6727 [rank_bm25=25]  rrf: 0.0283)
+               matched: [rejestr(1)]
+  ✓ [10] "kod bledu fault code wilo stratos maxo odczyt rejestr"
+         tokens: [kod, bledu, fault, code, wilo, stratos, maxo, odczyt, rejestr]
+       #1 chunk_id=15  (cosine: 0.6353 [rank_cos=1]  bm25: 2.1457 [rank_bm25=7]  rrf: 0.0318)
+               matched: [bledu(1), fault(1), rejestr(1)]
+       #2 chunk_id=22  (cosine: 0.6181 [rank_cos=8]  bm25: 2.8857 [rank_bm25=4]  rrf: 0.0308)
+               matched: [bledu(2), code(2), fault(3), kod(2), rejestr(1)]
+       #3 chunk_id=26  (cosine: 0.6350 [rank_cos=2]  bm25: 1.4787 [rank_bm25=12]  rrf: 0.0305)
+               matched: [fault(1), rejestr(1)]
+       #4 chunk_id=23  (cosine: 0.6192 [rank_cos=6]  bm25: 1.6078 [rank_bm25=10]  rrf: 0.0299)
+               matched: [fault(1), rejestr(1)]
+       #5 chunk_id=13  (cosine: 0.6273 [rank_cos=3]  bm25: 1.1577 [rank_bm25=14]  rrf: 0.0298)
+               matched: [bledu(1), rejestr(1)]
+       #6 chunk_id=24  (cosine: 0.6165 [rank_cos=9]  bm25: 1.6869 [rank_bm25=9]  rrf: 0.0294)
+               matched: [bledu(1), code(1), fault(1), kod(1), rejestr(1)]
+       #7 chunk_id=14  (cosine: 0.6056 [rank_cos=17]  bm25: 3.6373 [rank_bm25=3]  rrf: 0.0293)
+               matched: [bledu(3), code(1), fault(3), kod(3), rejestr(1)]
+       #8 chunk_id=21  (cosine: 0.5914 [rank_cos=22]  bm25: 11.0641 [rank_bm25=1]  rrf: 0.0290)
+               matched: [bledu(1), fault(1), maxo(1), rejestr(1), stratos(1), wilo(1)]
+       #9 chunk_id=7  (cosine: 0.6212 [rank_cos=5]  bm25: 0.7394 [rank_bm25=18]  rrf: 0.0286)
+               matched: [rejestr(1)]
+     ► #10 chunk_id=20  (cosine: 0.5900 [rank_cos=23]  bm25: 9.9861 [rank_bm25=2]  rrf: 0.0286)
+               matched: [bledu(1), code(3), fault(1), kod(3), maxo(1), rejestr(1), stratos(1), wilo(1)]
+  ✓ [4] "energia pobrana energy consumed stratosmaxo wilo hex"
+         tokens: [energia, pobrana, energy, consumed, stratosmaxo, wilo, hex]
+       #1 chunk_id=21  (cosine: 0.5242 [rank_cos=6]  bm25: 6.5969 [rank_bm25=2]  rrf: 0.0318)
+               matched: [hex(1), stratosmaxo(1), wilo(1)]
+       #2 chunk_id=4  (cosine: 0.5383 [rank_cos=2]  bm25: 3.1770 [rank_bm25=9]  rrf: 0.0311)
+               matched: [energia(9), energy(9), hex(1)]
+       #3 chunk_id=25  (cosine: 0.5184 [rank_cos=7]  bm25: 4.0485 [rank_bm25=4]  rrf: 0.0310)
+               matched: [energia(6), energy(2), hex(1), pobrana(2)]
+     ► #4 chunk_id=20  (cosine: 0.4850 [rank_cos=21]  bm25: 8.5037 [rank_bm25=1]  rrf: 0.0292)
+               matched: [consumed(1), energia(1), energy(1), hex(1), pobrana(1), stratosmaxo(1), wilo(1)]
+       #5 chunk_id=16  (cosine: 0.4964 [rank_cos=15]  bm25: 3.9695 [rank_bm25=5]  rrf: 0.0291)
+               matched: [consumed(1), energia(3), energy(3), hex(1)]
+       #6 chunk_id=15  (cosine: 0.5444 [rank_cos=1]  bm25: 0.6727 [rank_bm25=23]  rrf: 0.0289)
+               matched: [hex(1)]
+       #7 chunk_id=0  (cosine: 0.5008 [rank_cos=12]  bm25: 3.1008 [rank_bm25=10]  rrf: 0.0286)
+               matched: [energia(13), energy(13), hex(1), pobrana(1)]
+       #8 chunk_id=13  (cosine: 0.5282 [rank_cos=3]  bm25: 0.6959 [rank_bm25=22]  rrf: 0.0285)
+               matched: [hex(1)]
+       #9 chunk_id=5  (cosine: 0.5253 [rank_cos=5]  bm25: 1.0330 [rank_bm25=19]  rrf: 0.0284)
+               matched: [energy(1), hex(1)]
+       #10 chunk_id=18  (cosine: 0.4817 [rank_cos=23]  bm25: 4.2008 [rank_bm25=3]  rrf: 0.0283)
+               matched: [consumed(1), energia(1), energy(1), hex(1), pobrana(1)]
+
+══════════════════════════════════════════════════
+  Chunków:             27
+  Par (prompt, chunk): 135
+  BM25 kandydaci:      100
+  Recall@1:            0.444  (60/135)
+  Recall@2:            0.585  (79/135)
+  Recall@3:            0.689  (93/135)
+  Recall@4:            0.741  (100/135)
+  Recall@5:            0.807  (109/135)
+  Recall@6:            0.852  (115/135)
+  Recall@7:            0.889  (120/135)
+  Recall@8:            0.911  (123/135)
+  Recall@9:            0.941  (127/135)
+  Recall@10:            0.985  (133/135)
+  MRR:                 0.600
+══════════════════════════════════════════════════

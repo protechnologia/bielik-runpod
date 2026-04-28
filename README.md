@@ -32,30 +32,8 @@ Zapytanie użytkownika przechodzi przez cztery etapy:
 
 1. **Query Router** (Bielik 11B, opcjonalny) — identyfikuje urządzenie z pytania na podstawie listy `source_label` pobranej z Qdrant. Jeśli rozpozna urządzenie, kolejne etapy przeszukują tylko jego chunki; jeśli nie — fallback do pełnej kolekcji.
 2. **Embedder** (`nomic-embed-text`) — zamienia zapytanie na wektor i wyszukuje semantycznie podobne chunki w Qdrant (z filtrem `source_label` jeśli router zadziałał).
-3. **BM25 reranker** (opcjonalny) — spośród kandydatów z etapu 2. reankuje przez dopasowanie słów kluczowych, łącząc oba rankingi metodą RRF (Reciprocal Rank Fusion).
+3. **BM25 reranker** (opcjonalny) — spośród kandydatów z etapu 2. reankuje przez dopasowanie słów kluczowych, łącząc oba rankingi metodą RRF (Reciprocal Rank Fusion). Ustawienie wysokiej liczby kandydatów (równej lub wyższej niż łączna liczba chunków w kolekcji) zamienia BM25 w symetryczny RRF — oba rankingi obejmują wtedy pełen zestaw dokumentów. Przy małej bazie chunków jest to korzystne, bo BM25 reankuje wszystkich kandydatów i nie pomija trafnych wyników.
 4. **LLM** (Bielik 11B) — generuje odpowiedź na podstawie wybranych fragmentów jako kontekst.
-
-```mermaid
-flowchart TD
-    Q([Pytanie użytkownika]) --> A{query_router\n= true?}
-
-    A -- nie --> E
-    A -- tak --> R[Query Router\nBielik 11B]
-    R --> R2{urządzenie\nrozpoznane?}
-    R2 -- tak --> F[filtr: source_label]
-    R2 -- nie / fallback --> E
-
-    F --> E[Embedder\nnomic-embed-text]
-    E --> S[Qdrant search\ncosine similarity]
-
-    S --> B{bm25_candidates\n> 0?}
-    B -- nie --> CTX
-    B -- tak --> BM[BM25 reranker\n+ RRF fusion]
-    BM --> CTX
-
-    CTX[Top-k chunków\njako kontekst] --> LLM[LLM\nBielik 11B]
-    LLM --> ANS([Odpowiedź])
-```
 
 **Dlaczego same embeddingi nie wystarczają — wyzwanie terminów technicznych:**
 
@@ -657,9 +635,39 @@ Blok `PROMPT DO LLM` jest wyświetlany zawsze — niezależnie od flagi `--verbo
 
 ---
 
+## Wyniki testów
+
+### Query Router
+
+| Metryka                  | Bielik 11B Q8_0 |
+|:-------------------------|:----------------|
+| Trafień                  | 120/135         |
+| Fallback (brak)          | 15/135          |
+| Błędów (złe urządzenie)  | 0/135           |
+| **Accuracy**             | **88.9%**       |
+
+### Retriever — BM25 kandydaci: 20 vs 100
+
+| Metryka    | cand=20         | cand=100            |
+|:-----------|:----------------|:--------------------|
+| Recall@1   | 0.422 (57/135)  | 0.444 (60/135)      |
+| Recall@2   | 0.563 (76/135)  | 0.585 (79/135)      |
+| Recall@3   | 0.659 (89/135)  | 0.689 (93/135)      |
+| Recall@4   | 0.689 (93/135)  | 0.741 (100/135)     |
+| Recall@5   | 0.733 (99/135)  | 0.807 (109/135)     |
+| Recall@6   | 0.807 (109/135) | 0.852 (115/135)     |
+| Recall@7   | 0.837 (113/135) | 0.889 (120/135)     |
+| Recall@8   | 0.859 (116/135) | 0.911 (123/135)     |
+| Recall@9   | 0.867 (117/135) | 0.941 (127/135)     |
+| Recall@10  | 0.867 (117/135) | **0.985** (133/135) |
+| **MRR**    | 0.567           | **0.600**           |
+
+---
+
 ## TODO
 
 ### Jakość RAG
+- [ ] Implementacja FuzzyRouter w oparciu o rapidfuzz — alternatywa dla routera LLM: dopasowanie rozmyte nazwy urządzenia z zapytania do listy `source_label`, bez angażowania Bielika 11B
 - [ ] Lepszy model embeddingów (np. `multilingual-e5-large`)
 - [ ] HyDE — model generuje hipotetyczną odpowiedź, jej embedding idzie do Qdrant
 - [ ] Osobne kolekcje per urządzenie
@@ -683,3 +691,29 @@ Blok `PROMPT DO LLM` jest wyświetlany zawsze — niezależnie od flagi `--verbo
 - `rm -rf /tmp/init` w start command zabezpiecza przed błędem przy ponownym starcie na tym samym węźle.
 - Container Disk kasuje się przy każdym Stop — `git clone` i `pip install` wykonują się przy każdym starcie (~60 sek.).
 - Volume Disk ustawiony na **35 GB**: ~12 GB Bielik + ~274 MB nomic-embed-text + margines na dane Qdrant.
+
+---
+
+## Diagram pipeline
+
+```mermaid
+flowchart TD
+    Q([Pytanie użytkownika]) --> A{query_router\n= true?}
+
+    A -- nie --> E
+    A -- tak --> R[Query Router\nBielik 11B]
+    R --> R2{urządzenie\nrozpoznane?}
+    R2 -- tak --> F[filtr: source_label]
+    R2 -- nie / fallback --> E
+
+    F --> E[Embedder\nnomic-embed-text]
+    E --> S[Qdrant search\ncosine similarity]
+
+    S --> B{bm25_candidates\n> 0?}
+    B -- nie --> CTX
+    B -- tak --> BM[BM25 reranker\n+ RRF fusion]
+    BM --> CTX
+
+    CTX[Top-k chunków\njako kontekst] --> LLM[LLM\nBielik 11B]
+    LLM --> ANS([Odpowiedź])
+```

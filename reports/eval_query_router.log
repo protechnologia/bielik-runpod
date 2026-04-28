@@ -1,0 +1,451 @@
+(venv) PS C:\_Workspace\Github\bielik-runpod> python test/eval_query_router.py .\data\golden_set_big.json --router-model SpeakLeash/bielik-11b-v3.0-instruct:Q8_0 --verbose
+Model routera:  SpeakLeash/bielik-11b-v3.0-instruct:Q8_0
+Urządzenia:     ['BOSCH CONDENS 7000i', 'DAIKIN ALTHERMA-R', 'EASTRON SDM630', 'GOODWE ET-PLUS', 'GRUNDFOS MAGNA3', 'KAMSTRUP MULTICAL-403', 'NIBE F1255', 'ORNO OR-WE-520', 'SOFAR HYD6000-ES', 'SONTEX SUPERCAL-539', 'VIESSMANN VITODENS-200W', 'WILO STRATOS-MAXO']
+Chunków:        27
+Par (prompt, chunk): 135
+  [1/135] "temperatura zasilania powrotu rejestr bosch condens 7000i"
+  [2/135] "stan palnika burner state adres 0019 condens7000"
+  [3/135] "modulacja palnika procent rejestr bosch 7000i"
+  [4/135] "cisnienie instalacji system pressure condens 7000i hex"
+  [5/135] "blad error code odczyt bosch condens7000i"
+  [6/135] "temperatura wody wylotowej leaving water temp daikin altherma"
+  [7/135] "cop grzanie rejestr 0020 altherma-r odczyt"
+  [8/135] "tryb pracy operation mode daikin althermar hex"
+  [9/135] "czestotliwosc sprezarki compressor freq altherma r rejestr"
+  [10/135] "moc grzewcza heating capacity adres 001a daikin"
+  [11/135] "reset licznikow supercal-539 zapis 0xAAAA rejestr"
+  [12/135] "baud rate modbus konfiguracja sontex supercal539"
+  [13/135] "synchronizacja czasu time sync supercal 539 rejestr 0103"
+  [14/135] "adres modbus meter id supercal-539 ustawienie"
+  [15/135] "maska alarmow alarm mask rejestr sontex 539"
+  [16/135] "limit eksportu safe export limit goodwe et-plus zapis"
+  [17/135] "minimalne soc baterii battery min soc etplus rejestr 0082"
+  [18/135] "tryb pracy work mode zapis goodwe etplus 0081"
+  [19/135] "baud rate modbus adres 008d goodwe et plus konfiguracja"
+  [20/135] "tou charge okno ladowania czas goodwe etplus rejestr"
+  [21/135] "tryb sterowania control mode zapis grundfos magna3"
+  [22/135] "zadana predkosc speed setpoint rejestr 0042 magna3"
+  [23/135] "reset alarmu alarm reset grundfos magna 3 zapis 0x0001"
+  [24/135] "baud rate modbus adres 0048 grundfos magna3 konfiguracja"
+  [25/135] "stop start pompa grundfos magna3 rejestr 0049 004a"
+  [26/135] "przeplyw chwilowy flow rate rejestr kamstrup multical 403"
+  [27/135] "energia cieplna heat energy adres 007c multical-403"
+  [28/135] "temperatura zasilania supply temperature kamstrup 403 odczyt"
+  [29/135] "moc cieplna heat power rejestr 0078 kamstrup multical403"
+  [30/135] "czas pracy operating hours multical-403 kamstrup hex"
+  [31/135] "energy reset F90B zapis 0x0300 sdm630"
+  [32/135] "jak zmienić baud rate eastron modbus"
+  [33/135] "meter id F907 adres modbus sdm 630"
+  [34/135] "sterowanie przekaźnikiem rejestr sdm630"
+  [35/135] "przekładnik prądowy CT konfiguracja eastron"
+  [36/135] "temperatura zewnetrzna outdoor temp rejestr nibe f1255"
+  [37/135] "predkosc sprezarki compressor speed adres 0018 f1255"
+  [38/135] "cop wspolczynnik efektywnosci rejestr 001f nibe f1255"
+  [39/135] "tryb pracy operating mode nibe f 1255 odczyt"
+  [40/135] "energia elektryczna electric energy total f1255 nibe hex"
+  [41/135] "zadana temperatura co setpoint heating vitodens-200w zapis"
+  [42/135] "reset bledu fault reset 0xe0e0 viessmann vitodens200w"
+  [43/135] "tryb pracy operating mode zapis vitodens 200w rejestr 0042"
+  [44/135] "baud rate modbus adres 0048 vitodens-200w konfiguracja"
+  [45/135] "modulacja max min palnik vitodens200w rejestr 0043 0044"
+  [46/135] "napiecie pv1 voltage rejestr sofar hyd6000-es odczyt"
+  [47/135] "stan baterii battery soc soh adres 001b sofar hyd6000es"
+  [48/135] "moc sieciowa grid power l1 l2 l3 sofar hyd 6000"
+  [49/135] "tryb pracy operating mode rejestr 002c sofar hyd6000-es"
+  [50/135] "energia pv dzis today rejestr 0040 sofar hyd6000es hex"
+  [51/135] "zadana temperatura co setpoint heat nibe f1255 zapis"
+  [52/135] "reset alarmu alarm reset zapis 0xA5A5 nibe f1255"
+  [53/135] "tryb pracy operating mode zapis nibe f 1255 rejestr"
+  [54/135] "force dhw wymus podgrzanie cwu f1255 rejestr 0035"
+  [55/135] "baud rate modbus konfiguracja nibe f1255 adres 0036"
+  [56/135] "predkosc pompy pump speed rejestr grundfos magna3 odczyt"
+  [57/135] "roznica cisnienia diff pressure adres 0015 magna 3"
+  [58/135] "pobor mocy input power rejestr grundfos magna3 hex"
+  [59/135] "stan alarmu alarm word slowo grundfos magna3 rejestr"
+  [60/135] "czas pracy operating hours grundfos magna 3 odczyt"
+  [61/135] "reset licznika we520"
+  [62/135] "jak zmienić baud rate rejestr zapisu or-we-520"
+  [63/135] "adres modbus licznika ustawienie or-we-520"
+  [64/135] "synchronizacja zegara rtc rejestr orwe520"
+  [65/135] "haslo zabezpieczenie parametry 520"
+  [66/135] "temperatura kotla boiler temp rejestr viessmann vitodens 200w"
+  [67/135] "modulacja palnika modulation level adres 0016 vitodens200w"
+  [68/135] "kod bledu fault code viessmann vitodens-200w odczyt"
+  [69/135] "energia gazu gas energy total vitodens 200w hex rejestr"
+  [70/135] "stan pompy pump status rejestr 0018 viessmann vitodens"
+  [71/135] "napiecie pv1 pv2 rejestr goodwe et-plus odczyt"
+  [72/135] "stan baterii battery soc soh adres 0044 goodwe etplus"
+  [73/135] "moc sieciowa grid power l1 l2 l3 goodwe et plus"
+  [74/135] "tryb pracy work mode rejestr 0036 goodwe etplus hex"
+  [75/135] "temperatura falownika inverter temp adres 0035 goodwe"
+  [76/135] "zadana temperatura cwu setpoint dhw daikin altherma-r zapis"
+  [77/135] "reset bledu error reset 0x1234 althermar rejestr"
+  [78/135] "tryb pracy operation mode zapis daikin altherma r"
+  [79/135] "baud rate modbus adres 0048 altherma-r konfiguracja"
+  [80/135] "force dhw wymus podgrzanie althermar rejestr 0044"
+  [81/135] "napiecie L1 rejestr orno 520"
+  [82/135] "jak odczytac prad fazowy we520"
+  [83/135] "adres hex moc czynna orwe520"
+  [84/135] "czestotliwosc sieci grid frequency rejestr or-we-520"
+  [85/135] "wspolczynnik mocy L2 L3 rejestr orno or-we-520"
+  [86/135] "zadana temperatura co setpoint bosch condens 7000i zapis"
+  [87/135] "reset bledu error reset rejestr 0046 condens 7000i"
+  [88/135] "tryb pracy operating mode zapis bosch7000i"
+  [89/135] "baud rate modbus adres 0049 bosch condens 7000"
+  [90/135] "max moc co palnik limit rejestr condens7000i"
+  [91/135] "energia pv dzis today rejestr 0060 goodwe et-plus"
+  [92/135] "energia z sieci grid import total goodwe etplus adres"
+  [93/135] "energia obciazenia load energy total et-plus rejestr"
+  [94/135] "energia oddana export today goodwe et plus hex"
+  [95/135] "bat discharge energia rozladowana goodwe etplus rejestr"
+  [96/135] "energia bierna import L1 sdm630 adres hex"
+  [97/135] "rejestr eksport energia bierna fazy L2 eastron"
+  [98/135] "L3 reactive energy kVArh adres 0166 sdm-630"
+  [99/135] "całkowita energia bierna fazy sdm630"
+  [100/135] "import export reactive energy eastron rejestr"
+  [101/135] "tryb sterowania control mode zapis wilo stratos-maxo"
+  [102/135] "zadana roznica cisnienia pressure setpoint stratosmaxo rejestr"
+  [103/135] "reset bledu fault reset wilo stratos maxo zapis 0x0055"
+  [104/135] "baud rate modbus adres 0049 wilo stratos-maxo konfiguracja"
+  [105/135] "start stop pompa stratos-maxo rejestr 0043 wilo"
+  [106/135] "reset licznikow energia kamstrup multical-403 zapis 0x5A5A"
+  [107/135] "adres modbus meter id multical403 ustawienie rejestr"
+  [108/135] "baud rate konfiguracja kamstrup multical 403 rejestr 0063"
+  [109/135] "synchronizacja czasu time sync multical-403 rejestr 0202"
+  [110/135] "haslo zabezpieczenie password kamstrup multical403 zapis"
+  [111/135] "moc cieplna thermal power rejestr sontex supercal 539"
+  [112/135] "temperatura zasilania powrotu supercal-539 odczyt"
+  [113/135] "energia cieplna heat energy adres 001c supercal539"
+  [114/135] "przeplyw chwilowy flow rate rejestr sontex 539"
+  [115/135] "alarm status slowo alarmowe supercal 539 hex"
+  [116/135] "minimalne soc baterii battery min soc sofar hyd6000-es zapis"
+  [117/135] "limit eksportu grid export limit hyd6000es rejestr 0063"
+  [118/135] "tryb pracy operating mode zapis sofar hyd6000 rejestr 0060"
+  [119/135] "baud rate modbus adres 0068 sofar hyd6000-es konfiguracja"
+  [120/135] "reset bledow fault reset hyd6000es zapis 0x00FF"
+  [121/135] "energia bierna taryfa t1 t2 orwe520 adres hex"
+  [122/135] "rejestr taryfa t4 kvarh 520"
+  [123/135] "forward reverse reactive energy rejestr or-we-520"
+  [124/135] "energia eksport L1 L2 L3 rejestr or-we-520"
+  [125/135] "moc zapotrzebowania demand power taryfa or-we-520"
+  [126/135] "napięcie L1 L2 L3 adres 0000 sdm-630 eastron"
+  [127/135] "prąd fazowy L1 current rejestr 0006 sdm630"
+  [128/135] "active power moc czynna rejestr 000C eastron sdm630"
+  [129/135] "frequency 003C częstotliwość sieci sdm630"
+  [130/135] "power factor współczynnik mocy L3 sdm630"
+  [131/135] "predkosc pompy actual speed rejestr wilo stratos-maxo"
+  [132/135] "roznica cisnienia differential pressure adres 0015 stratos maxo"
+  [133/135] "pobor mocy power input rejestr 0018 wilo stratos-maxo"
+  [134/135] "kod bledu fault code wilo stratos maxo odczyt rejestr"
+  [135/135] "energia pobrana energy consumed stratosmaxo wilo hex"
+
+  ✓ "temperatura zasilania powrotu rejestr bosch condens 7000i"
+       router: BOSCH CONDENS 7000i
+  ✓ "stan palnika burner state adres 0019 condens7000"
+       router: BOSCH CONDENS 7000i
+  ✓ "modulacja palnika procent rejestr bosch 7000i"
+       router: BOSCH CONDENS 7000i
+  ✓ "cisnienie instalacji system pressure condens 7000i hex"
+       router: BOSCH CONDENS 7000i
+  ✓ "blad error code odczyt bosch condens7000i"
+       router: BOSCH CONDENS 7000i
+  ✓ "temperatura wody wylotowej leaving water temp daikin altherma"
+       router: DAIKIN ALTHERMA-R
+  ✓ "cop grzanie rejestr 0020 altherma-r odczyt"
+       router: DAIKIN ALTHERMA-R
+  ✓ "tryb pracy operation mode daikin althermar hex"
+       router: DAIKIN ALTHERMA-R
+  ✓ "czestotliwosc sprezarki compressor freq altherma r rejestr"
+       router: DAIKIN ALTHERMA-R
+  ✓ "moc grzewcza heating capacity adres 001a daikin"
+       router: DAIKIN ALTHERMA-R
+  ✓ "reset licznikow supercal-539 zapis 0xAAAA rejestr"
+       router: SONTEX SUPERCAL-539
+  ✓ "baud rate modbus konfiguracja sontex supercal539"
+       router: SONTEX SUPERCAL-539
+  ✓ "synchronizacja czasu time sync supercal 539 rejestr 0103"
+       router: SONTEX SUPERCAL-539
+  ✓ "adres modbus meter id supercal-539 ustawienie"
+       router: SONTEX SUPERCAL-539
+  ? "maska alarmow alarm mask rejestr sontex 539"
+       router: brak → fallback
+  ✓ "limit eksportu safe export limit goodwe et-plus zapis"
+       router: GOODWE ET-PLUS
+  ? "minimalne soc baterii battery min soc etplus rejestr 0082"
+       router: brak → fallback
+  ✓ "tryb pracy work mode zapis goodwe etplus 0081"
+       router: GOODWE ET-PLUS
+  ✓ "baud rate modbus adres 008d goodwe et plus konfiguracja"
+       router: GOODWE ET-PLUS
+  ✓ "tou charge okno ladowania czas goodwe etplus rejestr"
+       router: GOODWE ET-PLUS
+  ✓ "tryb sterowania control mode zapis grundfos magna3"
+       router: GRUNDFOS MAGNA3
+  ✓ "zadana predkosc speed setpoint rejestr 0042 magna3"
+       router: GRUNDFOS MAGNA3
+  ✓ "reset alarmu alarm reset grundfos magna 3 zapis 0x0001"
+       router: GRUNDFOS MAGNA3
+  ✓ "baud rate modbus adres 0048 grundfos magna3 konfiguracja"
+       router: GRUNDFOS MAGNA3
+  ✓ "stop start pompa grundfos magna3 rejestr 0049 004a"
+       router: GRUNDFOS MAGNA3
+  ✓ "przeplyw chwilowy flow rate rejestr kamstrup multical 403"
+       router: KAMSTRUP MULTICAL-403
+  ✓ "energia cieplna heat energy adres 007c multical-403"
+       router: KAMSTRUP MULTICAL-403
+  ✓ "temperatura zasilania supply temperature kamstrup 403 odczyt"
+       router: KAMSTRUP MULTICAL-403
+  ✓ "moc cieplna heat power rejestr 0078 kamstrup multical403"
+       router: KAMSTRUP MULTICAL-403
+  ✓ "czas pracy operating hours multical-403 kamstrup hex"
+       router: KAMSTRUP MULTICAL-403
+  ✓ "energy reset F90B zapis 0x0300 sdm630"
+       router: EASTRON SDM630
+  ✓ "jak zmienić baud rate eastron modbus"
+       router: EASTRON SDM630
+  ✓ "meter id F907 adres modbus sdm 630"
+       router: EASTRON SDM630
+  ✓ "sterowanie przekaźnikiem rejestr sdm630"
+       router: EASTRON SDM630
+  ✓ "przekładnik prądowy CT konfiguracja eastron"
+       router: EASTRON SDM630
+  ✓ "temperatura zewnetrzna outdoor temp rejestr nibe f1255"
+       router: NIBE F1255
+  ✓ "predkosc sprezarki compressor speed adres 0018 f1255"
+       router: NIBE F1255
+  ✓ "cop wspolczynnik efektywnosci rejestr 001f nibe f1255"
+       router: NIBE F1255
+  ✓ "tryb pracy operating mode nibe f 1255 odczyt"
+       router: NIBE F1255
+  ? "energia elektryczna electric energy total f1255 nibe hex"
+       router: brak → fallback
+  ✓ "zadana temperatura co setpoint heating vitodens-200w zapis"
+       router: VIESSMANN VITODENS-200W
+  ✓ "reset bledu fault reset 0xe0e0 viessmann vitodens200w"
+       router: VIESSMANN VITODENS-200W
+  ✓ "tryb pracy operating mode zapis vitodens 200w rejestr 0042"
+       router: VIESSMANN VITODENS-200W
+  ✓ "baud rate modbus adres 0048 vitodens-200w konfiguracja"
+       router: VIESSMANN VITODENS-200W
+  ✓ "modulacja max min palnik vitodens200w rejestr 0043 0044"
+       router: VIESSMANN VITODENS-200W
+  ✓ "napiecie pv1 voltage rejestr sofar hyd6000-es odczyt"
+       router: SOFAR HYD6000-ES
+  ✓ "stan baterii battery soc soh adres 001b sofar hyd6000es"
+       router: SOFAR HYD6000-ES
+  ✓ "moc sieciowa grid power l1 l2 l3 sofar hyd 6000"
+       router: SOFAR HYD6000-ES
+  ✓ "tryb pracy operating mode rejestr 002c sofar hyd6000-es"
+       router: SOFAR HYD6000-ES
+  ✓ "energia pv dzis today rejestr 0040 sofar hyd6000es hex"
+       router: SOFAR HYD6000-ES
+  ✓ "zadana temperatura co setpoint heat nibe f1255 zapis"
+       router: NIBE F1255
+  ✓ "reset alarmu alarm reset zapis 0xA5A5 nibe f1255"
+       router: NIBE F1255
+  ✓ "tryb pracy operating mode zapis nibe f 1255 rejestr"
+       router: NIBE F1255
+  ? "force dhw wymus podgrzanie cwu f1255 rejestr 0035"
+       router: brak → fallback
+  ✓ "baud rate modbus konfiguracja nibe f1255 adres 0036"
+       router: NIBE F1255
+  ✓ "predkosc pompy pump speed rejestr grundfos magna3 odczyt"
+       router: GRUNDFOS MAGNA3
+  ✓ "roznica cisnienia diff pressure adres 0015 magna 3"
+       router: GRUNDFOS MAGNA3
+  ✓ "pobor mocy input power rejestr grundfos magna3 hex"
+       router: GRUNDFOS MAGNA3
+  ✓ "stan alarmu alarm word slowo grundfos magna3 rejestr"
+       router: GRUNDFOS MAGNA3
+  ✓ "czas pracy operating hours grundfos magna 3 odczyt"
+       router: GRUNDFOS MAGNA3
+  ✓ "reset licznika we520"
+       router: ORNO OR-WE-520
+  ✓ "jak zmienić baud rate rejestr zapisu or-we-520"
+       router: ORNO OR-WE-520
+  ✓ "adres modbus licznika ustawienie or-we-520"
+       router: ORNO OR-WE-520
+  ? "synchronizacja zegara rtc rejestr orwe520"
+       router: brak → fallback
+  ? "haslo zabezpieczenie parametry 520"
+       router: brak → fallback
+  ✓ "temperatura kotla boiler temp rejestr viessmann vitodens 200w"
+       router: VIESSMANN VITODENS-200W
+  ✓ "modulacja palnika modulation level adres 0016 vitodens200w"
+       router: VIESSMANN VITODENS-200W
+  ✓ "kod bledu fault code viessmann vitodens-200w odczyt"
+       router: VIESSMANN VITODENS-200W
+  ✓ "energia gazu gas energy total vitodens 200w hex rejestr"
+       router: VIESSMANN VITODENS-200W
+  ✓ "stan pompy pump status rejestr 0018 viessmann vitodens"
+       router: VIESSMANN VITODENS-200W
+  ✓ "napiecie pv1 pv2 rejestr goodwe et-plus odczyt"
+       router: GOODWE ET-PLUS
+  ✓ "stan baterii battery soc soh adres 0044 goodwe etplus"
+       router: GOODWE ET-PLUS
+  ✓ "moc sieciowa grid power l1 l2 l3 goodwe et plus"
+       router: GOODWE ET-PLUS
+  ✓ "tryb pracy work mode rejestr 0036 goodwe etplus hex"
+       router: GOODWE ET-PLUS
+  ✓ "temperatura falownika inverter temp adres 0035 goodwe"
+       router: GOODWE ET-PLUS
+  ✓ "zadana temperatura cwu setpoint dhw daikin altherma-r zapis"
+       router: DAIKIN ALTHERMA-R
+  ✓ "reset bledu error reset 0x1234 althermar rejestr"
+       router: DAIKIN ALTHERMA-R
+  ✓ "tryb pracy operation mode zapis daikin altherma r"
+       router: DAIKIN ALTHERMA-R
+  ✓ "baud rate modbus adres 0048 altherma-r konfiguracja"
+       router: DAIKIN ALTHERMA-R
+  ? "force dhw wymus podgrzanie althermar rejestr 0044"
+       router: brak → fallback
+  ✓ "napiecie L1 rejestr orno 520"
+       router: ORNO OR-WE-520
+  ✓ "jak odczytac prad fazowy we520"
+       router: ORNO OR-WE-520
+  ✓ "adres hex moc czynna orwe520"
+       router: ORNO OR-WE-520
+  ✓ "czestotliwosc sieci grid frequency rejestr or-we-520"
+       router: ORNO OR-WE-520
+  ✓ "wspolczynnik mocy L2 L3 rejestr orno or-we-520"
+       router: ORNO OR-WE-520
+  ✓ "zadana temperatura co setpoint bosch condens 7000i zapis"
+       router: BOSCH CONDENS 7000i
+  ✓ "reset bledu error reset rejestr 0046 condens 7000i"
+       router: BOSCH CONDENS 7000i
+  ✓ "tryb pracy operating mode zapis bosch7000i"
+       router: BOSCH CONDENS 7000i
+  ✓ "baud rate modbus adres 0049 bosch condens 7000"
+       router: BOSCH CONDENS 7000i
+  ✓ "max moc co palnik limit rejestr condens7000i"
+       router: BOSCH CONDENS 7000i
+  ✓ "energia pv dzis today rejestr 0060 goodwe et-plus"
+       router: GOODWE ET-PLUS
+  ✓ "energia z sieci grid import total goodwe etplus adres"
+       router: GOODWE ET-PLUS
+  ? "energia obciazenia load energy total et-plus rejestr"
+       router: brak → fallback
+  ✓ "energia oddana export today goodwe et plus hex"
+       router: GOODWE ET-PLUS
+  ✓ "bat discharge energia rozladowana goodwe etplus rejestr"
+       router: GOODWE ET-PLUS
+  ? "energia bierna import L1 sdm630 adres hex"
+       router: brak → fallback
+  ✓ "rejestr eksport energia bierna fazy L2 eastron"
+       router: EASTRON SDM630
+  ✓ "L3 reactive energy kVArh adres 0166 sdm-630"
+       router: EASTRON SDM630
+  ✓ "całkowita energia bierna fazy sdm630"
+       router: EASTRON SDM630
+  ✓ "import export reactive energy eastron rejestr"
+       router: EASTRON SDM630
+  ✓ "tryb sterowania control mode zapis wilo stratos-maxo"
+       router: WILO STRATOS-MAXO
+  ? "zadana roznica cisnienia pressure setpoint stratosmaxo rejestr"
+       router: brak → fallback
+  ✓ "reset bledu fault reset wilo stratos maxo zapis 0x0055"
+       router: WILO STRATOS-MAXO
+  ✓ "baud rate modbus adres 0049 wilo stratos-maxo konfiguracja"
+       router: WILO STRATOS-MAXO
+  ✓ "start stop pompa stratos-maxo rejestr 0043 wilo"
+       router: WILO STRATOS-MAXO
+  ✓ "reset licznikow energia kamstrup multical-403 zapis 0x5A5A"
+       router: KAMSTRUP MULTICAL-403
+  ✓ "adres modbus meter id multical403 ustawienie rejestr"
+       router: KAMSTRUP MULTICAL-403
+  ✓ "baud rate konfiguracja kamstrup multical 403 rejestr 0063"
+       router: KAMSTRUP MULTICAL-403
+  ✓ "synchronizacja czasu time sync multical-403 rejestr 0202"
+       router: KAMSTRUP MULTICAL-403
+  ✓ "haslo zabezpieczenie password kamstrup multical403 zapis"
+       router: KAMSTRUP MULTICAL-403
+  ✓ "moc cieplna thermal power rejestr sontex supercal 539"
+       router: SONTEX SUPERCAL-539
+  ✓ "temperatura zasilania powrotu supercal-539 odczyt"
+       router: SONTEX SUPERCAL-539
+  ? "energia cieplna heat energy adres 001c supercal539"
+       router: brak → fallback
+  ✓ "przeplyw chwilowy flow rate rejestr sontex 539"
+       router: SONTEX SUPERCAL-539
+  ? "alarm status slowo alarmowe supercal 539 hex"
+       router: brak → fallback
+  ✓ "minimalne soc baterii battery min soc sofar hyd6000-es zapis"
+       router: SOFAR HYD6000-ES
+  ✓ "limit eksportu grid export limit hyd6000es rejestr 0063"
+       router: SOFAR HYD6000-ES
+  ✓ "tryb pracy operating mode zapis sofar hyd6000 rejestr 0060"
+       router: SOFAR HYD6000-ES
+  ✓ "baud rate modbus adres 0068 sofar hyd6000-es konfiguracja"
+       router: SOFAR HYD6000-ES
+  ✓ "reset bledow fault reset hyd6000es zapis 0x00FF"
+       router: SOFAR HYD6000-ES
+  ? "energia bierna taryfa t1 t2 orwe520 adres hex"
+       router: brak → fallback
+  ? "rejestr taryfa t4 kvarh 520"
+       router: brak → fallback
+  ✓ "forward reverse reactive energy rejestr or-we-520"
+       router: ORNO OR-WE-520
+  ✓ "energia eksport L1 L2 L3 rejestr or-we-520"
+       router: ORNO OR-WE-520
+  ✓ "moc zapotrzebowania demand power taryfa or-we-520"
+       router: ORNO OR-WE-520
+  ✓ "napięcie L1 L2 L3 adres 0000 sdm-630 eastron"
+       router: EASTRON SDM630
+  ✓ "prąd fazowy L1 current rejestr 0006 sdm630"
+       router: EASTRON SDM630
+  ✓ "active power moc czynna rejestr 000C eastron sdm630"
+       router: EASTRON SDM630
+  ✓ "frequency 003C częstotliwość sieci sdm630"
+       router: EASTRON SDM630
+  ✓ "power factor współczynnik mocy L3 sdm630"
+       router: EASTRON SDM630
+  ✓ "predkosc pompy actual speed rejestr wilo stratos-maxo"
+       router: WILO STRATOS-MAXO
+  ✓ "roznica cisnienia differential pressure adres 0015 stratos maxo"
+       router: WILO STRATOS-MAXO
+  ✓ "pobor mocy power input rejestr 0018 wilo stratos-maxo"
+       router: WILO STRATOS-MAXO
+  ✓ "kod bledu fault code wilo stratos maxo odczyt rejestr"
+       router: WILO STRATOS-MAXO
+  ? "energia pobrana energy consumed stratosmaxo wilo hex"
+       router: brak → fallback
+
+══════════════════════════════════════════════════
+  Model routera:       SpeakLeash/bielik-11b-v3.0-instruct:Q8_0
+  Urządzenia:          12  (BOSCH CONDENS 7000i, DAIKIN ALTHERMA-R, EASTRON SDM630, GOODWE ET-PLUS, GRUNDFOS MAGNA3, KAMSTRUP MULTICAL-403, NIBE F1255, ORNO OR-WE-520, SOFAR HYD6000-ES, SONTEX SUPERCAL-539, VIESSMANN VITODENS-200W, WILO STRATOS-MAXO)
+  Par (prompt, chunk): 135
+  Trafień:             120/135  (88.9%)
+  Fallback (brak):     15/135  (11.1%)
+  Błędów:              0/135  (0.0%)
+  Accuracy:            0.889
+══════════════════════════════════════════════════
+
+──────────────────────────────────────────────────
+  PROMPT DO LLM (pierwsze zapytanie)
+──────────────────────────────────────────────────
+[SYSTEM]
+Masz listę urządzeń. Twoim zadaniem jest określić, którego urządzenia dotyczy pytanie użytkownika.
+
+Zasady:
+1. Szukaj w pytaniu nazwy urządzenia lub jej fragmentu.
+2. Jeśli znajdziesz dopasowanie — odpowiedz DOKŁADNIE nazwą z listy, bez żadnych zmian.
+3. Jeśli pytanie nie dotyczy żadnego konkretnego urządzenia z listy — odpowiedz: brak
+4. Nie dodawaj żadnych innych słów, wyjaśnień ani znaków interpunkcyjnych.
+
+[USER]
+Dostępne urządzenia:
+- BOSCH CONDENS 7000i
+- DAIKIN ALTHERMA-R
+- EASTRON SDM630
+- GOODWE ET-PLUS
+- GRUNDFOS MAGNA3
+- KAMSTRUP MULTICAL-403
+- NIBE F1255
+- ORNO OR-WE-520
+- SOFAR HYD6000-ES
+- SONTEX SUPERCAL-539
+- VIESSMANN VITODENS-200W
+- WILO STRATOS-MAXO
+
+Pytanie: temperatura zasilania powrotu rejestr bosch condens 7000i
+──────────────────────────────────────────────────
