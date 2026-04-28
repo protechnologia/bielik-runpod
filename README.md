@@ -646,21 +646,23 @@ Blok `PROMPT DO LLM` jest wyświetlany zawsze — niezależnie od flagi `--verbo
 | Błędów (złe urządzenie)  | 0/135           |
 | **Accuracy**             | **88.9%**       |
 
-### Retriever — BM25 kandydaci: 20 vs 100
+Najważniejsza metryka to **brak błędów** (0 złych urządzeń). Błąd routera — wskazanie nieprawidłowego urządzenia — jest gorszy niż fallback: retriever przeszukuje wtedy wyłącznie chunki błędnie wskazanego urządzenia, co gwarantuje pominięcie właściwego wyniku bez względu na jakość embeddera. Fallback (brak rozpoznania) uruchamia wyszukiwanie po całej kolekcji, więc retriever nadal ma szansę odnaleźć właściwy chunk. W drugiej kolejności zależy nam na jak najwyższej liczbie trafień — im rzadziej router odpada do fallbacku, tym mniejszy corpus przeszukuje embedder i tym precyzyjniejszy wynik.
 
-| Metryka    | cand=20         | cand=100            |
-|:-----------|:----------------|:--------------------|
-| Recall@1   | 0.422 (57/135)  | 0.444 (60/135)      |
-| Recall@2   | 0.563 (76/135)  | 0.585 (79/135)      |
-| Recall@3   | 0.659 (89/135)  | 0.689 (93/135)      |
-| Recall@4   | 0.689 (93/135)  | 0.741 (100/135)     |
-| Recall@5   | 0.733 (99/135)  | 0.807 (109/135)     |
-| Recall@6   | 0.807 (109/135) | 0.852 (115/135)     |
-| Recall@7   | 0.837 (113/135) | 0.889 (120/135)     |
-| Recall@8   | 0.859 (116/135) | 0.911 (123/135)     |
-| Recall@9   | 0.867 (117/135) | 0.941 (127/135)     |
-| Recall@10  | 0.867 (117/135) | **0.985** (133/135) |
-| **MRR**    | 0.567           | **0.600**           |
+### Retriever
+
+| Metryka    | EMBED+BM25@20   | EMBED+BM25@100      | ROU+EMB+BM25@100        |
+|:-----------|:----------------|:--------------------|:------------------------|
+| Recall@1   | 0.422 (57/135)  | 0.444 (60/135)      | **0.541** (73/135)      |
+| Recall@2   | 0.563 (76/135)  | 0.585 (79/135)      | **0.896** (121/135)     |
+| Recall@3   | 0.659 (89/135)  | 0.689 (93/135)      | **0.963** (130/135)     |
+| Recall@4   | 0.689 (93/135)  | 0.741 (100/135)     | **0.985** (133/135)     |
+| Recall@5   | 0.733 (99/135)  | 0.807 (109/135)     | **0.993** (134/135)     |
+| Recall@6   | 0.807 (109/135) | 0.852 (115/135)     | **0.993** (134/135)     |
+| Recall@7   | 0.837 (113/135) | 0.889 (120/135)     | **1.000** (135/135)     |
+| Recall@8   | 0.859 (116/135) | 0.911 (123/135)     | **1.000** (135/135)     |
+| Recall@9   | 0.867 (117/135) | 0.941 (127/135)     | **1.000** (135/135)     |
+| Recall@10  | 0.867 (117/135) | 0.985 (133/135)     | **1.000** (135/135)     |
+| **MRR**    | 0.567           | 0.600               | **0.749**               |
 
 ---
 

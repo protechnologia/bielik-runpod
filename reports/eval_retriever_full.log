@@ -1,0 +1,975 @@
+               matched: [1255(1), adres(2), f1255(1)]
+     ► #2 chunk_id=10  (cosine: 0.5670 [rank_cos=2]  bm25: -0.1846 [rank_bm25=None]  rrf: 0.0164)
+               matched: [0018(1), 1255(1), adres(1), compressor(3), f1255(1), predkosc(3), speed(3), sprezarki(4)]
+  ✓ [2] "cop wspolczynnik efektywnosci rejestr 001f nibe f1255"
+         router: NIBE F1255
+         tokens: [cop, wspolczynnik, efektywnosci, rejestr, 001f, 001, nibe, f1255, 1255]
+       #1 chunk_id=11  (cosine: 0.5815 [rank_cos=1]  bm25: -0.3669 [rank_bm25=None]  rrf: 0.0167)
+               matched: [1255(1), f1255(1), nibe(1), rejestr(1)]
+     ► #2 chunk_id=10  (cosine: 0.5521 [rank_cos=2]  bm25: -0.2461 [rank_bm25=None]  rrf: 0.0164)
+               matched: [001(4), 001f(1), 1255(1), cop(2), efektywnosci(1), f1255(1), nibe(1), rejestr(1), wspolczynnik(1)]
+  ✓ [2] "tryb pracy operating mode nibe f 1255 odczyt"
+         router: NIBE F1255
+         tokens: [tryb, pracy, operating, mode, nibe, 1255, odczyt]
+       #1 chunk_id=11  (cosine: 0.6168 [rank_cos=1]  bm25: -0.3669 [rank_bm25=None]  rrf: 0.0167)
+               matched: [1255(1), mode(1), nibe(1), operating(1)]
+     ► #2 chunk_id=10  (cosine: 0.5848 [rank_cos=2]  bm25: -0.3075 [rank_bm25=None]  rrf: 0.0164)
+               matched: [1255(1), mode(1), nibe(1), operating(4), pracy(2)]
+  ✓ [3] "energia elektryczna electric energy total f1255 nibe hex"
+         router: brak → pełny corpus
+         tokens: [energia, elektryczna, electric, energy, total, f1255, 1255, nibe, hex]
+       #1 chunk_id=4  (cosine: 0.5997 [rank_cos=3]  bm25: 4.4526 [rank_bm25=4]  rrf: 0.0320)
+               matched: [energia(9), energy(9), hex(1), total(3)]
+       #2 chunk_id=11  (cosine: 0.5894 [rank_cos=8]  bm25: 9.9095 [rank_bm25=2]  rrf: 0.0313)
+               matched: [1255(1), f1255(1), hex(1), nibe(1)]
+     ► #3 chunk_id=10  (cosine: 0.5822 [rank_cos=12]  bm25: 14.5411 [rank_bm25=1]  rrf: 0.0308)
+               matched: [1255(1), electric(1), elektryczna(1), energia(3), energy(3), f1255(1), hex(1), nibe(1), total(3)]
+       #4 chunk_id=7  (cosine: 0.6262 [rank_cos=1]  bm25: 1.4788 [rank_bm25=17]  rrf: 0.0298)
+               matched: [energy(1), hex(1)]
+       #5 chunk_id=5  (cosine: 0.6062 [rank_cos=2]  bm25: 1.0330 [rank_bm25=19]  rrf: 0.0292)
+               matched: [energy(1), hex(1)]
+       #6 chunk_id=3  (cosine: 0.5783 [rank_cos=14]  bm25: 4.0247 [rank_bm25=6]  rrf: 0.0291)
+               matched: [energia(15), energy(15), hex(1), total(10)]
+       #7 chunk_id=6  (cosine: 0.5868 [rank_cos=9]  bm25: 2.6995 [rank_bm25=12]  rrf: 0.0288)
+               matched: [energia(4), energy(4), hex(1)]
+       #8 chunk_id=25  (cosine: 0.5739 [rank_cos=18]  bm25: 4.1777 [rank_bm25=5]  rrf: 0.0286)
+               matched: [energia(6), energy(2), hex(1), total(3)]
+       #9 chunk_id=22  (cosine: 0.5817 [rank_cos=13]  bm25: 3.2451 [rank_bm25=9]  rrf: 0.0286)
+               matched: [energia(9), energy(3), hex(1), total(6)]
+       #10 chunk_id=9  (cosine: 0.5960 [rank_cos=4]  bm25: 0.7491 [rank_bm25=20]  rrf: 0.0285)
+               matched: [hex(1)]
+  ✓ [1] "zadana temperatura co setpoint heating vitodens-200w zapis"
+         router: VIESSMANN VITODENS-200W
+         tokens: [zadana, temperatura, co, setpoint, heating, vitodens, 200w, 200, vitodens-200w, vitodens200w, zapis]
+     ► #1 chunk_id=15  (cosine: 0.5708 [rank_cos=1]  bm25: -1.0698 [rank_bm25=None]  rrf: 0.0167)
+               matched: [200(2), 200w(1), co(2), heating(2), setpoint(2), temperatura(2), vitodens(1), vitodens-200w(1), vitodens200w(1), zadana(2), zapis(1)]
+       #2 chunk_id=14  (cosine: 0.4548 [rank_cos=2]  bm25: -0.8560 [rank_bm25=None]  rrf: 0.0164)
+               matched: [200(1), 200w(1), co(7), heating(1), setpoint(2), temperatura(6), vitodens(1), vitodens-200w(1), vitodens200w(1)]
+  ✓ [1] "reset bledu fault reset 0xe0e0 viessmann vitodens200w"
+         router: VIESSMANN VITODENS-200W
+         tokens: [reset, bledu, fault, reset, 0xe0e0, xe, viessmann, vitodens200w, vitodens, 200]
+     ► #1 chunk_id=15  (cosine: 0.4933 [rank_cos=1]  bm25: -0.6314 [rank_bm25=None]  rrf: 0.0167)
+               matched: [0xe0e0(2), 200(2), bledu(1), fault(1), reset(1), viessmann(1), vitodens(1), vitodens200w(1), xe(2)]
+       #2 chunk_id=14  (cosine: 0.4349 [rank_cos=2]  bm25: -0.5398 [rank_bm25=None]  rrf: 0.0164)
+               matched: [200(1), bledu(3), fault(3), viessmann(1), vitodens(1), vitodens200w(1)]
+  ✓ [1] "tryb pracy operating mode zapis vitodens 200w rejestr 0042"
+         router: VIESSMANN VITODENS-200W
+         tokens: [tryb, pracy, operating, mode, zapis, vitodens, 200w, 200, rejestr, 0042]
+     ► #1 chunk_id=15  (cosine: 0.6108 [rank_cos=1]  bm25: -0.6314 [rank_bm25=None]  rrf: 0.0167)
+               matched: [0042(1), 200(2), 200w(1), mode(1), operating(1), rejestr(1), vitodens(1), zapis(1)]
+       #2 chunk_id=14  (cosine: 0.5056 [rank_cos=2]  bm25: -0.4287 [rank_bm25=None]  rrf: 0.0164)
+               matched: [200(1), 200w(1), mode(1), operating(1), pracy(2), rejestr(1), vitodens(1)]
+  ✓ [1] "baud rate modbus adres 0048 vitodens-200w konfiguracja"
+         router: VIESSMANN VITODENS-200W
+         tokens: [baud, rate, modbus, adres, 0048, vitodens, 200w, 200, vitodens-200w, vitodens200w, konfiguracja]
+     ► #1 chunk_id=15  (cosine: 0.6281 [rank_cos=1]  bm25: -0.9003 [rank_bm25=None]  rrf: 0.0167)
+               matched: [0048(1), 200(2), 200w(1), adres(2), baud(1), modbus(2), rate(1), vitodens(1), vitodens-200w(1), vitodens200w(1)]
+       #2 chunk_id=14  (cosine: 0.5695 [rank_cos=2]  bm25: -0.6414 [rank_bm25=None]  rrf: 0.0164)
+               matched: [200(1), 200w(1), adres(2), modbus(2), rate(1), vitodens(1), vitodens-200w(1), vitodens200w(1)]
+  ✓ [1] "modulacja max min palnik vitodens200w rejestr 0043 0044"
+         router: VIESSMANN VITODENS-200W
+         tokens: [modulacja, max, min, palnik, vitodens200w, vitodens, 200, rejestr, 0043, 0044]
+     ► #1 chunk_id=15  (cosine: 0.6704 [rank_cos=1]  bm25: -0.4326 [rank_bm25=None]  rrf: 0.0167)
+               matched: [0043(1), 0044(1), 200(2), max(1), min(1), rejestr(1), vitodens(1), vitodens200w(1)]
+       #2 chunk_id=14  (cosine: 0.5891 [rank_cos=2]  bm25: -0.2858 [rank_bm25=None]  rrf: 0.0164)
+               matched: [200(1), rejestr(1), vitodens(1), vitodens200w(1)]
+  ✓ [2] "napiecie pv1 voltage rejestr sofar hyd6000-es odczyt"
+         router: SOFAR HYD6000-ES
+         tokens: [napiecie, pv1, pv, voltage, rejestr, sofar, hyd6000, hyd, 6000, es, hyd6000-es, hyd6000es, odczyt]
+       #1 chunk_id=23  (cosine: 0.5962 [rank_cos=1]  bm25: -0.6922 [rank_bm25=None]  rrf: 0.0167)
+               matched: [6000(4), es(1), hyd(1), hyd6000(1), hyd6000-es(1), hyd6000es(1), rejestr(1), sofar(1)]
+     ► #2 chunk_id=22  (cosine: 0.5866 [rank_cos=2]  bm25: -0.4023 [rank_bm25=None]  rrf: 0.0164)
+               matched: [6000(1), es(1), hyd(1), hyd6000(1), hyd6000-es(1), hyd6000es(1), napiecie(6), pv(18), pv1(6), rejestr(1), sofar(1), voltage(6)]
+  ✓ [2] "stan baterii battery soc soh adres 001b sofar hyd6000es"
+         router: SOFAR HYD6000-ES
+         tokens: [stan, baterii, battery, soc, soh, adres, 001b, 001, sofar, hyd6000es, hyd, 6000, es]
+       #1 chunk_id=23  (cosine: 0.4979 [rank_cos=1]  bm25: -0.9070 [rank_bm25=None]  rrf: 0.0167)
+               matched: [6000(4), adres(2), baterii(3), battery(2), es(1), hyd(1), hyd6000es(1), soc(4), sofar(1)]
+     ► #2 chunk_id=22  (cosine: 0.4442 [rank_cos=2]  bm25: -0.6230 [rank_bm25=None]  rrf: 0.0164)
+               matched: [001(11), 001b(1), 6000(1), adres(2), baterii(7), battery(9), es(1), hyd(1), hyd6000es(1), soc(1), sofar(1), soh(1), stan(2)]
+  ✓ [1] "moc sieciowa grid power l1 l2 l3 sofar hyd 6000"
+         router: SOFAR HYD6000-ES
+         tokens: [moc, sieciowa, grid, power, l1, l2, l3, sofar, hyd, 6000]
+     ► #1 chunk_id=22  (cosine: 0.5218 [rank_cos=1]  bm25: -0.5487 [rank_bm25=None]  rrf: 0.0167)
+               matched: [6000(1), grid(13), hyd(1), l1(6), l2(6), l3(6), moc(12), power(12), sieciowa(4), sofar(1)]
+       #2 chunk_id=23  (cosine: 0.5195 [rank_cos=2]  bm25: -0.5813 [rank_bm25=None]  rrf: 0.0164)
+               matched: [6000(4), grid(1), hyd(1), moc(2), power(2), sofar(1)]
+  ✓ [2] "tryb pracy operating mode rejestr 002c sofar hyd6000-es"
+         router: SOFAR HYD6000-ES
+         tokens: [tryb, pracy, operating, mode, rejestr, 002c, 002, sofar, hyd6000, hyd, 6000, es, hyd6000-es, hyd6000es]
+       #1 chunk_id=23  (cosine: 0.5425 [rank_cos=1]  bm25: -0.8540 [rank_bm25=None]  rrf: 0.0167)
+               matched: [6000(4), es(1), hyd(1), hyd6000(1), hyd6000-es(1), hyd6000es(1), mode(1), operating(1), rejestr(1), sofar(1), tryb(1)]
+     ► #2 chunk_id=22  (cosine: 0.4753 [rank_cos=2]  bm25: -0.5029 [rank_bm25=None]  rrf: 0.0164)
+               matched: [002(5), 002c(1), 6000(1), es(1), hyd(1), hyd6000(1), hyd6000-es(1), hyd6000es(1), mode(1), operating(1), rejestr(1), sofar(1)]
+  ✓ [2] "energia pv dzis today rejestr 0040 sofar hyd6000es hex"
+         router: SOFAR HYD6000-ES
+         tokens: [energia, pv, dzis, today, rejestr, 0040, sofar, hyd6000es, hyd, 6000, es, hex]
+       #1 chunk_id=23  (cosine: 0.6221 [rank_cos=1]  bm25: -0.6113 [rank_bm25=None]  rrf: 0.0167)
+               matched: [6000(4), es(1), hex(1), hyd(1), hyd6000es(1), rejestr(1), sofar(1)]
+     ► #2 chunk_id=22  (cosine: 0.5686 [rank_cos=2]  bm25: -0.3520 [rank_bm25=None]  rrf: 0.0164)
+               matched: [0040(1), 6000(1), dzis(6), energia(9), es(1), hex(1), hyd(1), hyd6000es(1), pv(18), rejestr(1), sofar(1), today(6)]
+  ✓ [1] "zadana temperatura co setpoint heat nibe f1255 zapis"
+         router: NIBE F1255
+         tokens: [zadana, temperatura, co, setpoint, heat, nibe, f1255, 1255, zapis]
+     ► #1 chunk_id=11  (cosine: 0.5526 [rank_cos=1]  bm25: -0.6271 [rank_bm25=None]  rrf: 0.0167)
+               matched: [1255(1), co(1), f1255(1), heat(3), nibe(1), setpoint(2)]
+       #2 chunk_id=10  (cosine: 0.4821 [rank_cos=2]  bm25: -0.5314 [rank_bm25=None]  rrf: 0.0164)
+               matched: [1255(1), co(5), f1255(1), heat(4), nibe(1), setpoint(2), temperatura(10), zadana(2)]
+  ✓ [1] "reset alarmu alarm reset zapis 0xA5A5 nibe f1255"
+         router: NIBE F1255
+         tokens: [reset, alarmu, alarm, reset, zapis, 0xa5a5, xa, nibe, f1255, 1255]
+     ► #1 chunk_id=11  (cosine: 0.5905 [rank_cos=1]  bm25: -0.4586 [rank_bm25=None]  rrf: 0.0167)
+               matched: [0xa5a5(1), 1255(1), alarm(1), alarmu(1), f1255(1), nibe(1), reset(1), xa(1)]
+       #2 chunk_id=10  (cosine: 0.4774 [rank_cos=2]  bm25: -0.3076 [rank_bm25=None]  rrf: 0.0164)
+               matched: [1255(1), alarm(1), alarmu(1), f1255(1), nibe(1)]
+  ✓ [1] "tryb pracy operating mode zapis nibe f 1255 rejestr"
+         router: NIBE F1255
+         tokens: [tryb, pracy, operating, mode, zapis, nibe, 1255, rejestr]
+     ► #1 chunk_id=11  (cosine: 0.6004 [rank_cos=1]  bm25: -0.4586 [rank_bm25=None]  rrf: 0.0167)
+               matched: [1255(1), mode(1), nibe(1), operating(1), rejestr(1)]
+       #2 chunk_id=10  (cosine: 0.5203 [rank_cos=2]  bm25: -0.3690 [rank_bm25=None]  rrf: 0.0164)
+               matched: [1255(1), mode(1), nibe(1), operating(4), pracy(2), rejestr(1)]
+  ✓ [1] "force dhw wymus podgrzanie cwu f1255 rejestr 0035"
+         router: brak → pełny corpus
+         tokens: [force, dhw, wymus, podgrzanie, cwu, f1255, 1255, rejestr, 0035]
+     ► #1 chunk_id=11  (cosine: 0.6140 [rank_cos=6]  bm25: 21.7351 [rank_bm25=1]  rrf: 0.0321)
+               matched: [0035(1), 1255(1), cwu(2), dhw(4), f1255(1), force(1), podgrzanie(1), rejestr(1), wymus(1)]
+       #2 chunk_id=15  (cosine: 0.6169 [rank_cos=4]  bm25: 5.6537 [rank_bm25=4]  rrf: 0.0317)
+               matched: [cwu(1), dhw(3), rejestr(1), wymus(1)]
+       #3 chunk_id=7  (cosine: 0.6376 [rank_cos=1]  bm25: 0.7394 [rank_bm25=11]  rrf: 0.0310)
+               matched: [rejestr(1)]
+       #4 chunk_id=9  (cosine: 0.6150 [rank_cos=5]  bm25: 0.7491 [rank_bm25=10]  rrf: 0.0301)
+               matched: [rejestr(1)]
+       #5 chunk_id=13  (cosine: 0.6025 [rank_cos=14]  bm25: 12.1062 [rank_bm25=2]  rrf: 0.0301)
+               matched: [cwu(2), dhw(3), force(1), podgrzanie(1), rejestr(1), wymus(1)]
+       #6 chunk_id=17  (cosine: 0.6083 [rank_cos=11]  bm25: 3.2141 [rank_bm25=6]  rrf: 0.0297)
+               matched: [cwu(1), dhw(3), rejestr(1)]
+       #7 chunk_id=6  (cosine: 0.6190 [rank_cos=3]  bm25: 0.6136 [rank_bm25=18]  rrf: 0.0291)
+               matched: [rejestr(1)]
+       #8 chunk_id=21  (cosine: 0.6131 [rank_cos=7]  bm25: 0.6917 [rank_bm25=14]  rrf: 0.0289)
+               matched: [rejestr(1)]
+       #9 chunk_id=25  (cosine: 0.6118 [rank_cos=9]  bm25: 0.7347 [rank_bm25=12]  rrf: 0.0288)
+               matched: [rejestr(1)]
+       #10 chunk_id=5  (cosine: 0.6216 [rank_cos=2]  bm25: 0.5165 [rank_bm25=23]  rrf: 0.0286)
+               matched: [rejestr(1)]
+  ✓ [1] "baud rate modbus konfiguracja nibe f1255 adres 0036"
+         router: NIBE F1255
+         tokens: [baud, rate, modbus, konfiguracja, nibe, f1255, 1255, adres, 0036]
+     ► #1 chunk_id=11  (cosine: 0.6083 [rank_cos=1]  bm25: -0.3976 [rank_bm25=None]  rrf: 0.0167)
+               matched: [0036(1), 1255(1), adres(2), baud(1), f1255(1), modbus(1), nibe(1), rate(1)]
+       #2 chunk_id=10  (cosine: 0.5627 [rank_cos=2]  bm25: -0.2461 [rank_bm25=None]  rrf: 0.0164)
+               matched: [1255(1), adres(1), f1255(1), nibe(1)]
+  ✓ [2] "predkosc pompy pump speed rejestr grundfos magna3 odczyt"
+         router: GRUNDFOS MAGNA3
+         tokens: [predkosc, pompy, pump, speed, rejestr, grundfos, magna3, magna, odczyt]
+       #1 chunk_id=19  (cosine: 0.6556 [rank_cos=1]  bm25: -0.7227 [rank_bm25=None]  rrf: 0.0167)
+               matched: [grundfos(1), magna(1), magna3(1), predkosc(1), rejestr(1), speed(4)]
+     ► #2 chunk_id=18  (cosine: 0.6302 [rank_cos=2]  bm25: -0.6559 [rank_bm25=None]  rrf: 0.0164)
+               matched: [grundfos(1), magna(1), magna3(1), predkosc(3), pump(1), rejestr(1), speed(4)]
+  ✓ [2] "roznica cisnienia diff pressure adres 0015 magna 3"
+         router: GRUNDFOS MAGNA3
+         tokens: [roznica, cisnienia, diff, pressure, adres, 0015, magna]
+       #1 chunk_id=19  (cosine: 0.5786 [rank_cos=1]  bm25: -0.5803 [rank_bm25=None]  rrf: 0.0167)
+               matched: [adres(2), diff(1), magna(1), pressure(1), roznica(1)]
+     ► #2 chunk_id=18  (cosine: 0.5259 [rank_cos=2]  bm25: -0.5888 [rank_bm25=None]  rrf: 0.0164)
+               matched: [0015(1), adres(2), diff(2), magna(1), pressure(2), roznica(2)]
+  ✓ [2] "pobor mocy input power rejestr grundfos magna3 hex"
+         router: GRUNDFOS MAGNA3
+         tokens: [pobor, mocy, input, power, rejestr, grundfos, magna3, magna, hex]
+       #1 chunk_id=19  (cosine: 0.5703 [rank_cos=1]  bm25: -0.5396 [rank_bm25=None]  rrf: 0.0167)
+               matched: [grundfos(1), hex(1), magna(1), magna3(1), rejestr(1)]
+     ► #2 chunk_id=18  (cosine: 0.5110 [rank_cos=2]  bm25: -0.4273 [rank_bm25=None]  rrf: 0.0164)
+               matched: [grundfos(1), hex(1), input(1), magna(1), magna3(1), mocy(1), pobor(1), power(1), rejestr(1)]
+  ✓ [2] "stan alarmu alarm word slowo grundfos magna3 rejestr"
+         router: GRUNDFOS MAGNA3
+         tokens: [stan, alarmu, alarm, word, slowo, grundfos, magna3, magna, rejestr]
+       #1 chunk_id=19  (cosine: 0.5342 [rank_cos=1]  bm25: -0.5396 [rank_bm25=None]  rrf: 0.0167)
+               matched: [alarm(1), alarmu(1), grundfos(1), magna(1), magna3(1), rejestr(1)]
+     ► #2 chunk_id=18  (cosine: 0.4738 [rank_cos=2]  bm25: -0.4273 [rank_bm25=None]  rrf: 0.0164)
+               matched: [alarm(1), grundfos(1), magna(1), magna3(1), rejestr(1), slowo(3), word(3)]
+  ✓ [2] "czas pracy operating hours grundfos magna 3 odczyt"
+         router: GRUNDFOS MAGNA3
+         tokens: [czas, pracy, operating, hours, grundfos, magna, odczyt]
+       #1 chunk_id=19  (cosine: 0.5735 [rank_cos=1]  bm25: -0.3238 [rank_bm25=None]  rrf: 0.0167)
+               matched: [grundfos(1), magna(1), operating(1)]
+     ► #2 chunk_id=18  (cosine: 0.5393 [rank_cos=2]  bm25: -0.2967 [rank_bm25=None]  rrf: 0.0164)
+               matched: [czas(1), grundfos(1), hours(1), magna(1), operating(2), pracy(1)]
+  ✓ [3] "reset licznika we520"
+         router: ORNO OR-WE-520
+         tokens: [reset, licznika, we520, we, 520]
+       #1 chunk_id=2  (cosine: 0.6562 [rank_cos=1]  bm25: 1.2749 [rank_bm25=1]  rrf: 0.0333)
+               matched: [520(1), licznika(1), reset(1), we(2)]
+       #2 chunk_id=0  (cosine: 0.6272 [rank_cos=2]  bm25: 0.0768 [rank_bm25=3]  rrf: 0.0325)
+               matched: [520(1), we(1)]
+     ► #3 chunk_id=1  (cosine: 0.5714 [rank_cos=3]  bm25: 0.0922 [rank_bm25=2]  rrf: 0.0325)
+               matched: [520(1), we(1)]
+  ✓ [3] "jak zmienić baud rate rejestr zapisu or-we-520"
+         router: ORNO OR-WE-520
+         tokens: [jak, zmienic, baud, rate, rejestr, zapisu, or, we, 520, or-we-520, orwe520]
+       #1 chunk_id=2  (cosine: 0.7273 [rank_cos=1]  bm25: 1.0357 [rank_bm25=1]  rrf: 0.0333)
+               matched: [520(1), baud(1), or(2), or-we-520(1), orwe520(1), rate(2), rejestr(1), we(2), zapisu(1)]
+       #2 chunk_id=0  (cosine: 0.7230 [rank_cos=2]  bm25: 0.3367 [rank_bm25=2]  rrf: 0.0328)
+               matched: [520(1), baud(1), or(1), or-we-520(1), orwe520(1), rate(3), rejestr(1), we(1)]
+     ► #3 chunk_id=1  (cosine: 0.7082 [rank_cos=3]  bm25: 0.2767 [rank_bm25=3]  rrf: 0.0323)
+               matched: [520(1), or(1), or-we-520(1), orwe520(1), rejestr(1), we(1)]
+  ✓ [3] "adres modbus licznika ustawienie or-we-520"
+         router: ORNO OR-WE-520
+         tokens: [adres, modbus, licznika, ustawienie, or, we, 520, or-we-520, orwe520]
+       #1 chunk_id=2  (cosine: 0.7190 [rank_cos=1]  bm25: 0.9855 [rank_bm25=1]  rrf: 0.0333)
+               matched: [520(1), adres(2), licznika(1), modbus(1), or(2), or-we-520(1), orwe520(1), we(2)]
+       #2 chunk_id=0  (cosine: 0.7126 [rank_cos=2]  bm25: 0.2873 [rank_bm25=2]  rrf: 0.0328)
+               matched: [520(1), adres(2), modbus(1), or(1), or-we-520(1), orwe520(1), we(1)]
+     ► #3 chunk_id=1  (cosine: 0.6494 [rank_cos=3]  bm25: 0.2767 [rank_bm25=3]  rrf: 0.0323)
+               matched: [520(1), adres(1), or(1), or-we-520(1), orwe520(1), we(1)]
+  ✓ [7] "synchronizacja zegara rtc rejestr orwe520"
+         router: brak → pełny corpus
+         tokens: [synchronizacja, zegara, rtc, rejestr, orwe520, orwe, 520]
+       #1 chunk_id=2  (cosine: 0.6327 [rank_cos=1]  bm25: 10.0345 [rank_bm25=1]  rrf: 0.0333)
+               matched: [520(1), orwe520(1), rejestr(1), rtc(1), synchronizacja(1), zegara(1)]
+       #2 chunk_id=0  (cosine: 0.6062 [rank_cos=2]  bm25: 3.0655 [rank_bm25=4]  rrf: 0.0323)
+               matched: [520(1), orwe520(1), rejestr(1)]
+       #3 chunk_id=7  (cosine: 0.5975 [rank_cos=5]  bm25: 8.9671 [rank_bm25=2]  rrf: 0.0320)
+               matched: [rejestr(1), rtc(1), synchronizacja(1), zegara(1)]
+       #4 chunk_id=9  (cosine: 0.5943 [rank_cos=6]  bm25: 2.6890 [rank_bm25=5]  rrf: 0.0310)
+               matched: [rejestr(1), synchronizacja(1)]
+       #5 chunk_id=15  (cosine: 0.6032 [rank_cos=3]  bm25: 0.6727 [rank_bm25=13]  rrf: 0.0300)
+               matched: [rejestr(1)]
+       #6 chunk_id=11  (cosine: 0.5914 [rank_cos=7]  bm25: 0.7177 [rank_bm25=9]  rrf: 0.0299)
+               matched: [rejestr(1)]
+     ► #7 chunk_id=1  (cosine: 0.5602 [rank_cos=15]  bm25: 3.8252 [rank_bm25=3]  rrf: 0.0296)
+               matched: [520(1), orwe520(1), rejestr(1)]
+       #8 chunk_id=23  (cosine: 0.5797 [rank_cos=12]  bm25: 2.2844 [rank_bm25=6]  rrf: 0.0295)
+               matched: [rejestr(1), synchronizacja(1)]
+       #9 chunk_id=25  (cosine: 0.5852 [rank_cos=10]  bm25: 0.7347 [rank_bm25=8]  rrf: 0.0294)
+               matched: [rejestr(1)]
+       #10 chunk_id=26  (cosine: 0.5698 [rank_cos=13]  bm25: 2.1010 [rank_bm25=7]  rrf: 0.0290)
+               matched: [rejestr(1), synchronizacja(1)]
+  ✓ [3] "haslo zabezpieczenie parametry 520"
+         router: brak → pełny corpus
+         tokens: [haslo, zabezpieczenie, parametry, 520]
+       #1 chunk_id=2  (cosine: 0.7239 [rank_cos=1]  bm25: 3.7230 [rank_bm25=1]  rrf: 0.0333)
+               matched: [520(1), haslo(1)]
+       #2 chunk_id=0  (cosine: 0.7113 [rank_cos=2]  bm25: 1.3448 [rank_bm25=5]  rrf: 0.0320)
+               matched: [520(1)]
+     ► #3 chunk_id=1  (cosine: 0.6690 [rank_cos=4]  bm25: 1.6780 [rank_bm25=4]  rrf: 0.0317)
+               matched: [520(1)]
+       #4 chunk_id=5  (cosine: 0.6470 [rank_cos=7]  bm25: 1.8475 [rank_bm25=3]  rrf: 0.0313)
+               matched: [haslo(1)]
+       #5 chunk_id=7  (cosine: 0.6231 [rank_cos=13]  bm25: 2.6448 [rank_bm25=2]  rrf: 0.0303)
+               matched: [haslo(1)]
+       #6 chunk_id=15  (cosine: 0.6803 [rank_cos=3]  bm25: 0.0000 [rank_bm25=None]  rrf: 0.0161)
+               matched: []
+       #7 chunk_id=13  (cosine: 0.6577 [rank_cos=5]  bm25: 0.0000 [rank_bm25=None]  rrf: 0.0156)
+               matched: []
+       #8 chunk_id=9  (cosine: 0.6482 [rank_cos=6]  bm25: 0.0000 [rank_bm25=None]  rrf: 0.0154)
+               matched: []
+       #9 chunk_id=17  (cosine: 0.6461 [rank_cos=8]  bm25: 0.0000 [rank_bm25=None]  rrf: 0.0149)
+               matched: []
+       #10 chunk_id=11  (cosine: 0.6428 [rank_cos=9]  bm25: 0.0000 [rank_bm25=None]  rrf: 0.0147)
+               matched: []
+  ✓ [2] "temperatura kotla boiler temp rejestr viessmann vitodens 200w"
+         router: VIESSMANN VITODENS-200W
+         tokens: [temperatura, kotla, boiler, temp, rejestr, viessmann, vitodens, 200w, 200]
+       #1 chunk_id=15  (cosine: 0.5603 [rank_cos=1]  bm25: -0.6664 [rank_bm25=None]  rrf: 0.0167)
+               matched: [200(2), 200w(1), rejestr(1), temperatura(2), viessmann(1), vitodens(1)]
+     ► #2 chunk_id=14  (cosine: 0.4965 [rank_cos=2]  bm25: -0.5149 [rank_bm25=None]  rrf: 0.0164)
+               matched: [200(1), 200w(1), boiler(2), kotla(2), rejestr(1), temp(6), temperatura(6), viessmann(1), vitodens(1)]
+  ✓ [2] "modulacja palnika modulation level adres 0016 vitodens200w"
+         router: VIESSMANN VITODENS-200W
+         tokens: [modulacja, palnika, modulation, level, adres, 0016, vitodens200w, vitodens, 200]
+       #1 chunk_id=15  (cosine: 0.6673 [rank_cos=1]  bm25: -0.7366 [rank_bm25=None]  rrf: 0.0167)
+               matched: [200(2), adres(2), modulation(2), palnika(2), vitodens(1), vitodens200w(1)]
+     ► #2 chunk_id=14  (cosine: 0.5894 [rank_cos=2]  bm25: -0.5192 [rank_bm25=None]  rrf: 0.0164)
+               matched: [0016(1), 200(1), adres(2), level(2), modulation(1), palnika(3), vitodens(1), vitodens200w(1)]
+  ✓ [2] "kod bledu fault code viessmann vitodens-200w odczyt"
+         router: VIESSMANN VITODENS-200W
+         tokens: [kod, bledu, fault, code, viessmann, vitodens, 200w, 200, vitodens-200w, vitodens200w, odczyt]
+       #1 chunk_id=15  (cosine: 0.6125 [rank_cos=1]  bm25: -0.8301 [rank_bm25=None]  rrf: 0.0167)
+               matched: [200(2), 200w(1), bledu(1), fault(1), viessmann(1), vitodens(1), vitodens-200w(1), vitodens200w(1)]
+     ► #2 chunk_id=14  (cosine: 0.5782 [rank_cos=2]  bm25: -0.6827 [rank_bm25=None]  rrf: 0.0164)
+               matched: [200(1), 200w(1), bledu(3), code(1), fault(3), kod(3), viessmann(1), vitodens(1), vitodens-200w(1), vitodens200w(1)]
+  ✓ [2] "energia gazu gas energy total vitodens 200w hex rejestr"
+         router: VIESSMANN VITODENS-200W
+         tokens: [energia, gazu, gas, energy, total, vitodens, 200w, 200, hex, rejestr]
+       #1 chunk_id=15  (cosine: 0.4901 [rank_cos=1]  bm25: -0.5320 [rank_bm25=None]  rrf: 0.0167)
+               matched: [200(2), 200w(1), hex(1), rejestr(1), vitodens(1)]
+     ► #2 chunk_id=14  (cosine: 0.4558 [rank_cos=2]  bm25: -0.3573 [rank_bm25=None]  rrf: 0.0164)
+               matched: [200(1), 200w(1), energia(3), energy(3), gas(3), gazu(2), hex(1), rejestr(1), total(3), vitodens(1)]
+  ✓ [2] "stan pompy pump status rejestr 0018 viessmann vitodens"
+         router: VIESSMANN VITODENS-200W
+         tokens: [stan, pompy, pump, status, rejestr, 0018, viessmann, vitodens]
+       #1 chunk_id=15  (cosine: 0.5569 [rank_cos=1]  bm25: -0.4969 [rank_bm25=None]  rrf: 0.0167)
+               matched: [pompy(1), pump(1), rejestr(1), viessmann(1), vitodens(1)]
+     ► #2 chunk_id=14  (cosine: 0.5139 [rank_cos=2]  bm25: -0.4128 [rank_bm25=None]  rrf: 0.0164)
+               matched: [0018(1), pompy(1), pump(3), rejestr(1), status(3), viessmann(1), vitodens(1)]
+  ✓ [2] "napiecie pv1 pv2 rejestr goodwe et-plus odczyt"
+         router: GOODWE ET-PLUS
+         tokens: [napiecie, pv1, pv, pv2, pv, rejestr, goodwe, et, plus, et-plus, etplus, odczyt]
+       #1 chunk_id=25  (cosine: 0.6533 [rank_cos=1]  bm25: 0.5074 [rank_bm25=2]  rrf: 0.0331)
+               matched: [et(1), et-plus(1), etplus(1), goodwe(1), plus(1), rejestr(1)]
+     ► #2 chunk_id=24  (cosine: 0.6264 [rank_cos=2]  bm25: 5.3542 [rank_bm25=1]  rrf: 0.0331)
+               matched: [et(1), et-plus(1), etplus(1), goodwe(1), napiecie(10), plus(1), pv(24), pv1(6), pv2(6), rejestr(1)]
+       #3 chunk_id=26  (cosine: 0.6181 [rank_cos=3]  bm25: 0.4164 [rank_bm25=3]  rrf: 0.0323)
+               matched: [et(1), et-plus(1), etplus(1), goodwe(1), plus(1), rejestr(1)]
+  ✓ [2] "stan baterii battery soc soh adres 0044 goodwe etplus"
+         router: GOODWE ET-PLUS
+         tokens: [stan, baterii, battery, soc, soh, adres, 0044, goodwe, etplus]
+       #1 chunk_id=26  (cosine: 0.4861 [rank_cos=1]  bm25: 0.5229 [rank_bm25=2]  rrf: 0.0331)
+               matched: [adres(2), baterii(1), battery(2), etplus(1), goodwe(1), soc(6)]
+     ► #2 chunk_id=24  (cosine: 0.4577 [rank_cos=3]  bm25: 1.6755 [rank_bm25=1]  rrf: 0.0328)
+               matched: [0044(1), adres(2), baterii(6), battery(8), etplus(1), goodwe(1), soc(1), soh(1), stan(2)]
+       #3 chunk_id=25  (cosine: 0.4742 [rank_cos=2]  bm25: 0.2537 [rank_bm25=3]  rrf: 0.0325)
+               matched: [adres(1), etplus(1), goodwe(1)]
+  ✓ [2] "moc sieciowa grid power l1 l2 l3 goodwe et plus"
+         router: GOODWE ET-PLUS
+         tokens: [moc, sieciowa, grid, power, l1, l2, l3, goodwe, et, plus]
+       #1 chunk_id=26  (cosine: 0.5842 [rank_cos=1]  bm25: 0.3855 [rank_bm25=2]  rrf: 0.0331)
+               matched: [et(1), goodwe(1), grid(1), plus(1), power(3)]
+     ► #2 chunk_id=24  (cosine: 0.5743 [rank_cos=2]  bm25: 4.3019 [rank_bm25=1]  rrf: 0.0331)
+               matched: [et(1), goodwe(1), grid(7), l1(8), l2(8), l3(8), moc(12), plus(1), power(12)]
+       #3 chunk_id=25  (cosine: 0.5473 [rank_cos=3]  bm25: 0.3790 [rank_bm25=3]  rrf: 0.0323)
+               matched: [et(1), goodwe(1), grid(4), plus(1)]
+  ✓ [2] "tryb pracy work mode rejestr 0036 goodwe etplus hex"
+         router: GOODWE ET-PLUS
+         tokens: [tryb, pracy, work, mode, rejestr, 0036, goodwe, etplus, hex]
+       #1 chunk_id=26  (cosine: 0.5943 [rank_cos=1]  bm25: 0.4164 [rank_bm25=2]  rrf: 0.0331)
+               matched: [etplus(1), goodwe(1), hex(1), mode(1), rejestr(1), work(1)]
+     ► #2 chunk_id=24  (cosine: 0.5934 [rank_cos=2]  bm25: 1.3409 [rank_bm25=1]  rrf: 0.0331)
+               matched: [0036(1), etplus(1), goodwe(1), hex(1), mode(2), pracy(1), rejestr(1), tryb(1), work(1)]
+       #3 chunk_id=25  (cosine: 0.5700 [rank_cos=3]  bm25: 0.3383 [rank_bm25=3]  rrf: 0.0323)
+               matched: [etplus(1), goodwe(1), hex(1), rejestr(1)]
+  ✓ [2] "temperatura falownika inverter temp adres 0035 goodwe"
+         router: GOODWE ET-PLUS
+         tokens: [temperatura, falownika, inverter, temp, adres, 0035, goodwe]
+       #1 chunk_id=26  (cosine: 0.5457 [rank_cos=1]  bm25: 0.2335 [rank_bm25=2]  rrf: 0.0331)
+               matched: [adres(2), falownika(1), goodwe(1)]
+     ► #2 chunk_id=24  (cosine: 0.5413 [rank_cos=2]  bm25: 1.9738 [rank_bm25=1]  rrf: 0.0331)
+               matched: [0035(1), adres(2), falownika(1), goodwe(1), inverter(1), temp(2), temperatura(2)]
+       #3 chunk_id=25  (cosine: 0.5395 [rank_cos=3]  bm25: 0.1691 [rank_bm25=3]  rrf: 0.0323)
+               matched: [adres(1), goodwe(1)]
+  ✓ [1] "zadana temperatura cwu setpoint dhw daikin altherma-r zapis"
+         router: DAIKIN ALTHERMA-R
+         tokens: [zadana, temperatura, cwu, setpoint, dhw, daikin, altherma, altherma-r, althermar, zapis]
+     ► #1 chunk_id=13  (cosine: 0.6254 [rank_cos=1]  bm25: -0.6531 [rank_bm25=None]  rrf: 0.0167)
+               matched: [altherma(1), altherma-r(1), althermar(1), cwu(2), daikin(1), dhw(3), setpoint(3), temperatura(1), zadana(3), zapis(1)]
+       #2 chunk_id=12  (cosine: 0.4703 [rank_cos=2]  bm25: -0.5503 [rank_bm25=None]  rrf: 0.0164)
+               matched: [altherma(1), altherma-r(1), althermar(1), cwu(2), daikin(1), dhw(3), temperatura(7)]
+  ✓ [1] "reset bledu error reset 0x1234 althermar rejestr"
+         router: DAIKIN ALTHERMA-R
+         tokens: [reset, bledu, error, reset, 0x1234, 1234, althermar, rejestr]
+     ► #1 chunk_id=13  (cosine: 0.4814 [rank_cos=1]  bm25: -0.3325 [rank_bm25=None]  rrf: 0.0167)
+               matched: [0x1234(2), 1234(2), althermar(1), bledu(1), error(1), rejestr(1), reset(1)]
+       #2 chunk_id=12  (cosine: 0.4139 [rank_cos=2]  bm25: -0.2294 [rank_bm25=None]  rrf: 0.0164)
+               matched: [althermar(1), bledu(1), error(1), rejestr(1)]
+  ✓ [1] "tryb pracy operation mode zapis daikin altherma r"
+         router: DAIKIN ALTHERMA-R
+         tokens: [tryb, pracy, operation, mode, zapis, daikin, altherma]
+     ► #1 chunk_id=13  (cosine: 0.5911 [rank_cos=1]  bm25: -0.3609 [rank_bm25=None]  rrf: 0.0167)
+               matched: [altherma(1), daikin(1), mode(2), operation(1), zapis(1)]
+       #2 chunk_id=12  (cosine: 0.4883 [rank_cos=2]  bm25: -0.2294 [rank_bm25=None]  rrf: 0.0164)
+               matched: [altherma(1), daikin(1), mode(1), operation(1), pracy(1)]
+  ✓ [1] "baud rate modbus adres 0048 altherma-r konfiguracja"
+         router: DAIKIN ALTHERMA-R
+         tokens: [baud, rate, modbus, adres, 0048, altherma, altherma-r, althermar, konfiguracja]
+     ► #1 chunk_id=13  (cosine: 0.6067 [rank_cos=1]  bm25: -0.4725 [rank_bm25=None]  rrf: 0.0167)
+               matched: [0048(1), adres(2), altherma(1), altherma-r(1), althermar(1), baud(1), modbus(2), rate(1)]
+       #2 chunk_id=12  (cosine: 0.5693 [rank_cos=2]  bm25: -0.3435 [rank_bm25=None]  rrf: 0.0164)
+               matched: [adres(2), altherma(1), altherma-r(1), althermar(1), modbus(2)]
+  ✓ [4] "force dhw wymus podgrzanie althermar rejestr 0044"
+         router: brak → pełny corpus
+         tokens: [force, dhw, wymus, podgrzanie, althermar, rejestr, 0044]
+       #1 chunk_id=15  (cosine: 0.6304 [rank_cos=7]  bm25: 5.6537 [rank_bm25=3]  rrf: 0.0313)
+               matched: [0044(1), dhw(3), rejestr(1), wymus(1)]
+       #2 chunk_id=19  (cosine: 0.6371 [rank_cos=2]  bm25: 1.6730 [rank_bm25=10]  rrf: 0.0309)
+               matched: [0044(1), rejestr(1)]
+       #3 chunk_id=11  (cosine: 0.6246 [rank_cos=10]  bm25: 11.1092 [rank_bm25=2]  rrf: 0.0309)
+               matched: [dhw(4), force(1), podgrzanie(1), rejestr(1), wymus(1)]
+     ► #4 chunk_id=13  (cosine: 0.6197 [rank_cos=12]  bm25: 14.7336 [rank_bm25=1]  rrf: 0.0308)
+               matched: [0044(1), althermar(1), dhw(3), force(1), podgrzanie(1), rejestr(1), wymus(1)]
+       #5 chunk_id=7  (cosine: 0.6535 [rank_cos=1]  bm25: 0.7394 [rank_bm25=15]  rrf: 0.0302)
+               matched: [rejestr(1)]
+       #6 chunk_id=21  (cosine: 0.6319 [rank_cos=6]  bm25: 1.7473 [rank_bm25=9]  rrf: 0.0301)
+               matched: [0044(1), rejestr(1)]
+       #7 chunk_id=17  (cosine: 0.6171 [rank_cos=14]  bm25: 3.2141 [rank_bm25=5]  rrf: 0.0293)
+               matched: [0044(1), dhw(3), rejestr(1)]
+       #8 chunk_id=25  (cosine: 0.6330 [rank_cos=5]  bm25: 0.7347 [rank_bm25=16]  rrf: 0.0290)
+               matched: [rejestr(1)]
+       #9 chunk_id=6  (cosine: 0.6367 [rank_cos=3]  bm25: 0.6136 [rank_bm25=20]  rrf: 0.0288)
+               matched: [rejestr(1)]
+       #10 chunk_id=9  (cosine: 0.6256 [rank_cos=9]  bm25: 0.7491 [rank_bm25=14]  rrf: 0.0284)
+               matched: [rejestr(1)]
+  ✓ [2] "napiecie L1 rejestr orno 520"
+         router: ORNO OR-WE-520
+         tokens: [napiecie, l1, rejestr, orno, 520]
+       #1 chunk_id=0  (cosine: 0.7538 [rank_cos=1]  bm25: 1.1887 [rank_bm25=1]  rrf: 0.0333)
+               matched: [520(1), l1(22), napiecie(6), orno(1), rejestr(1)]
+     ► #2 chunk_id=2  (cosine: 0.7442 [rank_cos=2]  bm25: 0.1504 [rank_bm25=3]  rrf: 0.0325)
+               matched: [520(1), orno(1), rejestr(1)]
+       #3 chunk_id=1  (cosine: 0.7192 [rank_cos=3]  bm25: 0.2282 [rank_bm25=2]  rrf: 0.0325)
+               matched: [520(1), l1(6), orno(1), rejestr(1)]
+  ✓ [2] "jak odczytac prad fazowy we520"
+         router: ORNO OR-WE-520
+         tokens: [jak, odczytac, prad, fazowy, we520, we, 520]
+       #1 chunk_id=0  (cosine: 0.7230 [rank_cos=1]  bm25: 1.6446 [rank_bm25=1]  rrf: 0.0333)
+               matched: [520(1), fazowy(3), prad(3), we(1)]
+     ► #2 chunk_id=2  (cosine: 0.7118 [rank_cos=2]  bm25: 0.1192 [rank_bm25=2]  rrf: 0.0328)
+               matched: [520(1), we(2)]
+       #3 chunk_id=1  (cosine: 0.6660 [rank_cos=3]  bm25: 0.0922 [rank_bm25=3]  rrf: 0.0323)
+               matched: [520(1), we(1)]
+  ✓ [2] "adres hex moc czynna orwe520"
+         router: ORNO OR-WE-520
+         tokens: [adres, hex, moc, czynna, orwe520, orwe, 520]
+       #1 chunk_id=0  (cosine: 0.7381 [rank_cos=1]  bm25: 0.3611 [rank_bm25=1]  rrf: 0.0333)
+               matched: [520(1), adres(2), czynna(10), hex(1), moc(12), orwe520(1)]
+     ► #2 chunk_id=2  (cosine: 0.7197 [rank_cos=2]  bm25: 0.2195 [rank_bm25=3]  rrf: 0.0325)
+               matched: [520(1), adres(2), hex(1), orwe520(1)]
+       #3 chunk_id=1  (cosine: 0.6766 [rank_cos=3]  bm25: 0.3485 [rank_bm25=2]  rrf: 0.0325)
+               matched: [520(1), adres(1), czynna(4), hex(1), moc(4), orwe520(1)]
+  ✓ [1] "czestotliwosc sieci grid frequency rejestr or-we-520"
+         router: ORNO OR-WE-520
+         tokens: [czestotliwosc, sieci, grid, frequency, rejestr, or, we, 520, or-we-520, orwe520]
+     ► #1 chunk_id=2  (cosine: 0.6865 [rank_cos=1]  bm25: 0.3386 [rank_bm25=2]  rrf: 0.0331)
+               matched: [520(1), or(2), or-we-520(1), orwe520(1), rejestr(1), we(2)]
+       #2 chunk_id=0  (cosine: 0.6793 [rank_cos=2]  bm25: 1.9996 [rank_bm25=1]  rrf: 0.0331)
+               matched: [520(1), czestotliwosc(1), frequency(1), grid(1), or(1), or-we-520(1), orwe520(1), rejestr(1), sieci(1), we(1)]
+       #3 chunk_id=1  (cosine: 0.6218 [rank_cos=3]  bm25: 0.2767 [rank_bm25=3]  rrf: 0.0323)
+               matched: [520(1), or(1), or-we-520(1), orwe520(1), rejestr(1), we(1)]
+  ✓ [2] "wspolczynnik mocy L2 L3 rejestr orno or-we-520"
+         router: ORNO OR-WE-520
+         tokens: [wspolczynnik, mocy, l2, l3, rejestr, orno, or, we, 520, or-we-520, orwe520]
+       #1 chunk_id=0  (cosine: 0.7461 [rank_cos=1]  bm25: 1.4157 [rank_bm25=1]  rrf: 0.0333)
+               matched: [520(1), l2(22), l3(22), mocy(4), or(1), or-we-520(1), orno(1), orwe520(1), rejestr(1), we(1), wspolczynnik(4)]
+     ► #2 chunk_id=2  (cosine: 0.7456 [rank_cos=2]  bm25: 0.4389 [rank_bm25=3]  rrf: 0.0325)
+               matched: [520(1), mocy(1), or(2), or-we-520(1), orno(1), orwe520(1), rejestr(1), we(2)]
+       #3 chunk_id=1  (cosine: 0.6788 [rank_cos=3]  bm25: 0.5024 [rank_bm25=2]  rrf: 0.0325)
+               matched: [520(1), l2(6), l3(6), or(1), or-we-520(1), orno(1), orwe520(1), rejestr(1), we(1)]
+  ✓ [1] "zadana temperatura co setpoint bosch condens 7000i zapis"
+         router: BOSCH CONDENS 7000i
+         tokens: [zadana, temperatura, co, setpoint, bosch, condens, 7000i, 7000, zapis]
+     ► #1 chunk_id=17  (cosine: 0.6446 [rank_cos=1]  bm25: -0.6208 [rank_bm25=None]  rrf: 0.0167)
+               matched: [7000(1), 7000i(1), bosch(1), co(3), condens(1), setpoint(2), temperatura(2), zadana(2)]
+       #2 chunk_id=16  (cosine: 0.5896 [rank_cos=2]  bm25: -0.4987 [rank_bm25=None]  rrf: 0.0164)
+               matched: [7000(1), 7000i(1), bosch(1), co(2), condens(1), setpoint(2), temperatura(5), zapis(1)]
+  ✓ [1] "reset bledu error reset rejestr 0046 condens 7000i"
+         router: BOSCH CONDENS 7000i
+         tokens: [reset, bledu, error, reset, rejestr, 0046, condens, 7000i, 7000]
+     ► #1 chunk_id=17  (cosine: 0.5440 [rank_cos=1]  bm25: -0.4512 [rank_bm25=None]  rrf: 0.0167)
+               matched: [0046(1), 7000(1), 7000i(1), bledu(1), condens(1), error(1), rejestr(1), reset(3)]
+       #2 chunk_id=16  (cosine: 0.5359 [rank_cos=2]  bm25: -0.3992 [rank_bm25=None]  rrf: 0.0164)
+               matched: [7000(1), 7000i(1), bledu(2), condens(1), error(3), rejestr(1)]
+  ✓ [1] "tryb pracy operating mode zapis bosch7000i"
+         router: BOSCH CONDENS 7000i
+         tokens: [tryb, pracy, operating, mode, zapis, bosch7000i, bosch, 7000]
+     ► #1 chunk_id=17  (cosine: 0.6165 [rank_cos=1]  bm25: -0.3008 [rank_bm25=None]  rrf: 0.0167)
+               matched: [7000(1), bosch(1), mode(1), operating(1)]
+       #2 chunk_id=16  (cosine: 0.5919 [rank_cos=2]  bm25: -0.2200 [rank_bm25=None]  rrf: 0.0164)
+               matched: [7000(1), bosch(1), mode(1), operating(1), pracy(2), zapis(1)]
+  ✓ [1] "baud rate modbus adres 0049 bosch condens 7000"
+         router: BOSCH CONDENS 7000i
+         tokens: [baud, rate, modbus, adres, 0049, bosch, condens, 7000]
+     ► #1 chunk_id=17  (cosine: 0.5695 [rank_cos=1]  bm25: -0.4298 [rank_bm25=None]  rrf: 0.0167)
+               matched: [0049(1), 7000(1), adres(2), baud(1), bosch(1), condens(1), modbus(2), rate(1)]
+       #2 chunk_id=16  (cosine: 0.5463 [rank_cos=2]  bm25: -0.3284 [rank_bm25=None]  rrf: 0.0164)
+               matched: [7000(1), adres(2), bosch(1), condens(1), modbus(2)]
+  ✓ [1] "max moc co palnik limit rejestr condens7000i"
+         router: BOSCH CONDENS 7000i
+         tokens: [max, moc, co, palnik, limit, rejestr, condens7000i, condens, 7000]
+     ► #1 chunk_id=17  (cosine: 0.5845 [rank_cos=1]  bm25: -0.4436 [rank_bm25=None]  rrf: 0.0167)
+               matched: [7000(1), co(3), condens(1), max(1), moc(2), rejestr(1)]
+       #2 chunk_id=16  (cosine: 0.5468 [rank_cos=2]  bm25: -0.3017 [rank_bm25=None]  rrf: 0.0164)
+               matched: [7000(1), co(2), condens(1), moc(1), rejestr(1)]
+  ✓ [3] "energia pv dzis today rejestr 0060 goodwe et-plus"
+         router: GOODWE ET-PLUS
+         tokens: [energia, pv, dzis, today, rejestr, 0060, goodwe, et, plus, et-plus, etplus]
+       #1 chunk_id=26  (cosine: 0.5897 [rank_cos=1]  bm25: 0.4164 [rank_bm25=3]  rrf: 0.0328)
+               matched: [et(1), et-plus(1), etplus(1), goodwe(1), plus(1), rejestr(1)]
+       #2 chunk_id=24  (cosine: 0.5667 [rank_cos=3]  bm25: 2.0227 [rank_bm25=1]  rrf: 0.0328)
+               matched: [0060(1), dzis(3), energia(6), et(1), et-plus(1), etplus(1), goodwe(1), plus(1), pv(24), rejestr(1), today(3)]
+     ► #3 chunk_id=25  (cosine: 0.5883 [rank_cos=2]  bm25: 0.8775 [rank_bm25=2]  rrf: 0.0328)
+               matched: [dzis(3), energia(6), et(1), et-plus(1), etplus(1), goodwe(1), plus(1), rejestr(1), today(3)]
+  ✓ [1] "energia z sieci grid import total goodwe etplus adres"
+         router: GOODWE ET-PLUS
+         tokens: [energia, sieci, grid, import, total, goodwe, etplus, adres]
+     ► #1 chunk_id=25  (cosine: 0.5338 [rank_cos=3]  bm25: 1.6796 [rank_bm25=1]  rrf: 0.0328)
+               matched: [adres(1), energia(6), etplus(1), goodwe(1), grid(4), import(2), sieci(4), total(3)]
+       #2 chunk_id=26  (cosine: 0.5903 [rank_cos=1]  bm25: 0.4188 [rank_bm25=3]  rrf: 0.0328)
+               matched: [adres(2), etplus(1), goodwe(1), grid(1), sieci(4)]
+       #3 chunk_id=24  (cosine: 0.5519 [rank_cos=2]  bm25: 0.5012 [rank_bm25=2]  rrf: 0.0328)
+               matched: [adres(2), energia(6), etplus(1), goodwe(1), grid(7), sieci(1), total(5)]
+  ✓ [4] "energia obciazenia load energy total et-plus rejestr"
+         router: brak → pełny corpus
+         tokens: [energia, obciazenia, load, energy, total, et, plus, et-plus, etplus, rejestr]
+       #1 chunk_id=4  (cosine: 0.5502 [rank_cos=1]  bm25: 4.4526 [rank_bm25=5]  rrf: 0.0323)
+               matched: [energia(9), energy(9), rejestr(1), total(3)]
+       #2 chunk_id=26  (cosine: 0.5311 [rank_cos=3]  bm25: 8.9599 [rank_bm25=4]  rrf: 0.0320)
+               matched: [et(1), et-plus(1), etplus(1), plus(1), rejestr(1)]
+       #3 chunk_id=22  (cosine: 0.5094 [rank_cos=9]  bm25: 9.2447 [rank_bm25=3]  rrf: 0.0308)
+               matched: [energia(9), energy(3), load(5), obciazenia(4), rejestr(1), total(6)]
+     ► #4 chunk_id=25  (cosine: 0.5059 [rank_cos=14]  bm25: 20.7289 [rank_bm25=1]  rrf: 0.0304)
+               matched: [energia(6), energy(2), et(1), et-plus(1), etplus(1), load(2), obciazenia(1), plus(1), rejestr(1), total(3)]
+       #5 chunk_id=24  (cosine: 0.4994 [rank_cos=17]  bm25: 9.9400 [rank_bm25=2]  rrf: 0.0296)
+               matched: [energia(6), energy(2), et(1), et-plus(1), etplus(1), load(1), obciazenia(1), plus(1), rejestr(1), total(5)]
+       #6 chunk_id=5  (cosine: 0.5390 [rank_cos=2]  bm25: 1.0330 [rank_bm25=19]  rrf: 0.0292)
+               matched: [energy(1), rejestr(1)]
+       #7 chunk_id=7  (cosine: 0.5306 [rank_cos=4]  bm25: 1.4788 [rank_bm25=17]  rrf: 0.0290)
+               matched: [energy(1), rejestr(1)]
+       #8 chunk_id=0  (cosine: 0.5041 [rank_cos=15]  bm25: 3.9310 [rank_bm25=7]  rrf: 0.0287)
+               matched: [energia(13), energy(13), rejestr(1), total(9)]
+       #9 chunk_id=15  (cosine: 0.5264 [rank_cos=5]  bm25: 0.6727 [rank_bm25=24]  rrf: 0.0277)
+               matched: [rejestr(1)]
+       #10 chunk_id=21  (cosine: 0.5202 [rank_cos=7]  bm25: 0.6917 [rank_bm25=23]  rrf: 0.0273)
+               matched: [rejestr(1)]
+  ✓ [1] "energia oddana export today goodwe et plus hex"
+         router: GOODWE ET-PLUS
+         tokens: [energia, oddana, export, today, goodwe, et, plus, hex]
+     ► #1 chunk_id=25  (cosine: 0.5710 [rank_cos=1]  bm25: 1.6216 [rank_bm25=1]  rrf: 0.0333)
+               matched: [energia(6), et(1), export(2), goodwe(1), hex(1), oddana(2), plus(1), today(3)]
+       #2 chunk_id=26  (cosine: 0.5434 [rank_cos=2]  bm25: 0.3470 [rank_bm25=3]  rrf: 0.0325)
+               matched: [et(1), export(1), goodwe(1), hex(1), plus(1)]
+       #3 chunk_id=24  (cosine: 0.5319 [rank_cos=3]  bm25: 0.3506 [rank_bm25=2]  rrf: 0.0325)
+               matched: [energia(6), et(1), goodwe(1), hex(1), plus(1), today(3)]
+  ✓ [3] "bat discharge energia rozladowana goodwe etplus rejestr"
+         router: GOODWE ET-PLUS
+         tokens: [bat, discharge, energia, rozladowana, goodwe, etplus, rejestr]
+       #1 chunk_id=24  (cosine: 0.5801 [rank_cos=2]  bm25: 0.9564 [rank_bm25=1]  rrf: 0.0331)
+               matched: [bat(4), discharge(3), energia(6), etplus(1), goodwe(1), rejestr(1), rozladowana(2)]
+       #2 chunk_id=26  (cosine: 0.5801 [rank_cos=1]  bm25: 0.3723 [rank_bm25=3]  rrf: 0.0328)
+               matched: [bat(2), discharge(1), etplus(1), goodwe(1), rejestr(1)]
+     ► #3 chunk_id=25  (cosine: 0.5702 [rank_cos=3]  bm25: 0.3860 [rank_bm25=2]  rrf: 0.0325)
+               matched: [energia(6), etplus(1), goodwe(1), rejestr(1)]
+  ✓ [1] "energia bierna import L1 sdm630 adres hex"
+         router: brak → pełny corpus
+         tokens: [energia, bierna, import, l1, sdm630, sdm, 630, adres, hex]
+     ► #1 chunk_id=4  (cosine: 0.6836 [rank_cos=1]  bm25: 17.7450 [rank_bm25=1]  rrf: 0.0333)
+               matched: [630(1), adres(1), bierna(9), energia(9), hex(1), import(6), l1(6), sdm(1), sdm630(1)]
+       #2 chunk_id=0  (cosine: 0.5773 [rank_cos=3]  bm25: 8.3828 [rank_bm25=5]  rrf: 0.0318)
+               matched: [adres(2), bierna(5), energia(13), hex(1), import(5), l1(22)]
+       #3 chunk_id=5  (cosine: 0.5667 [rank_cos=8]  bm25: 10.3151 [rank_bm25=3]  rrf: 0.0311)
+               matched: [630(1), adres(2), bierna(4), hex(1), import(2), sdm(1), sdm630(1)]
+       #4 chunk_id=1  (cosine: 0.5651 [rank_cos=10]  bm25: 9.1125 [rank_bm25=4]  rrf: 0.0304)
+               matched: [adres(1), bierna(15), energia(27), hex(1), import(7), l1(6)]
+       #5 chunk_id=3  (cosine: 0.5543 [rank_cos=16]  bm25: 12.8773 [rank_bm25=2]  rrf: 0.0297)
+               matched: [630(1), adres(1), bierna(7), energia(15), hex(1), import(10), l1(24), sdm(1), sdm630(1)]
+       #6 chunk_id=7  (cosine: 0.5894 [rank_cos=2]  bm25: 1.6974 [rank_bm25=18]  rrf: 0.0294)
+               matched: [adres(2), hex(1)]
+       #7 chunk_id=25  (cosine: 0.5593 [rank_cos=13]  bm25: 4.4237 [rank_bm25=8]  rrf: 0.0288)
+               matched: [adres(1), energia(6), hex(1), import(2)]
+       #8 chunk_id=6  (cosine: 0.5569 [rank_cos=15]  bm25: 2.5022 [rank_bm25=9]  rrf: 0.0282)
+               matched: [adres(2), energia(4), hex(1)]
+       #9 chunk_id=21  (cosine: 0.5722 [rank_cos=5]  bm25: 1.6087 [rank_bm25=21]  rrf: 0.0281)
+               matched: [adres(2), hex(1)]
+       #10 chunk_id=19  (cosine: 0.5751 [rank_cos=4]  bm25: 1.5530 [rank_bm25=24]  rrf: 0.0279)
+               matched: [adres(2), hex(1)]
+  ✓ [1] "rejestr eksport energia bierna fazy L2 eastron"
+         router: EASTRON SDM630
+         tokens: [rejestr, eksport, energia, bierna, fazy, l2, eastron]
+     ► #1 chunk_id=4  (cosine: 0.7213 [rank_cos=1]  bm25: 1.0947 [rank_bm25=1]  rrf: 0.0333)
+               matched: [bierna(9), eastron(1), eksport(3), energia(9), fazy(9), l2(6), rejestr(1)]
+       #2 chunk_id=5  (cosine: 0.6644 [rank_cos=2]  bm25: 0.4261 [rank_bm25=3]  rrf: 0.0325)
+               matched: [bierna(4), eastron(1), eksport(2), rejestr(1)]
+       #3 chunk_id=3  (cosine: 0.6255 [rank_cos=3]  bm25: 0.9472 [rank_bm25=2]  rrf: 0.0325)
+               matched: [bierna(7), eastron(1), eksport(5), energia(15), fazy(21), l2(24), rejestr(1)]
+  ✓ [1] "L3 reactive energy kVArh adres 0166 sdm-630"
+         router: EASTRON SDM630
+         tokens: [l3, reactive, energy, kvarh, adres, 0166, sdm, 630, sdm-630, sdm630]
+     ► #1 chunk_id=4  (cosine: 0.5275 [rank_cos=1]  bm25: 1.8529 [rank_bm25=1]  rrf: 0.0333)
+               matched: [0166(1), 630(1), adres(1), energy(9), kvarh(9), l3(6), reactive(9), sdm(1), sdm630(1)]
+       #2 chunk_id=5  (cosine: 0.5191 [rank_cos=2]  bm25: 0.4431 [rank_bm25=3]  rrf: 0.0325)
+               matched: [630(1), adres(2), energy(1), sdm(1), sdm630(1)]
+       #3 chunk_id=3  (cosine: 0.4629 [rank_cos=3]  bm25: 0.8669 [rank_bm25=2]  rrf: 0.0325)
+               matched: [630(1), adres(1), energy(15), kvarh(3), l3(24), reactive(7), sdm(1), sdm630(1)]
+  ✓ [1] "całkowita energia bierna fazy sdm630"
+         router: EASTRON SDM630
+         tokens: [calkowita, energia, bierna, fazy, sdm630, sdm, 630]
+     ► #1 chunk_id=4  (cosine: 0.6645 [rank_cos=1]  bm25: 1.0285 [rank_bm25=1]  rrf: 0.0333)
+               matched: [630(1), bierna(9), calkowita(3), energia(9), fazy(9), sdm(1), sdm630(1)]
+       #2 chunk_id=5  (cosine: 0.6470 [rank_cos=2]  bm25: 0.3919 [rank_bm25=3]  rrf: 0.0325)
+               matched: [630(1), bierna(4), sdm(1), sdm630(1)]
+       #3 chunk_id=3  (cosine: 0.5989 [rank_cos=3]  bm25: 0.8446 [rank_bm25=2]  rrf: 0.0325)
+               matched: [630(1), bierna(7), calkowita(8), energia(15), fazy(21), sdm(1), sdm630(1)]
+  ✓ [1] "import export reactive energy eastron rejestr"
+         router: EASTRON SDM630
+         tokens: [import, export, reactive, energy, eastron, rejestr]
+     ► #1 chunk_id=4  (cosine: 0.4632 [rank_cos=1]  bm25: 0.9124 [rank_bm25=1]  rrf: 0.0333)
+               matched: [eastron(1), energy(9), export(3), import(6), reactive(9), rejestr(1)]
+       #2 chunk_id=5  (cosine: 0.4147 [rank_cos=2]  bm25: 0.3613 [rank_bm25=3]  rrf: 0.0325)
+               matched: [eastron(1), energy(1), import(2), rejestr(1)]
+       #3 chunk_id=3  (cosine: 0.3817 [rank_cos=3]  bm25: 0.7478 [rank_bm25=2]  rrf: 0.0325)
+               matched: [eastron(1), energy(15), export(5), import(10), reactive(7), rejestr(1)]
+  ✓ [1] "tryb sterowania control mode zapis wilo stratos-maxo"
+         router: WILO STRATOS-MAXO
+         tokens: [tryb, sterowania, control, mode, zapis, wilo, stratos, maxo, stratos-maxo, stratosmaxo]
+     ► #1 chunk_id=21  (cosine: 0.5212 [rank_cos=1]  bm25: -0.6263 [rank_bm25=None]  rrf: 0.0167)
+               matched: [control(1), maxo(1), mode(1), stratos(1), stratos-maxo(1), stratosmaxo(1), wilo(1)]
+       #2 chunk_id=20  (cosine: 0.4560 [rank_cos=2]  bm25: -0.4860 [rank_bm25=None]  rrf: 0.0164)
+               matched: [control(1), maxo(1), mode(2), stratos(1), stratos-maxo(1), stratosmaxo(1), wilo(1)]
+  ✓ [1] "zadana roznica cisnienia pressure setpoint stratosmaxo rejestr"
+         router: brak → pełny corpus
+         tokens: [zadana, roznica, cisnienia, pressure, setpoint, stratosmaxo, rejestr]
+     ► #1 chunk_id=21  (cosine: 0.6330 [rank_cos=1]  bm25: 9.8371 [rank_bm25=1]  rrf: 0.0333)
+               matched: [pressure(3), rejestr(1), roznica(1), setpoint(2), stratosmaxo(1), zadana(2)]
+       #2 chunk_id=19  (cosine: 0.5968 [rank_cos=2]  bm25: 5.6324 [rank_bm25=4]  rrf: 0.0323)
+               matched: [pressure(1), rejestr(1), roznica(1), setpoint(1), zadana(2)]
+       #3 chunk_id=20  (cosine: 0.5611 [rank_cos=7]  bm25: 7.5358 [rank_bm25=2]  rrf: 0.0315)
+               matched: [pressure(4), rejestr(1), roznica(1), setpoint(1), stratosmaxo(1), zadana(1)]
+       #4 chunk_id=15  (cosine: 0.5894 [rank_cos=3]  bm25: 2.6438 [rank_bm25=6]  rrf: 0.0315)
+               matched: [rejestr(1), setpoint(2), zadana(2)]
+       #5 chunk_id=13  (cosine: 0.5699 [rank_cos=5]  bm25: 2.9554 [rank_bm25=5]  rrf: 0.0312)
+               matched: [rejestr(1), setpoint(3), zadana(3)]
+       #6 chunk_id=17  (cosine: 0.5799 [rank_cos=4]  bm25: 2.6168 [rank_bm25=7]  rrf: 0.0310)
+               matched: [rejestr(1), setpoint(2), zadana(2)]
+       #7 chunk_id=16  (cosine: 0.5487 [rank_cos=10]  bm25: 2.2488 [rank_bm25=8]  rrf: 0.0294)
+               matched: [pressure(1), rejestr(1), setpoint(2)]
+       #8 chunk_id=11  (cosine: 0.5549 [rank_cos=8]  bm25: 1.3413 [rank_bm25=12]  rrf: 0.0290)
+               matched: [rejestr(1), setpoint(2)]
+       #9 chunk_id=18  (cosine: 0.5200 [rank_cos=21]  bm25: 5.7672 [rank_bm25=3]  rrf: 0.0286)
+               matched: [pressure(2), rejestr(1), roznica(2), setpoint(1), zadana(2)]
+       #10 chunk_id=9  (cosine: 0.5478 [rank_cos=11]  bm25: 0.7491 [rank_bm25=14]  rrf: 0.0280)
+               matched: [rejestr(1)]
+  ✓ [1] "reset bledu fault reset wilo stratos maxo zapis 0x0055"
+         router: WILO STRATOS-MAXO
+         tokens: [reset, bledu, fault, reset, wilo, stratos, maxo, zapis, 0x0055, 0055]
+     ► #1 chunk_id=21  (cosine: 0.5265 [rank_cos=1]  bm25: -0.4474 [rank_bm25=None]  rrf: 0.0167)
+               matched: [0055(1), 0x0055(1), bledu(1), fault(1), maxo(1), reset(1), stratos(1), wilo(1)]
+       #2 chunk_id=20  (cosine: 0.4080 [rank_cos=2]  bm25: -0.3246 [rank_bm25=None]  rrf: 0.0164)
+               matched: [bledu(1), fault(1), maxo(1), stratos(1), wilo(1)]
+  ✓ [1] "baud rate modbus adres 0049 wilo stratos-maxo konfiguracja"
+         router: WILO STRATOS-MAXO
+         tokens: [baud, rate, modbus, adres, 0049, wilo, stratos, maxo, stratos-maxo, stratosmaxo, konfiguracja]
+     ► #1 chunk_id=21  (cosine: 0.6085 [rank_cos=1]  bm25: -0.6899 [rank_bm25=None]  rrf: 0.0167)
+               matched: [0049(1), adres(2), baud(1), maxo(1), modbus(2), rate(1), stratos(1), stratos-maxo(1), stratosmaxo(1), wilo(1)]
+       #2 chunk_id=20  (cosine: 0.5560 [rank_cos=2]  bm25: -0.5176 [rank_bm25=None]  rrf: 0.0164)
+               matched: [adres(2), maxo(1), modbus(2), stratos(1), stratos-maxo(1), stratosmaxo(1), wilo(1)]
+  ✓ [1] "start stop pompa stratos-maxo rejestr 0043 wilo"
+         router: WILO STRATOS-MAXO
+         tokens: [start, stop, pompa, stratos, maxo, stratos-maxo, stratosmaxo, rejestr, 0043, wilo]
+     ► #1 chunk_id=21  (cosine: 0.4970 [rank_cos=1]  bm25: -0.6581 [rank_bm25=None]  rrf: 0.0167)
+               matched: [0043(1), maxo(1), rejestr(1), start(2), stop(2), stratos(1), stratos-maxo(1), stratosmaxo(1), wilo(1)]
+       #2 chunk_id=20  (cosine: 0.4028 [rank_cos=2]  bm25: -0.4544 [rank_bm25=None]  rrf: 0.0164)
+               matched: [maxo(1), rejestr(1), stop(1), stratos(1), stratos-maxo(1), stratosmaxo(1), wilo(1)]
+  ✓ [1] "reset licznikow energia kamstrup multical-403 zapis 0x5A5A"
+         router: KAMSTRUP MULTICAL-403
+         tokens: [reset, licznikow, energia, kamstrup, multical, 403, multical-403, multical403, zapis, 0x5a5a]
+     ► #1 chunk_id=7  (cosine: 0.7550 [rank_cos=1]  bm25: -0.5631 [rank_bm25=None]  rrf: 0.0167)
+               matched: [0x5a5a(2), 403(1), kamstrup(1), multical(1), multical-403(1), multical403(1), reset(1), zapis(1)]
+       #2 chunk_id=6  (cosine: 0.6944 [rank_cos=2]  bm25: -0.4336 [rank_bm25=None]  rrf: 0.0164)
+               matched: [403(1), energia(4), kamstrup(1), multical(1), multical-403(1), multical403(1)]
+  ✓ [1] "adres modbus meter id multical403 ustawienie rejestr"
+         router: KAMSTRUP MULTICAL-403
+         tokens: [adres, modbus, meter, id, multical403, multical, 403, ustawienie, rejestr]
+     ► #1 chunk_id=7  (cosine: 0.5743 [rank_cos=1]  bm25: -0.9426 [rank_bm25=None]  rrf: 0.0167)
+               matched: [403(1), adres(2), id(1), meter(1), modbus(1), multical(1), multical403(1), rejestr(1)]
+       #2 chunk_id=6  (cosine: 0.5284 [rank_cos=2]  bm25: -0.7351 [rank_bm25=None]  rrf: 0.0164)
+               matched: [403(1), adres(2), id(1), meter(1), modbus(1), multical(1), multical403(1), rejestr(1)]
+  ✓ [1] "baud rate konfiguracja kamstrup multical 403 rejestr 0063"
+         router: KAMSTRUP MULTICAL-403
+         tokens: [baud, rate, konfiguracja, kamstrup, multical, 403, rejestr, 0063]
+     ► #1 chunk_id=7  (cosine: 0.6304 [rank_cos=1]  bm25: -0.8300 [rank_bm25=None]  rrf: 0.0167)
+               matched: [0063(1), 403(1), baud(1), kamstrup(1), multical(1), rate(2), rejestr(1)]
+       #2 chunk_id=6  (cosine: 0.6272 [rank_cos=2]  bm25: -0.6484 [rank_bm25=None]  rrf: 0.0164)
+               matched: [0063(1), 403(1), baud(1), kamstrup(1), multical(1), rate(2), rejestr(1)]
+  ✓ [1] "synchronizacja czasu time sync multical-403 rejestr 0202"
+         router: KAMSTRUP MULTICAL-403
+         tokens: [synchronizacja, czasu, time, sync, multical, 403, multical-403, multical403, rejestr, 0202]
+     ► #1 chunk_id=7  (cosine: 0.6842 [rank_cos=1]  bm25: -0.5631 [rank_bm25=None]  rrf: 0.0167)
+               matched: [0202(1), 403(1), multical(1), multical-403(1), multical403(1), rejestr(1), sync(1), synchronizacja(1), time(1)]
+       #2 chunk_id=6  (cosine: 0.6362 [rank_cos=2]  bm25: -0.4336 [rank_bm25=None]  rrf: 0.0164)
+               matched: [403(1), multical(1), multical-403(1), multical403(1), rejestr(1)]
+  ✓ [1] "haslo zabezpieczenie password kamstrup multical403 zapis"
+         router: KAMSTRUP MULTICAL-403
+         tokens: [haslo, zabezpieczenie, password, kamstrup, multical403, multical, 403, zapis]
+     ► #1 chunk_id=7  (cosine: 0.6993 [rank_cos=1]  bm25: -0.4505 [rank_bm25=None]  rrf: 0.0167)
+               matched: [403(1), haslo(1), kamstrup(1), multical(1), multical403(1), password(1), zapis(1)]
+       #2 chunk_id=6  (cosine: 0.6652 [rank_cos=2]  bm25: -0.3469 [rank_bm25=None]  rrf: 0.0164)
+               matched: [403(1), kamstrup(1), multical(1), multical403(1)]
+  ✓ [1] "moc cieplna thermal power rejestr sontex supercal 539"
+         router: SONTEX SUPERCAL-539
+         tokens: [moc, cieplna, thermal, power, rejestr, sontex, supercal, 539]
+     ► #1 chunk_id=8  (cosine: 0.6132 [rank_cos=1]  bm25: -0.2556 [rank_bm25=None]  rrf: 0.0167)
+               matched: [539(1), cieplna(3), moc(2), power(2), rejestr(1), sontex(1), supercal(1), thermal(1)]
+       #2 chunk_id=9  (cosine: 0.6033 [rank_cos=2]  bm25: -0.3248 [rank_bm25=None]  rrf: 0.0164)
+               matched: [539(1), rejestr(1), sontex(1), supercal(1)]
+  ✓ [1] "temperatura zasilania powrotu supercal-539 odczyt"
+         router: SONTEX SUPERCAL-539
+         tokens: [temperatura, zasilania, powrotu, supercal, 539, supercal-539, supercal539, odczyt]
+     ► #1 chunk_id=8  (cosine: 0.6875 [rank_cos=1]  bm25: -0.2556 [rank_bm25=None]  rrf: 0.0167)
+               matched: [539(1), supercal(1), supercal-539(1), supercal539(1), temperatura(2)]
+       #2 chunk_id=9  (cosine: 0.6786 [rank_cos=2]  bm25: -0.3248 [rank_bm25=None]  rrf: 0.0164)
+               matched: [539(1), supercal(1), supercal-539(1), supercal539(1)]
+  ✓ [1] "energia cieplna heat energy adres 001c supercal539"
+         router: brak → pełny corpus
+         tokens: [energia, cieplna, heat, energy, adres, 001c, 001, supercal539, supercal, 539]
+     ► #1 chunk_id=8  (cosine: 0.5614 [rank_cos=4]  bm25: 16.0612 [rank_bm25=1]  rrf: 0.0325)
+               matched: [001(3), 001c(1), 539(1), adres(2), cieplna(3), energia(3), energy(3), heat(2), supercal(1), supercal539(1)]
+       #2 chunk_id=9  (cosine: 0.5573 [rank_cos=7]  bm25: 10.5598 [rank_bm25=2]  rrf: 0.0315)
+               matched: [539(1), adres(2), supercal(1), supercal539(1)]
+       #3 chunk_id=4  (cosine: 0.5707 [rank_cos=1]  bm25: 3.1770 [rank_bm25=11]  rrf: 0.0310)
+               matched: [adres(1), energia(9), energy(9)]
+       #4 chunk_id=0  (cosine: 0.5581 [rank_cos=6]  bm25: 3.6011 [rank_bm25=7]  rrf: 0.0305)
+               matched: [001(3), 001c(1), adres(2), energia(13), energy(13)]
+       #5 chunk_id=6  (cosine: 0.5529 [rank_cos=10]  bm25: 6.4123 [rank_bm25=5]  rrf: 0.0301)
+               matched: [adres(2), cieplna(2), energia(4), energy(4), heat(2)]
+       #6 chunk_id=15  (cosine: 0.5648 [rank_cos=3]  bm25: 2.2740 [rank_bm25=17]  rrf: 0.0293)
+               matched: [adres(2), heat(2)]
+       #7 chunk_id=7  (cosine: 0.5707 [rank_cos=2]  bm25: 1.6974 [rank_bm25=20]  rrf: 0.0291)
+               matched: [adres(2), energy(1)]
+       #8 chunk_id=14  (cosine: 0.4987 [rank_cos=22]  bm25: 6.5963 [rank_bm25=4]  rrf: 0.0282)
+               matched: [001(4), 001c(1), adres(2), cieplna(2), energia(3), energy(3), heat(3)]
+       #9 chunk_id=12  (cosine: 0.4823 [rank_cos=27]  bm25: 6.6519 [rank_bm25=3]  rrf: 0.0278)
+               matched: [001(3), 001c(1), adres(2), cieplna(2), energia(6), energy(4), heat(2)]
+       #10 chunk_id=16  (cosine: 0.5046 [rank_cos=19]  bm25: 3.4711 [rank_bm25=8]  rrf: 0.0277)
+               matched: [001(7), 001c(1), adres(2), energia(3), energy(3)]
+  ✓ [1] "przeplyw chwilowy flow rate rejestr sontex 539"
+         router: SONTEX SUPERCAL-539
+         tokens: [przeplyw, chwilowy, flow, rate, rejestr, sontex, 539]
+     ► #1 chunk_id=8  (cosine: 0.7345 [rank_cos=1]  bm25: -0.3151 [rank_bm25=None]  rrf: 0.0167)
+               matched: [539(1), chwilowy(1), flow(4), przeplyw(3), rate(4), rejestr(1), sontex(1)]
+       #2 chunk_id=9  (cosine: 0.6938 [rank_cos=2]  bm25: -0.3553 [rank_bm25=None]  rrf: 0.0164)
+               matched: [539(1), rate(2), rejestr(1), sontex(1)]
+  ✓ [1] "alarm status slowo alarmowe supercal 539 hex"
+         router: brak → pełny corpus
+         tokens: [alarm, status, slowo, alarmowe, supercal, 539, hex]
+     ► #1 chunk_id=8  (cosine: 0.6103 [rank_cos=1]  bm25: 11.9595 [rank_bm25=1]  rrf: 0.0333)
+               matched: [539(1), alarm(1), alarmowe(1), hex(1), slowo(1), status(1), supercal(1)]
+       #2 chunk_id=9  (cosine: 0.5913 [rank_cos=2]  bm25: 8.7921 [rank_bm25=2]  rrf: 0.0328)
+               matched: [539(1), alarm(1), hex(1), supercal(1)]
+       #3 chunk_id=19  (cosine: 0.5683 [rank_cos=3]  bm25: 2.1185 [rank_bm25=6]  rrf: 0.0315)
+               matched: [alarm(1), hex(1)]
+       #4 chunk_id=11  (cosine: 0.5487 [rank_cos=7]  bm25: 2.2960 [rank_bm25=5]  rrf: 0.0308)
+               matched: [alarm(1), hex(1)]
+       #5 chunk_id=7  (cosine: 0.5532 [rank_cos=5]  bm25: 0.7394 [rank_bm25=13]  rrf: 0.0295)
+               matched: [hex(1)]
+       #6 chunk_id=21  (cosine: 0.5603 [rank_cos=4]  bm25: 0.6917 [rank_bm25=17]  rrf: 0.0290)
+               matched: [hex(1)]
+       #7 chunk_id=10  (cosine: 0.4875 [rank_cos=18]  bm25: 2.9922 [rank_bm25=4]  rrf: 0.0289)
+               matched: [alarm(1), hex(1), slowo(1), status(1)]
+       #8 chunk_id=18  (cosine: 0.4836 [rank_cos=21]  bm25: 6.0564 [rank_bm25=3]  rrf: 0.0286)
+               matched: [alarm(1), alarmowe(1), hex(1), slowo(3), status(1)]
+       #9 chunk_id=25  (cosine: 0.5326 [rank_cos=8]  bm25: 0.7347 [rank_bm25=14]  rrf: 0.0286)
+               matched: [hex(1)]
+       #10 chunk_id=0  (cosine: 0.5236 [rank_cos=12]  bm25: 1.8396 [rank_bm25=10]  rrf: 0.0286)
+               matched: [hex(1), slowo(1), status(3)]
+  ✓ [1] "minimalne soc baterii battery min soc sofar hyd6000-es zapis"
+         router: SOFAR HYD6000-ES
+         tokens: [minimalne, soc, baterii, battery, min, soc, sofar, hyd6000, hyd, 6000, es, hyd6000-es, hyd6000es, zapis]
+     ► #1 chunk_id=23  (cosine: 0.5354 [rank_cos=1]  bm25: -1.0886 [rank_bm25=None]  rrf: 0.0167)
+               matched: [6000(4), baterii(3), battery(2), es(1), hyd(1), hyd6000(1), hyd6000-es(1), hyd6000es(1), min(1), minimalne(1), soc(4), sofar(1)]
+       #2 chunk_id=22  (cosine: 0.4543 [rank_cos=2]  bm25: -0.6979 [rank_bm25=None]  rrf: 0.0164)
+               matched: [6000(1), baterii(7), battery(9), es(1), hyd(1), hyd6000(1), hyd6000-es(1), hyd6000es(1), soc(1), sofar(1)]
+  ✓ [1] "limit eksportu grid export limit hyd6000es rejestr 0063"
+         router: SOFAR HYD6000-ES
+         tokens: [limit, eksportu, grid, export, limit, hyd6000es, hyd, 6000, es, rejestr, 0063]
+     ► #1 chunk_id=23  (cosine: 0.5418 [rank_cos=1]  bm25: -0.6113 [rank_bm25=None]  rrf: 0.0167)
+               matched: [0063(1), 6000(4), eksportu(1), es(1), export(1), grid(1), hyd(1), hyd6000es(1), limit(2), rejestr(1)]
+       #2 chunk_id=22  (cosine: 0.4911 [rank_cos=2]  bm25: -0.4610 [rank_bm25=None]  rrf: 0.0164)
+               matched: [6000(1), es(1), export(2), grid(13), hyd(1), hyd6000es(1), rejestr(1)]
+  ✓ [1] "tryb pracy operating mode zapis sofar hyd6000 rejestr 0060"
+         router: SOFAR HYD6000-ES
+         tokens: [tryb, pracy, operating, mode, zapis, sofar, hyd6000, hyd, 6000, rejestr, 0060]
+     ► #1 chunk_id=23  (cosine: 0.6363 [rank_cos=1]  bm25: -0.6113 [rank_bm25=None]  rrf: 0.0167)
+               matched: [0060(1), 6000(4), hyd(1), hyd6000(1), mode(1), operating(1), rejestr(1), sofar(1), tryb(1)]
+       #2 chunk_id=22  (cosine: 0.5472 [rank_cos=2]  bm25: -0.3520 [rank_bm25=None]  rrf: 0.0164)
+               matched: [6000(1), hyd(1), hyd6000(1), mode(1), operating(1), rejestr(1), sofar(1)]
+  ✓ [1] "baud rate modbus adres 0068 sofar hyd6000-es konfiguracja"
+         router: SOFAR HYD6000-ES
+         tokens: [baud, rate, modbus, adres, 0068, sofar, hyd6000, hyd, 6000, es, hyd6000-es, hyd6000es, konfiguracja]
+     ► #1 chunk_id=23  (cosine: 0.5703 [rank_cos=1]  bm25: -0.8239 [rank_bm25=None]  rrf: 0.0167)
+               matched: [0068(1), 6000(4), adres(2), baud(1), es(1), hyd(1), hyd6000(1), hyd6000-es(1), hyd6000es(1), modbus(2), rate(1), sofar(1)]
+       #2 chunk_id=22  (cosine: 0.5478 [rank_cos=2]  bm25: -0.5039 [rank_bm25=None]  rrf: 0.0164)
+               matched: [6000(1), adres(2), es(1), hyd(1), hyd6000(1), hyd6000-es(1), hyd6000es(1), modbus(2), sofar(1)]
+  ✓ [1] "reset bledow fault reset hyd6000es zapis 0x00FF"
+         router: SOFAR HYD6000-ES
+         tokens: [reset, bledow, fault, reset, hyd6000es, hyd, 6000, es, zapis, 0x00ff, 00, ff]
+     ► #1 chunk_id=23  (cosine: 0.5450 [rank_cos=1]  bm25: -0.4496 [rank_bm25=None]  rrf: 0.0167)
+               matched: [00(1), 0x00ff(1), 6000(4), bledow(1), es(1), fault(1), ff(1), hyd(1), hyd6000es(1), reset(1)]
+       #2 chunk_id=22  (cosine: 0.4462 [rank_cos=2]  bm25: -0.2926 [rank_bm25=None]  rrf: 0.0164)
+               matched: [6000(1), es(1), fault(3), hyd(1), hyd6000es(1)]
+  ✓ [5] "energia bierna taryfa t1 t2 orwe520 adres hex"
+         router: brak → pełny corpus
+         tokens: [energia, bierna, taryfa, t1, t2, orwe520, orwe, 520, adres, hex]
+       #1 chunk_id=1  (cosine: 0.6312 [rank_cos=2]  bm25: 20.1702 [rank_bm25=1]  rrf: 0.0331)
+               matched: [520(1), adres(1), bierna(15), energia(27), hex(1), orwe520(1), t1(10), t2(10), taryfa(20)]
+       #2 chunk_id=4  (cosine: 0.6532 [rank_cos=1]  bm25: 5.3654 [rank_bm25=5]  rrf: 0.0323)
+               matched: [adres(1), bierna(9), energia(9), hex(1)]
+       #3 chunk_id=2  (cosine: 0.6287 [rank_cos=4]  bm25: 11.9629 [rank_bm25=2]  rrf: 0.0323)
+               matched: [520(1), adres(2), hex(1), orwe520(1), t1(2), t2(2), taryfa(1)]
+       #4 chunk_id=6  (cosine: 0.5982 [rank_cos=6]  bm25: 9.4615 [rank_bm25=3]  rrf: 0.0315)
+               matched: [adres(2), energia(4), hex(1), t1(1), t2(1), taryfa(2)]
+     ► #5 chunk_id=0  (cosine: 0.6015 [rank_cos=5]  bm25: 6.7498 [rank_bm25=4]  rrf: 0.0315)
+               matched: [520(1), adres(2), bierna(5), energia(13), hex(1), orwe520(1)]
+       #6 chunk_id=7  (cosine: 0.6292 [rank_cos=3]  bm25: 3.9440 [rank_bm25=7]  rrf: 0.0313)
+               matched: [adres(2), hex(1), taryfa(1)]
+       #7 chunk_id=5  (cosine: 0.5728 [rank_cos=15]  bm25: 3.3888 [rank_bm25=8]  rrf: 0.0284)
+               matched: [adres(2), bierna(4), hex(1)]
+       #8 chunk_id=8  (cosine: 0.5826 [rank_cos=12]  bm25: 2.4930 [rank_bm25=11]  rrf: 0.0284)
+               matched: [adres(2), energia(3), hex(1)]
+       #9 chunk_id=3  (cosine: 0.5403 [rank_cos=21]  bm25: 4.1046 [rank_bm25=6]  rrf: 0.0279)
+               matched: [adres(1), bierna(7), energia(15), hex(1)]
+       #10 chunk_id=9  (cosine: 0.5947 [rank_cos=8]  bm25: 1.7152 [rank_bm25=19]  rrf: 0.0277)
+               matched: [adres(2), hex(1)]
+  ✓ [3] "rejestr taryfa t4 kvarh 520"
+         router: brak → pełny corpus
+         tokens: [rejestr, taryfa, t4, kvarh, 520]
+       #1 chunk_id=1  (cosine: 0.6792 [rank_cos=1]  bm25: 14.4684 [rank_bm25=1]  rrf: 0.0333)
+               matched: [520(1), kvarh(15), rejestr(1), t4(10), taryfa(20)]
+       #2 chunk_id=2  (cosine: 0.6254 [rank_cos=2]  bm25: 7.1768 [rank_bm25=2]  rrf: 0.0328)
+               matched: [520(1), rejestr(1), t4(2), taryfa(1)]
+     ► #3 chunk_id=0  (cosine: 0.6180 [rank_cos=3]  bm25: 2.8631 [rank_bm25=6]  rrf: 0.0315)
+               matched: [520(1), kvarh(1), rejestr(1)]
+       #4 chunk_id=7  (cosine: 0.5802 [rank_cos=4]  bm25: 2.9860 [rank_bm25=5]  rrf: 0.0315)
+               matched: [rejestr(1), taryfa(1)]
+       #5 chunk_id=9  (cosine: 0.5716 [rank_cos=6]  bm25: 0.7491 [rank_bm25=8]  rrf: 0.0303)
+               matched: [rejestr(1)]
+       #6 chunk_id=6  (cosine: 0.5572 [rank_cos=11]  bm25: 3.1831 [rank_bm25=4]  rrf: 0.0302)
+               matched: [rejestr(1), taryfa(2)]
+       #7 chunk_id=15  (cosine: 0.5740 [rank_cos=5]  bm25: 0.6727 [rank_bm25=13]  rrf: 0.0295)
+               matched: [rejestr(1)]
+       #8 chunk_id=4  (cosine: 0.5258 [rank_cos=16]  bm25: 4.4584 [rank_bm25=3]  rrf: 0.0295)
+               matched: [kvarh(9), rejestr(1)]
+       #9 chunk_id=13  (cosine: 0.5653 [rank_cos=8]  bm25: 0.6959 [rank_bm25=11]  rrf: 0.0292)
+               matched: [rejestr(1)]
+       #10 chunk_id=21  (cosine: 0.5614 [rank_cos=9]  bm25: 0.6917 [rank_bm25=12]  rrf: 0.0288)
+               matched: [rejestr(1)]
+  ✓ [1] "forward reverse reactive energy rejestr or-we-520"
+         router: ORNO OR-WE-520
+         tokens: [forward, reverse, reactive, energy, rejestr, or, we, 520, or-we-520, orwe520]
+     ► #1 chunk_id=0  (cosine: 0.5297 [rank_cos=1]  bm25: 0.5581 [rank_bm25=2]  rrf: 0.0331)
+               matched: [520(1), energy(13), forward(4), or(1), or-we-520(1), orwe520(1), reactive(5), rejestr(1), reverse(4), we(1)]
+       #2 chunk_id=1  (cosine: 0.4929 [rank_cos=3]  bm25: 0.6719 [rank_bm25=1]  rrf: 0.0328)
+               matched: [520(1), energy(27), forward(8), or(1), or-we-520(1), orwe520(1), reactive(15), rejestr(1), reverse(8), we(1)]
+       #3 chunk_id=2  (cosine: 0.5206 [rank_cos=2]  bm25: 0.3888 [rank_bm25=3]  rrf: 0.0325)
+               matched: [520(1), energy(1), or(2), or-we-520(1), orwe520(1), rejestr(1), we(2)]
+  ✓ [1] "energia eksport L1 L2 L3 rejestr or-we-520"
+         router: ORNO OR-WE-520
+         tokens: [energia, eksport, l1, l2, l3, rejestr, or, we, 520, or-we-520, orwe520]
+     ► #1 chunk_id=0  (cosine: 0.6764 [rank_cos=1]  bm25: 0.7137 [rank_bm25=2]  rrf: 0.0331)
+               matched: [520(1), eksport(5), energia(13), l1(22), l2(22), l3(22), or(1), or-we-520(1), orwe520(1), rejestr(1), we(1)]
+       #2 chunk_id=1  (cosine: 0.6474 [rank_cos=2]  bm25: 0.7438 [rank_bm25=1]  rrf: 0.0331)
+               matched: [520(1), eksport(7), energia(27), l1(6), l2(6), l3(6), or(1), or-we-520(1), orwe520(1), rejestr(1), we(1)]
+       #3 chunk_id=2  (cosine: 0.6466 [rank_cos=3]  bm25: 0.3386 [rank_bm25=3]  rrf: 0.0323)
+               matched: [520(1), or(2), or-we-520(1), orwe520(1), rejestr(1), we(2)]
+  ✓ [3] "moc zapotrzebowania demand power taryfa or-we-520"
+         router: ORNO OR-WE-520
+         tokens: [moc, zapotrzebowania, demand, power, taryfa, or, we, 520, or-we-520, orwe520]
+       #1 chunk_id=2  (cosine: 0.7052 [rank_cos=1]  bm25: 0.4389 [rank_bm25=2]  rrf: 0.0331)
+               matched: [520(1), demand(1), or(2), or-we-520(1), orwe520(1), taryfa(1), we(2), zapotrzebowania(1)]
+       #2 chunk_id=1  (cosine: 0.6376 [rank_cos=3]  bm25: 0.6623 [rank_bm25=1]  rrf: 0.0328)
+               matched: [520(1), demand(4), moc(4), or(1), or-we-520(1), orwe520(1), power(4), taryfa(20), we(1), zapotrzebowania(4)]
+     ► #3 chunk_id=0  (cosine: 0.6637 [rank_cos=2]  bm25: 0.3868 [rank_bm25=3]  rrf: 0.0325)
+               matched: [520(1), moc(12), or(1), or-we-520(1), orwe520(1), power(16), we(1)]
+  ✓ [2] "napięcie L1 L2 L3 adres 0000 sdm-630 eastron"
+         router: EASTRON SDM630
+         tokens: [napiecie, l1, l2, l3, adres, 0000, sdm, 630, sdm-630, sdm630, eastron]
+       #1 chunk_id=4  (cosine: 0.4865 [rank_cos=1]  bm25: 1.0677 [rank_bm25=2]  rrf: 0.0331)
+               matched: [630(1), adres(1), eastron(1), l1(6), l2(6), l3(6), sdm(1), sdm630(1)]
+     ► #2 chunk_id=3  (cosine: 0.4613 [rank_cos=3]  bm25: 2.2478 [rank_bm25=1]  rrf: 0.0328)
+               matched: [0000(1), 630(1), adres(1), eastron(1), l1(24), l2(24), l3(24), napiecie(8), sdm(1), sdm630(1)]
+       #3 chunk_id=5  (cosine: 0.4649 [rank_cos=2]  bm25: 0.4431 [rank_bm25=3]  rrf: 0.0325)
+               matched: [630(1), adres(2), eastron(1), sdm(1), sdm630(1)]
+  ✓ [1] "prąd fazowy L1 current rejestr 0006 sdm630"
+         router: EASTRON SDM630
+         tokens: [prad, fazowy, l1, current, rejestr, 0006, sdm630, sdm, 630]
+     ► #1 chunk_id=3  (cosine: 0.6864 [rank_cos=2]  bm25: 3.5875 [rank_bm25=1]  rrf: 0.0331)
+               matched: [0006(1), 630(1), current(5), fazowy(8), l1(24), prad(5), rejestr(1), sdm(1), sdm630(1)]
+       #2 chunk_id=5  (cosine: 0.6919 [rank_cos=1]  bm25: 0.3272 [rank_bm25=3]  rrf: 0.0328)
+               matched: [630(1), rejestr(1), sdm(1), sdm630(1)]
+       #3 chunk_id=4  (cosine: 0.6597 [rank_cos=3]  bm25: 0.6094 [rank_bm25=2]  rrf: 0.0325)
+               matched: [630(1), l1(6), rejestr(1), sdm(1), sdm630(1)]
+  ✓ [2] "active power moc czynna rejestr 000C eastron sdm630"
+         router: EASTRON SDM630
+         tokens: [active, power, moc, czynna, rejestr, 000c, 000, eastron, sdm630, sdm, 630]
+       #1 chunk_id=5  (cosine: 0.6433 [rank_cos=1]  bm25: 0.4090 [rank_bm25=3]  rrf: 0.0328)
+               matched: [630(1), eastron(1), rejestr(1), sdm(1), sdm630(1)]
+     ► #2 chunk_id=3  (cosine: 0.5981 [rank_cos=3]  bm25: 5.7880 [rank_bm25=1]  rrf: 0.0328)
+               matched: [000(3), 000c(1), 630(1), active(15), czynna(10), eastron(1), moc(12), power(16), rejestr(1), sdm(1), sdm630(1)]
+       #3 chunk_id=4  (cosine: 0.6032 [rank_cos=2]  bm25: 0.5432 [rank_bm25=2]  rrf: 0.0328)
+               matched: [630(1), eastron(1), rejestr(1), sdm(1), sdm630(1)]
+  ✓ [2] "frequency 003C częstotliwość sieci sdm630"
+         router: EASTRON SDM630
+         tokens: [frequency, 003c, 003, czestotliwosc, sieci, sdm630, sdm, 630]
+       #1 chunk_id=5  (cosine: 0.5373 [rank_cos=1]  bm25: 0.2454 [rank_bm25=3]  rrf: 0.0328)
+               matched: [630(1), sdm(1), sdm630(1)]
+     ► #2 chunk_id=3  (cosine: 0.4732 [rank_cos=3]  bm25: 2.3682 [rank_bm25=1]  rrf: 0.0328)
+               matched: [003(2), 003c(1), 630(1), czestotliwosc(1), frequency(1), sdm(1), sdm630(1), sieci(1)]
+       #3 chunk_id=4  (cosine: 0.4957 [rank_cos=2]  bm25: 0.3259 [rank_bm25=2]  rrf: 0.0328)
+               matched: [630(1), sdm(1), sdm630(1)]
+  ✓ [2] "power factor współczynnik mocy L3 sdm630"
+         router: EASTRON SDM630
+         tokens: [power, factor, wspolczynnik, mocy, l3, sdm630, sdm, 630]
+       #1 chunk_id=5  (cosine: 0.5350 [rank_cos=1]  bm25: 0.2454 [rank_bm25=3]  rrf: 0.0328)
+               matched: [630(1), sdm(1), sdm630(1)]
+     ► #2 chunk_id=3  (cosine: 0.4764 [rank_cos=3]  bm25: 3.9463 [rank_bm25=1]  rrf: 0.0328)
+               matched: [630(1), factor(4), l3(24), mocy(4), power(16), sdm(1), sdm630(1), wspolczynnik(4)]
+       #3 chunk_id=4  (cosine: 0.4962 [rank_cos=2]  bm25: 0.5007 [rank_bm25=2]  rrf: 0.0328)
+               matched: [630(1), l3(6), sdm(1), sdm630(1)]
+  ✓ [2] "predkosc pompy actual speed rejestr wilo stratos-maxo"
+         router: WILO STRATOS-MAXO
+         tokens: [predkosc, pompy, actual, speed, rejestr, wilo, stratos, maxo, stratos-maxo, stratosmaxo]
+       #1 chunk_id=21  (cosine: 0.6276 [rank_cos=1]  bm25: -0.8219 [rank_bm25=None]  rrf: 0.0167)
+               matched: [maxo(1), predkosc(3), rejestr(1), speed(4), stratos(1), stratos-maxo(1), stratosmaxo(1), wilo(1)]
+     ► #2 chunk_id=20  (cosine: 0.5615 [rank_cos=2]  bm25: -0.6012 [rank_bm25=None]  rrf: 0.0164)
+               matched: [actual(2), maxo(1), predkosc(2), rejestr(1), speed(3), stratos(1), stratos-maxo(1), stratosmaxo(1), wilo(1)]
+  ✓ [2] "roznica cisnienia differential pressure adres 0015 stratos maxo"
+         router: WILO STRATOS-MAXO
+         tokens: [roznica, cisnienia, differential, pressure, adres, 0015, stratos, maxo]
+       #1 chunk_id=21  (cosine: 0.6101 [rank_cos=1]  bm25: -0.5272 [rank_bm25=None]  rrf: 0.0167)
+               matched: [adres(2), maxo(1), pressure(3), roznica(1), stratos(1)]
+     ► #2 chunk_id=20  (cosine: 0.5326 [rank_cos=2]  bm25: -0.4188 [rank_bm25=None]  rrf: 0.0164)
+               matched: [0015(1), adres(2), differential(1), maxo(1), pressure(4), roznica(1), stratos(1)]
+  ✓ [2] "pobor mocy power input rejestr 0018 wilo stratos-maxo"
+         router: WILO STRATOS-MAXO
+         tokens: [pobor, mocy, power, input, rejestr, 0018, wilo, stratos, maxo, stratos-maxo, stratosmaxo]
+       #1 chunk_id=21  (cosine: 0.5809 [rank_cos=1]  bm25: -0.5368 [rank_bm25=None]  rrf: 0.0167)
+               matched: [maxo(1), rejestr(1), stratos(1), stratos-maxo(1), stratosmaxo(1), wilo(1)]
+     ► #2 chunk_id=20  (cosine: 0.5178 [rank_cos=2]  bm25: -0.3895 [rank_bm25=None]  rrf: 0.0164)
+               matched: [0018(1), input(1), maxo(1), mocy(3), pobor(2), power(3), rejestr(1), stratos(1), stratos-maxo(1), stratosmaxo(1), wilo(1)]
+  ✓ [2] "kod bledu fault code wilo stratos maxo odczyt rejestr"
+         router: WILO STRATOS-MAXO
+         tokens: [kod, bledu, fault, code, wilo, stratos, maxo, odczyt, rejestr]
+       #1 chunk_id=21  (cosine: 0.5914 [rank_cos=1]  bm25: -0.5368 [rank_bm25=None]  rrf: 0.0167)
+               matched: [bledu(1), fault(1), maxo(1), rejestr(1), stratos(1), wilo(1)]
+     ► #2 chunk_id=20  (cosine: 0.5900 [rank_cos=2]  bm25: -0.3895 [rank_bm25=None]  rrf: 0.0164)
+               matched: [bledu(1), code(3), fault(1), kod(3), maxo(1), rejestr(1), stratos(1), wilo(1)]
+  ✓ [4] "energia pobrana energy consumed stratosmaxo wilo hex"
+         router: brak → pełny corpus
+         tokens: [energia, pobrana, energy, consumed, stratosmaxo, wilo, hex]
+       #1 chunk_id=21  (cosine: 0.5242 [rank_cos=6]  bm25: 6.5969 [rank_bm25=2]  rrf: 0.0318)
+               matched: [hex(1), stratosmaxo(1), wilo(1)]
+       #2 chunk_id=4  (cosine: 0.5383 [rank_cos=2]  bm25: 3.1770 [rank_bm25=9]  rrf: 0.0311)
+               matched: [energia(9), energy(9), hex(1)]
+       #3 chunk_id=25  (cosine: 0.5184 [rank_cos=7]  bm25: 4.0485 [rank_bm25=4]  rrf: 0.0310)
+               matched: [energia(6), energy(2), hex(1), pobrana(2)]
+     ► #4 chunk_id=20  (cosine: 0.4850 [rank_cos=21]  bm25: 8.5037 [rank_bm25=1]  rrf: 0.0292)
+               matched: [consumed(1), energia(1), energy(1), hex(1), pobrana(1), stratosmaxo(1), wilo(1)]
+       #5 chunk_id=16  (cosine: 0.4964 [rank_cos=15]  bm25: 3.9695 [rank_bm25=5]  rrf: 0.0291)
+               matched: [consumed(1), energia(3), energy(3), hex(1)]
+       #6 chunk_id=15  (cosine: 0.5444 [rank_cos=1]  bm25: 0.6727 [rank_bm25=23]  rrf: 0.0289)
+               matched: [hex(1)]
+       #7 chunk_id=0  (cosine: 0.5008 [rank_cos=12]  bm25: 3.1008 [rank_bm25=10]  rrf: 0.0286)
+               matched: [energia(13), energy(13), hex(1), pobrana(1)]
+       #8 chunk_id=13  (cosine: 0.5282 [rank_cos=3]  bm25: 0.6959 [rank_bm25=22]  rrf: 0.0285)
+               matched: [hex(1)]
+       #9 chunk_id=5  (cosine: 0.5253 [rank_cos=5]  bm25: 1.0330 [rank_bm25=19]  rrf: 0.0284)
+               matched: [energy(1), hex(1)]
+       #10 chunk_id=18  (cosine: 0.4817 [rank_cos=23]  bm25: 4.2008 [rank_bm25=3]  rrf: 0.0283)
+               matched: [consumed(1), energia(1), energy(1), hex(1), pobrana(1)]
+
+══════════════════════════════════════════════════
+  Chunków:             27
+  Par (prompt, chunk): 135
+  BM25 kandydaci:      100
+  Router trafień:      120/135
+  Router fallback:     15/135
+  Router błędów:       0/135
+  Recall@1:            0.541  (73/135)
+  Recall@2:            0.896  (121/135)
+  Recall@3:            0.963  (130/135)
+  Recall@4:            0.985  (133/135)
+  Recall@5:            0.993  (134/135)
+  Recall@6:            0.993  (134/135)
+  Recall@7:            1.000  (135/135)
+  Recall@8:            1.000  (135/135)
+  Recall@9:            1.000  (135/135)
+  Recall@10:            1.000  (135/135)
+  MRR:                 0.749
+══════════════════════════════════════════════════
