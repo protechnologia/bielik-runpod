@@ -1,5 +1,6 @@
 from config import MODEL, SYSTEM_PROMPT, RAG_SYSTEM_PROMPT
 from ollama_client import OllamaClient
+from query_router import QueryRouter
 from rag_retriever import RagRetriever
 from schemas import AskRequest, AskResponse
 
@@ -7,14 +8,16 @@ from schemas import AskRequest, AskResponse
 class AskPipeline:
     """Orkiestruje pełny przepływ zapytania: RAG → generowanie → metryki → AskResponse."""
 
-    def __init__(self, ollama: OllamaClient, rag_retriever: RagRetriever):
+    def __init__(self, ollama: OllamaClient, rag_retriever: RagRetriever, query_router: QueryRouter):
         """
         Args:
-            ollama: klient Ollama do generowania odpowiedzi
+            ollama:        klient Ollama do generowania odpowiedzi
             rag_retriever: retriever do wyszukiwania kontekstu z Qdrant
+            query_router:  router identyfikujący urządzenie z pytania (filtr Qdrant)
         """
         self.ollama = ollama
         self.rag_retriever = rag_retriever
+        self.query_router = query_router
 
     async def run(self, req: AskRequest) -> AskResponse:
         """
@@ -44,8 +47,16 @@ class AskPipeline:
 
         # RAG: wyszukaj pasujące fragmenty i przepisz prompt — jeśli nie ma trafień, zostaje oryginał
         if req.rag:
+            # query router: identyfikuj urządzenie i ogranicz wyszukiwanie do jego chunków;
+            # jeśli router nie rozpozna urządzenia, source_label_filter=None → cała kolekcja
+            source_label_filter = None
+            if req.query_router:
+                labels = self.rag_retriever.store.scroll_source_labels(req.collection)
+                source_label_filter = await self.query_router.route(req.prompt, labels)
+
             result = await self.rag_retriever.retrieve(
-                req.prompt, req.collection, req.rag_top_k, req.rag_score_threshold, req.bm25_candidates
+                req.prompt, req.collection, req.rag_top_k, req.rag_score_threshold,
+                req.bm25_candidates, source_label_filter
             )
             if result:
                 prompt = result.prompt

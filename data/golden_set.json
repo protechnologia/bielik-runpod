@@ -1,8 +1,9 @@
 [
   {
     "chunk_id": 0,
+    "source_label": "ORNO OR-WE-520",
     "prompts": [
-      "energia bierna taryfa t1 t2 or-we-520 adres hex",
+      "energia bierna taryfa t1 t2 orwe520 adres hex",
       "rejestr taryfa t4 kvarh 520",
       "forward reverse reactive energy rejestr or-we-520",
       "energia eksport L1 L2 L3 rejestr or-we-520",
@@ -12,21 +13,23 @@
   },
   {
     "chunk_id": 1,
+    "source_label": "ORNO OR-WE-520",
     "prompts": [
       "reset licznika we520",
       "jak zmienić baud rate rejestr zapisu or-we-520",
       "adres modbus licznika ustawienie or-we-520",
-      "synchronizacja zegara rtc rejestr or-we-520",
+      "synchronizacja zegara rtc rejestr orwe520",
       "haslo zabezpieczenie parametry 520"
     ],
     "text": "ORNO OR-WE-520 / Rejestry zapisu\n\nAdres (hex) | Rejestr nr | Nazwa | Długość (bajty) | Typ danych | Zakres wartości | Opis\n--- | --- | --- | --- | --- | --- | ---\n0002 | 1 | Meter ID | 2 | uint16 | 1–247 | Ustaw adres Modbus licznika\n0003 | 2 | Baud Rate | 2 | uint16 | 1–4 | 1=1200, 2=2400, 3=4800, 4=9600 bps\n0009 | 3 | S0 Output Rate | 4 | float | 1/10/100/1000 | Stała impulsowa wyjścia S0 [imp/kWh]\n0042 | 4 | Combined Code | 2 | uint16 | 0x0000–0xFFFF | Kombinowany kod trybu pracy\n000D | 5 | Cycle Time | 2 | uint16 | 1–30 | Czas automatycznego przewijania wyświetlacza [s]\n0200 | 6 | Reset Energy | 2 | uint16 | 0x5A5A | Zapis wartości 0x5A5A resetuje liczniki energii\n0201 | 7 | CT Primary | 2 | uint16 | 1–9999 | Przekładnia pierwotna przekładnika prądowego\n0202 | 8 | CT Secondary | 2 | uint16 | 1–9999 | Przekładnia wtórna przekładnika prądowego\n0203 | 9 | Display Mode | 2 | uint16 | 0–2 | Tryb podświetlania: 0=przycisk, 1=zawsze wł, 2=zawsze wył\n0204 | 10 | Pulse Width | 2 | uint16 | 50–200 | Szerokość impulsu wyjścia S0 [ms]\n0205 | 11 | Tariff Mode | 2 | uint16 | 0–1 | 0=jedna taryfa, 1=wielotaryfowy (tylko OR-WE-517)\n0206 | 12 | Password | 2 | uint16 | 0–9999 | Hasło zabezpieczające przed zmianą parametrów\n0207 | 13 | Time Sync | 4 | uint32 | Unix timestamp | Synchronizacja zegara RTC [sekundy od 1970-01-01]\n0209 | 14 | T1 Start Hour | 2 | uint16 | 0–23 | Godzina rozpoczęcia taryfy T1\n020A | 15 | T2 Start Hour | 2 | uint16 | 0–23 | Godzina rozpoczęcia taryfy T2\n020B | 16 | T3 Start Hour | 2 | uint16 | 0–23 | Godzina rozpoczęcia taryfy T3\n020C | 17 | T4 Start Hour | 2 | uint16 | 0–23 | Godzina rozpoczęcia taryfy T4\n020D | 18 | Demand Interval | 2 | uint16 | 1–60 | Interwał obliczania mocy zapotrzebowania [min]"
   },
   {
     "chunk_id": 2,
+    "source_label": "ORNO OR-WE-520",
     "prompts": [
       "napiecie L1 rejestr orno 520",
       "jak odczytac prad fazowy we520",
-      "adres hex moc czynna or-we-520",
+      "adres hex moc czynna orwe520",
       "czestotliwosc sieci grid frequency rejestr or-we-520",
       "wspolczynnik mocy L2 L3 rejestr orno or-we-520"
     ],
@@ -34,8 +37,9 @@
   },
   {
     "chunk_id": 3,
+    "source_label": "EASTRON SDM630",
     "prompts": [
-      "napięcie L1 L2 L3 adres 0000 sdm630 eastron",
+      "napięcie L1 L2 L3 adres 0000 sdm-630 eastron",
       "prąd fazowy L1 current rejestr 0006 sdm630",
       "active power moc czynna rejestr 000C eastron sdm630",
       "frequency 003C częstotliwość sieci sdm630",
@@ -45,10 +49,11 @@
   },
   {
     "chunk_id": 4,
+    "source_label": "EASTRON SDM630",
     "prompts": [
       "energia bierna import L1 sdm630 adres hex",
       "rejestr eksport energia bierna fazy L2 eastron",
-      "L3 reactive energy kVArh adres 0166 sdm630",
+      "L3 reactive energy kVArh adres 0166 sdm-630",
       "całkowita energia bierna fazy sdm630",
       "import export reactive energy eastron rejestr"
     ],
@@ -56,10 +61,11 @@
   },
   {
     "chunk_id": 5,
+    "source_label": "EASTRON SDM630",
     "prompts": [
       "energy reset F90B zapis 0x0300 sdm630",
       "jak zmienić baud rate eastron modbus",
-      "meter id F907 adres modbus sdm630",
+      "meter id F907 adres modbus sdm 630",
       "sterowanie przekaźnikiem rejestr sdm630",
       "przekładnik prądowy CT konfiguracja eastron"
     ],

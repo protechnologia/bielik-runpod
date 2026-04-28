@@ -11,7 +11,7 @@ class AskRequest(BaseModel):
 
     Używany: POST /ask (request body)
 
-    Przykład (rag=true, z BM25):
+    Przykład (rag=true, z BM25 i query routerem):
         {
             "prompt": "Jakie jest napięcie znamionowe licznika ORNO OR-WE-516?",
             "max_tokens": 512,
@@ -20,11 +20,14 @@ class AskRequest(BaseModel):
             "collection": "documents",
             "rag_top_k": 3,
             "rag_score_threshold": 0.3,
-            "bm25_candidates": 20
+            "bm25_candidates": 20,
+            "query_router": true
         }
 
     bm25_candidates: liczba kandydatów pobieranych z Qdrant przed rerankingiem BM25;
                      0 wyłącza BM25 i zwraca bezpośrednio top rag_top_k z Qdrant.
+    query_router:    jeśli true i rag=true, przed wyszukiwaniem identyfikuje urządzenie
+                     i filtruje Qdrant po source_label; false = przeszukuje całą kolekcję.
     """
 
     prompt: str
@@ -35,6 +38,7 @@ class AskRequest(BaseModel):
     rag_top_k: int = 3
     rag_score_threshold: float = 0.3
     bm25_candidates: int = 20
+    query_router: bool = False
 
 
 class RagChunk(BaseModel):

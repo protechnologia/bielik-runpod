@@ -90,8 +90,8 @@ def build_entries(
     Zwraca:
         list[dict] -- wpisy ze wszystkich plików z nadanymi chunk_id i pustą listą prompts, np.:
             [
-              {"chunk_id": 0, "prompts": [], "text": "ORNO OR-WE-516 / Rejestry odczytu\n\n..."},
-              {"chunk_id": 1, "prompts": [], "text": "ORNO OR-WE-516 / Rejestry zapisu\n\n..."}
+              {"chunk_id": 0, "source_label": "ORNO OR-WE-516", "prompts": [], "text": "ORNO OR-WE-516 / Rejestry odczytu\n\n..."},
+              {"chunk_id": 1, "source_label": "ORNO OR-WE-516", "prompts": [], "text": "ORNO OR-WE-516 / Rejestry zapisu\n\n..."}
             ]
 
     Rzuca:
@@ -103,7 +103,7 @@ def build_entries(
         all_chunks.extend(chunks)
         print(f"  {path.name}: {len(chunks)} chunków")
     return [
-        {"chunk_id": i, "prompts": [], "text": chunk["text"]}
+        {"chunk_id": i, "source_label": chunk["source_label"], "prompts": [], "text": chunk["text"]}
         for i, chunk in enumerate(all_chunks)
     ]
 
@@ -120,11 +120,13 @@ def main():
         [
           {
             "chunk_id": 0,
+            "source_label": "ORNO OR-WE-516",
             "prompts": [],
             "text": "ORNO OR-WE-516 / Rejestry odczytu\n\nAdres | Nazwa | ...\n--- | --- | ...\n..."
           },
           {
             "chunk_id": 1,
+            "source_label": "Licznik XYZ",
             "prompts": [],
             "text": "Licznik XYZ / Dane techniczne\n\nParametr | Wartość\n--- | ---\n..."
           }

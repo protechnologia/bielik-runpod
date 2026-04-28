@@ -1,5 +1,5 @@
 from qdrant_client import QdrantClient
-from qdrant_client.models import Distance, VectorParams, PointStruct
+from qdrant_client.models import Distance, VectorParams, PointStruct, Filter, FieldCondition, MatchValue
 
 
 class QdrantStore:
@@ -92,6 +92,7 @@ class QdrantStore:
         vector: list[float],
         top_k: int,
         score_threshold: float,
+        source_label: str | None = None,
     ) -> list[dict]:
         """
         Wyszukuje najbliższe wektory w kolekcji metodą cosine similarity.
@@ -102,6 +103,8 @@ class QdrantStore:
             top_k:           Maksymalna liczba wyników.
             score_threshold: Minimalna wartość podobieństwa (0.0–1.0).
                              Wyniki poniżej progu są odrzucane.
+            source_label:    Jeśli podany, zwraca tylko punkty z tym source_label
+                             (filtr payload Qdrant). None = bez filtra.
 
         Returns:
             Lista słowników posortowana malejąco po score:
@@ -118,13 +121,51 @@ class QdrantStore:
                     ...
                 ]
         """
+        query_filter = (
+            Filter(must=[FieldCondition(key="source_label", match=MatchValue(value=source_label))])
+            if source_label is not None
+            else None
+        )
         hits = self.client.search(
             collection_name=collection,
             query_vector=vector,
             limit=top_k,
             score_threshold=score_threshold,
+            query_filter=query_filter,
         )
         return [{"score": hit.score, "payload": hit.payload} for hit in hits]
+
+    def scroll_source_labels(self, collection: str) -> list[str]:
+        """
+        Zwraca listę unikalnych wartości source_label zapisanych w kolekcji.
+
+        Używa scroll (pełne przeglądanie bez wektora zapytania) zamiast search,
+        żeby wyciągnąć wszystkie etykiety niezależnie od podobieństwa.
+
+        Args:
+            collection: Nazwa kolekcji.
+
+        Returns:
+            Posortowana lista unikalnych source_label, np.:
+                ["EASTRON SDM630", "ORNO OR-WE-516", "ORNO OR-WE-520"]
+        """
+        labels: set[str] = set()
+        offset = None
+        while True:
+            points, offset = self.client.scroll(
+                collection_name=collection,
+                with_payload=True,
+                with_vectors=False,
+                limit=1000,
+                offset=offset,
+            )
+            for point in points:
+                label = (point.payload or {}).get("source_label")
+                if label:
+                    labels.add(label)
+            if offset is None:
+                break
+        return sorted(labels)
 
     def list_collections(self) -> list[dict]:
         """

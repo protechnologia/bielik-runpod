@@ -106,11 +106,11 @@ class XlsxIngester:
                 "id":     str(uuid.uuid4()),
                 "vector": vector,
                 "payload": {
-                    "text":         chunk["text"],
-                    "source_label": chunk["source_label"],
-                    "sheet":        chunk["sheet"],
-                    "chunk":        chunk["chunk"],
-                    "source":       file.filename,
+                    "text":         chunk["text"],         # "NIBE F1255 / Dane techniczne\n\nParametr | Wartość\n--- | ---\nMoc grzewcza | 6 kW\n..."
+                    "source_label": chunk["source_label"], # "NIBE F1255"
+                    "sheet":        chunk["sheet"],        # "Dane techniczne"
+                    "chunk":        chunk["chunk"],        # 1  (numer 1-based w obrębie arkusza)
+                    "source":       file.filename,         # "NIBE F1255.xlsx"
                 },
             })
 

@@ -1,6 +1,7 @@
 [
   {
     "chunk_id": 0,
+    "source_label": "ORNO OR-WE-520",
     "prompts": [
       "T3 T4 reverse active energy eksport taryfa we520",
       "demand power moc zapotrzebowania T2 kW or-we-520"
@@ -9,6 +10,7 @@
   },
   {
     "chunk_id": 1,
+    "source_label": "ORNO OR-WE-520",
     "prompts": [
       "S0 output rate stała impulsowa rejestr zapisu we520",
       "tariff mode wielotaryfowy godzina taryfy or-we-520"
@@ -17,6 +19,7 @@
   },
   {
     "chunk_id": 2,
+    "source_label": "ORNO OR-WE-520",
     "prompts": [
       "numer seryjny serial number rejestr or-we-520",
       "wersja oprogramowania software version hardware version we520"
@@ -25,6 +28,7 @@
   },
   {
     "chunk_id": 3,
+    "source_label": "EASTRON SDM630",
     "prompts": [
       "neutral current prąd neutralny sdm630",
       "phase angle kąt fazowy L1 L2 L3 eastron sdm630"
@@ -33,6 +37,7 @@
   },
   {
     "chunk_id": 4,
+    "source_label": "EASTRON SDM630",
     "prompts": [
       "L2 export reactive energy kVArh fazy sdm630",
       "L1 import reactive energia bierna fazy eastron"
@@ -41,6 +46,7 @@
   },
   {
     "chunk_id": 5,
+    "source_label": "EASTRON SDM630",
     "prompts": [
       "system type 3P4W 3P3W konfiguracja eastron sdm630",
       "VT primary secondary przekładnik napięciowy sdm630"

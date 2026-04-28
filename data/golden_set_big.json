@@ -1,0 +1,326 @@
+[
+  {
+    "chunk_id": 16,
+    "source_label": "BOSCH CONDENS 7000i",
+    "prompts": [
+      "temperatura zasilania powrotu rejestr bosch condens 7000i",
+      "stan palnika burner state adres 0019 condens7000",
+      "modulacja palnika procent rejestr bosch 7000i",
+      "cisnienie instalacji system pressure condens 7000i hex",
+      "blad error code odczyt bosch condens7000i"
+    ],
+    "text": "BOSCH CONDENS 7000i / Rejestry odczytu\n\nAdres (hex) | Rejestr nr | Nazwa | Długość (bajty) | Typ danych | Jednostka | Opis\n--- | --- | --- | --- | --- | --- | ---\n0000 | 1 | Product ID | 2 | uint16 |  | Identyfikator produktu\n0001 | 2 | Firmware | 2 | uint16 |  | Wersja firmware\n0002 | 3 | Modbus Address | 2 | uint16 |  | Adres Modbus\n0010 | 4 | Flow Temp | 2 | int16 | 0.1°C | Temperatura zasilania (×0.1)\n0011 | 5 | Return Temp | 2 | int16 | 0.1°C | Temperatura powrotu (×0.1)\n0012 | 6 | DHW Temp | 2 | int16 | 0.1°C | Temperatura zasobnika CWU (×0.1)\n0013 | 7 | Flue Temp | 2 | int16 | 0.1°C | Temperatura spalin (×0.1)\n0014 | 8 | Outdoor Temp | 2 | int16 | 0.1°C | Temperatura zewnętrzna (×0.1)\n0015 | 9 | Fan Speed | 2 | uint16 | RPM | Prędkość wentylatora palnika\n0016 | 10 | Ionisation Current | 2 | int16 | 0.1µA | Prąd jonizacji płomienia (×0.1µA)\n0017 | 11 | Burner Modulation | 2 | uint16 | % | Modulacja palnika [%]\n0018 | 12 | System Pressure | 2 | uint16 | 0.01 bar | Ciśnienie instalacji (×0.01 bar)\n0019 | 13 | Burner State | 2 | uint16 |  | 0=Off,1=CH,2=DHW,3=Ignition,4=Error\n001A | 14 | CH Pump State | 2 | uint16 |  | 0=Off,1=On\n001B | 15 | DHW Pump State | 2 | uint16 |  | 0=Off,1=On\n001C | 16 | Gas Valve State | 2 | uint16 |  | 0=Closed,1=Open\n001D | 17 | Heating Power | 4 | float | kW | Chwilowa moc grzewcza\n001F | 18 | Gas Consumption | 4 | float | m³/h | Chwilowe zużycie gazu\n0021 | 19 | Setpoint Active | 2 | int16 | 0.1°C | Aktywny setpoint zasilania\n0022 | 20 | Operating Mode | 2 | uint16 |  | 0=Standby,1=CH,2=DHW,3=CH+DHW\n0023 | 21 | Status Word | 2 | uint16 |  | Słowo stanu (bitowe)\n0024 | 22 | Error Code | 2 | uint16 |  | Kod błędu (0=brak)\n0025 | 23 | Error Code History | 2 | uint16 |  | Ostatni zapis błędu\n0030 | 24 | Gas Energy Consumed | 4 | float | kWh | Łączna energia gazu\n0032 | 25 | CH Energy Output | 4 | float | kWh | Łączna energia CO\n0034 | 26 | DHW Energy Output | 4 | float | kWh | Łączna energia CWU\n0036 | 27 | Burner Ignitions | 4 | uint32 |  | Liczba zapłonów palnika\n0038 | 28 | Burner Run Hours | 4 | uint32 | h | Czas pracy palnika\n003A | 29 | Pump Run Hours | 4 | uint32 | h | Czas pracy pompy CO"
+  },
+  {
+    "chunk_id": 12,
+    "source_label": "DAIKIN ALTHERMA-R",
+    "prompts": [
+      "temperatura wody wylotowej leaving water temp daikin altherma",
+      "cop grzanie rejestr 0020 altherma-r odczyt",
+      "tryb pracy operation mode daikin althermar hex",
+      "czestotliwosc sprezarki compressor freq altherma r rejestr",
+      "moc grzewcza heating capacity adres 001a daikin"
+    ],
+    "text": "DAIKIN ALTHERMA-R / Rejestry odczytu\n\nAdres (hex) | Rejestr nr | Nazwa | Długość (bajty) | Typ danych | Jednostka | Opis\n--- | --- | --- | --- | --- | --- | ---\n0000 | 1 | Unit Type | 2 | uint16 |  | Typ jednostki (stała)\n0001 | 2 | Firmware Version | 2 | uint16 |  | Wersja oprogramowania\n0002 | 3 | Modbus Address | 2 | uint16 |  | Aktualny adres Modbus\n0010 | 4 | Leaving Water Temp | 2 | int16 | 0.1°C | Temperatura wody wylotowej (×0.1)\n0011 | 5 | Entering Water Temp | 2 | int16 | 0.1°C | Temperatura wody wlotowej (×0.1)\n0012 | 6 | Outdoor Air Temp | 2 | int16 | 0.1°C | Temperatura powietrza zewnętrznego (×0.1)\n0013 | 7 | DHW Tank Temp | 2 | int16 | 0.1°C | Temperatura zasobnika CWU (×0.1)\n0014 | 8 | Room Temp | 2 | int16 | 0.1°C | Temperatura pokojowa (jeśli czujnik podłączony)\n0015 | 9 | Refrigerant Liquid Temp | 2 | int16 | 0.1°C | Temperatura cieczy czynnika (×0.1)\n0016 | 10 | Discharge Temp | 2 | int16 | 0.1°C | Temperatura tłoczenia (×0.1)\n0017 | 11 | Fan Speed | 2 | uint16 | RPM | Prędkość wentylatora\n0018 | 12 | Compressor Freq | 2 | uint16 | Hz | Częstotliwość sprężarki\n0019 | 13 | Pump Speed | 2 | uint16 | % | Prędkość pompy obiegowej [%]\n001A | 14 | Heating Capacity | 4 | float | kW | Chwilowa moc grzewcza\n001C | 15 | Cooling Capacity | 4 | float | kW | Chwilowa moc chłodzenia\n001E | 16 | Input Power | 4 | float | kW | Chwilowy pobór mocy\n0020 | 17 | COP Heating | 4 | float |  | COP grzanie\n0022 | 18 | EER Cooling | 4 | float |  | EER chłodzenie\n0024 | 19 | Operation Mode | 2 | uint16 |  | 0=Off,1=Heating,2=Cooling,3=DHW,4=Auto\n0025 | 20 | Unit Status | 2 | uint16 |  | Słowo stanu jednostki (bitowe)\n0026 | 21 | Error Code | 2 | uint16 |  | Kod błędu (0=brak)\n0027 | 22 | Warning Code | 2 | uint16 |  | Kod ostrzeżenia (0=brak)\n0030 | 23 | Heat Energy Today | 4 | float | kWh | Energia cieplna dostarczona dziś\n0032 | 24 | Heat Energy Total | 4 | float | kWh | Energia cieplna dostarczona łącznie\n0034 | 25 | Cool Energy Total | 4 | float | kWh | Energia chłodzenia łącznie\n0036 | 26 | DHW Energy Total | 4 | float | kWh | Energia CWU łącznie\n0038 | 27 | Electrical Today | 4 | float | kWh | Energia elektryczna pobrana dziś\n003A | 28 | Electrical Total | 4 | float | kWh | Energia elektryczna pobrana łącznie\n003C | 29 | Compressor Hours | 4 | uint32 | h | Czas pracy sprężarki\n003E | 30 | Compressor Starts | 4 | uint32 |  | Liczba uruchomień sprężarki"
+  },
+  {
+    "chunk_id": 9,
+    "source_label": "SONTEX SUPERCAL-539",
+    "prompts": [
+      "reset licznikow supercal-539 zapis 0xAAAA rejestr",
+      "baud rate modbus konfiguracja sontex supercal539",
+      "synchronizacja czasu time sync supercal 539 rejestr 0103",
+      "adres modbus meter id supercal-539 ustawienie",
+      "maska alarmow alarm mask rejestr sontex 539"
+    ],
+    "text": "SONTEX SUPERCAL-539 / Rejestry zapisu\n\nAdres (hex) | Rejestr nr | Nazwa | Długość (bajty) | Typ danych | Zakres wartości | Opis\n--- | --- | --- | --- | --- | --- | ---\n0002 | 1 | Meter ID | 2 | uint16 | 1–247 | Adres Modbus\n0003 | 2 | Baud Rate | 2 | uint16 | 1–4 | 1=1200, 2=2400, 3=4800, 4=9600\n0100 | 3 | Reset Counters | 2 | uint16 | 0xAAAA | Reset liczników (zapis 0xAAAA)\n0101 | 4 | Alarm Mask | 2 | uint16 | 0–0xFFFF | Maska aktywnych alarmów\n0102 | 5 | Pulse Rate | 2 | uint16 | 1/10/100 | Stała impulsowa wyjścia\n0103 | 6 | Time Sync | 4 | uint32 | Unix ts | Synchronizacja czasu\n0105 | 7 | Display Cycle | 2 | uint16 | 5–60 | Czas obrotu wyświetlacza [s]"
+  },
+  {
+    "chunk_id": 26,
+    "source_label": "GOODWE ET-PLUS",
+    "prompts": [
+      "limit eksportu safe export limit goodwe et-plus zapis",
+      "minimalne soc baterii battery min soc etplus rejestr 0082",
+      "tryb pracy work mode zapis goodwe etplus 0081",
+      "baud rate modbus adres 008d goodwe et plus konfiguracja",
+      "tou charge okno ladowania czas goodwe etplus rejestr"
+    ],
+    "text": "GOODWE ET-PLUS / Rejestry zapisu\n\nAdres (hex) | Rejestr nr | Nazwa | Długość (bajty) | Typ danych | Zakres wartości | Opis\n--- | --- | --- | --- | --- | --- | ---\n0080 | 1 | Safe Export Limit | 2 | uint16 | 0–30000 W | Limit eksportu do sieci [W]\n0081 | 2 | Work Mode | 2 | uint16 | 0–4 | 0=General,1=Off-grid,2=Backup,3=Eco,4=Peak-shaving\n0082 | 3 | Battery Min SOC | 2 | uint16 | 0–100 (%) | Minimalne SOC baterii [%]\n0083 | 4 | Battery Reserve SOC | 2 | uint16 | 0–100 (%) | SOC rezerwy dla backup [%]\n0084 | 5 | Bat Charge Power Limit | 2 | uint16 | 0–10000 W | Limit mocy ładowania [W]\n0085 | 6 | Bat Discharge Power Limit | 2 | uint16 | 0–10000 W | Limit mocy rozładowania [W]\n0086 | 7 | AC Charge Enable | 2 | uint16 | 0–1 | Zezwolenie na ładowanie z sieci\n0087 | 8 | AC Charge SOC Limit | 2 | uint16 | 0–100 (%) | SOC do którego ładować z sieci\n0088 | 9 | AC Charge Power Limit | 2 | uint16 | 0–10000 W | Limit mocy ładowania z sieci\n0089 | 10 | TOU Charge Start | 2 | uint16 | 0–2359 | Czas startu okna TOU (HHMM)\n008A | 11 | TOU Charge End | 2 | uint16 | 0–2359 | Czas końca okna TOU (HHMM)\n008B | 12 | Fault Reset | 2 | uint16 | 0x00AA | Kasowanie błędów falownika\n008C | 13 | Modbus Address | 2 | uint16 | 1–247 | Adres Modbus\n008D | 14 | Baud Rate | 2 | uint16 | 0–4 | 0=9600,1=19200,2=38400,3=57600,4=115200\n008E | 15 | Time Sync | 4 | uint32 | Unix ts | Synchronizacja czasu systemowego"
+  },
+  {
+    "chunk_id": 19,
+    "source_label": "GRUNDFOS MAGNA3",
+    "prompts": [
+      "tryb sterowania control mode zapis grundfos magna3",
+      "zadana predkosc speed setpoint rejestr 0042 magna3",
+      "reset alarmu alarm reset grundfos magna 3 zapis 0x0001",
+      "baud rate modbus adres 0048 grundfos magna3 konfiguracja",
+      "stop start pompa grundfos magna3 rejestr 0049 004a"
+    ],
+    "text": "GRUNDFOS MAGNA3 / Rejestry zapisu\n\nAdres (hex) | Rejestr nr | Nazwa | Długość (bajty) | Typ danych | Zakres wartości | Opis\n--- | --- | --- | --- | --- | --- | ---\n0040 | 1 | Control Mode | 2 | uint16 | 0–2 | 0=Local,1=Remote,2=Bus\n0041 | 2 | Operating Mode | 2 | uint16 | 0–5 | 0=Stop,1=Min,2=Max,3=Const-speed,4=Auto-press,5=Auto-flow\n0042 | 3 | Speed Setpoint | 2 | uint16 | 0–4000 RPM | Zadana prędkość [RPM]\n0043 | 4 | Diff Pressure SP | 2 | uint16 | 0–1000 (×0.01 bar) | Zadana różnica ciśnień\n0044 | 5 | Max Speed Limit | 2 | uint16 | 500–4000 RPM | Ograniczenie max prędkości\n0045 | 6 | Min Speed Limit | 2 | uint16 | 0–2000 RPM | Ograniczenie min prędkości\n0046 | 7 | Alarm Reset | 2 | uint16 | 0x0001 | Kasowanie alarmu\n0047 | 8 | Modbus Address | 2 | uint16 | 1–247 | Adres Modbus\n0048 | 9 | Baud Rate | 2 | uint16 | 0–4 | 0=9600,1=19200,2=38400,3=57600,4=115200\n0049 | 10 | Stop Command | 2 | uint16 | 0–1 | 1=zatrzymaj pompę\n004A | 11 | Start Command | 2 | uint16 | 0–1 | 1=uruchom pompę"
+  },
+  {
+    "chunk_id": 6,
+    "source_label": "KAMSTRUP MULTICAL-403",
+    "prompts": [
+      "przeplyw chwilowy flow rate rejestr kamstrup multical 403",
+      "energia cieplna heat energy adres 007c multical-403",
+      "temperatura zasilania supply temperature kamstrup 403 odczyt",
+      "moc cieplna heat power rejestr 0078 kamstrup multical403",
+      "czas pracy operating hours multical-403 kamstrup hex"
+    ],
+    "text": "KAMSTRUP MULTICAL-403 / Rejestry odczytu\n\nAdres (hex) | Rejestr nr | Nazwa | Długość (bajty) | Typ danych | Jednostka | Opis\n--- | --- | --- | --- | --- | --- | ---\n0060 | 1 | Serial Number | 4 | uint32 |  | Numer seryjny urządzenia\n0062 | 2 | Meter ID | 2 | uint16 |  | Adres Modbus (domyślnie 1)\n0063 | 3 | Baud Rate | 2 | uint16 | bps | 1=1200, 2=2400, 3=4800, 4=9600\n0070 | 4 | Flow Rate | 4 | float | m³/h | Przepływ chwilowy\n0072 | 5 | Supply Temperature | 4 | float | °C | Temperatura zasilania\n0074 | 6 | Return Temperature | 4 | float | °C | Temperatura powrotu\n0076 | 7 | Temperature Diff | 4 | float | K | Różnica temperatur zasilanie-powrót\n0078 | 8 | Heat Power | 4 | float | kW | Chwilowa moc cieplna\n007A | 9 | Cooling Power | 4 | float | kW | Chwilowa moc chłodzenia\n007C | 10 | Heat Energy | 4 | float | MWh | Skumulowana energia cieplna\n007E | 11 | Cooling Energy | 4 | float | MWh | Skumulowana energia chłodzenia\n0080 | 12 | Volume | 4 | float | m³ | Skumulowany wolumen przepływu\n0082 | 13 | Operating Hours | 4 | uint32 | h | Całkowity czas pracy\n0084 | 14 | Peak Power | 4 | float | kW | Maksymalna odnotowana moc\n0086 | 15 | Tariff 1 Energy | 4 | float | MWh | Energia taryfa T1\n0088 | 16 | Tariff 2 Energy | 4 | float | MWh | Energia taryfa T2\n008A | 17 | Info Code | 2 | uint16 |  | Kod informacyjny (0=brak błędu)\n008C | 18 | Error Code | 2 | uint16 |  | Kod błędu urządzenia\n008E | 19 | Software Version | 2 | uint16 |  | Wersja oprogramowania\n0090 | 20 | Hardware Version | 2 | uint16 |  | Wersja sprzętowa"
+  },
+  {
+    "chunk_id": 5,
+    "source_label": "EASTRON SDM630",
+    "prompts": [
+      "energy reset F90B zapis 0x0300 sdm630",
+      "jak zmienić baud rate eastron modbus",
+      "meter id F907 adres modbus sdm 630",
+      "sterowanie przekaźnikiem rejestr sdm630",
+      "przekładnik prądowy CT konfiguracja eastron"
+    ],
+    "text": "EASTRON SDM630 / Rejestry zapisu\n\nAdres (hex) | Rejestr nr | Nazwa | Długość (bajty) | Typ danych | Zakres wartości | Opis\n--- | --- | --- | --- | --- | --- | ---\nFC00 | 1 | Relay 1 Control | 2 | uint16 | 0=OFF, 1=ON | Sterowanie przekaźnikiem 1\nFC01 | 2 | Relay 2 Control | 2 | uint16 | 0=OFF, 1=ON | Sterowanie przekaźnikiem 2\nF900 | 3 | System Type | 2 | uint16 | 0–3 | 0=1P2W, 1=3P4W, 2=3P3W, 3=3P4W bal.\nF901 | 4 | CT Primary | 2 | uint16 | 1–9999 | Wartość pierwotna przekładnika prądowego [A]\nF902 | 5 | CT Secondary | 2 | uint16 | 1–9999 | Wartość wtórna przekładnika prądowego [A]\nF903 | 6 | Pulse 1 Output | 2 | uint16 | 0–3 | Wyjście impulsowe 1: 0=import, 1=eksport, 2=bierna+, 3=bierna-\nF904 | 7 | Pulse 2 Output | 2 | uint16 | 0–3 | Wyjście impulsowe 2: 0=import, 1=eksport, 2=bierna+, 3=bierna-\nF905 | 8 | Pulse 1 Divisor | 2 | uint16 | 1/10/100/1000 | Dzielnik impulsów wyjścia 1 [imp/kWh]\nF906 | 9 | Pulse 2 Divisor | 2 | uint16 | 1/10/100/1000 | Dzielnik impulsów wyjścia 2 [imp/kWh]\nF907 | 10 | Meter ID | 2 | uint16 | 1–247 | Adres Modbus licznika\nF908 | 11 | Baud Rate | 2 | uint16 | 0–5 | 0=2400, 1=4800, 2=9600, 3=19200, 4=38400, 5=115200 bps\nF909 | 12 | Parity/Stop Bits | 2 | uint16 | 0–4 | 0=1S/N, 1=1S/E, 2=1S/O, 3=2S/N, 4=2S/E\nF90A | 13 | Password | 2 | uint16 | 0–9999 | Hasło zabezpieczenia przed zmianą parametrów\nF90B | 14 | Energy Reset | 2 | uint16 | 0x0300 | Zapis 0x0300 resetuje wszystkie liczniki energii\nF90C | 15 | VT Primary | 2 | uint16 | 1–9999 | Wartość pierwotna przekładnika napięciowego [V]\nF90D | 16 | VT Secondary | 2 | uint16 | 1–9999 | Wartość wtórna przekładnika napięciowego [V]"
+  },
+  {
+    "chunk_id": 10,
+    "source_label": "NIBE F1255",
+    "prompts": [
+      "temperatura zewnetrzna outdoor temp rejestr nibe f1255",
+      "predkosc sprezarki compressor speed adres 0018 f1255",
+      "cop wspolczynnik efektywnosci rejestr 001f nibe f1255",
+      "tryb pracy operating mode nibe f 1255 odczyt",
+      "energia elektryczna electric energy total f1255 nibe hex"
+    ],
+    "text": "NIBE F1255 / Rejestry odczytu\n\nAdres (hex) | Rejestr nr | Nazwa | Długość (bajty) | Typ danych | Jednostka | Opis\n--- | --- | --- | --- | --- | --- | ---\n0000 | 1 | Device ID | 2 | uint16 |  | Identyfikator urządzenia\n0001 | 2 | Firmware Version | 2 | uint16 |  | Wersja oprogramowania\n0010 | 3 | Outdoor Temp | 2 | int16 | 0.1°C | Temperatura zewnętrzna (×0.1)\n0011 | 4 | Supply Line Temp | 2 | int16 | 0.1°C | Temperatura zasilania CO (×0.1)\n0012 | 5 | Return Line Temp | 2 | int16 | 0.1°C | Temperatura powrotu CO (×0.1)\n0013 | 6 | Hot Water Temp | 2 | int16 | 0.1°C | Temperatura ciepłej wody (×0.1)\n0014 | 7 | Brine In Temp | 2 | int16 | 0.1°C | Temperatura solanki wlot (×0.1)\n0015 | 8 | Brine Out Temp | 2 | int16 | 0.1°C | Temperatura solanki wylot (×0.1)\n0016 | 9 | Compressor Temp | 2 | int16 | 0.1°C | Temperatura tłoczenia sprężarki (×0.1)\n0017 | 10 | Condenser Temp | 2 | int16 | 0.1°C | Temperatura skraplacza (×0.1)\n0018 | 11 | Compressor Speed | 2 | uint16 | RPM | Prędkość obrotowa sprężarki\n0019 | 12 | Brine Pump Speed | 2 | uint16 | % | Prędkość pompy solanki [%]\n001A | 13 | Heating Pump Speed | 2 | uint16 | % | Prędkość pompy CO [%]\n001B | 14 | Heating Power | 4 | float | kW | Chwilowa moc grzewcza\n001D | 15 | Electrical Power | 4 | float | kW | Chwilowy pobór mocy elektrycznej\n001F | 16 | COP | 4 | float |  | Współczynnik efektywności COP\n0021 | 17 | Operating Mode | 2 | uint16 |  | 0=Stop,1=Heat,2=DHW,3=Heat+DHW,4=Cool\n0022 | 18 | Operating Status | 2 | uint16 |  | Słowo stanu (bitowe)\n0023 | 19 | Alarm Code | 2 | uint16 |  | Aktywny kod alarmu (0=brak)\n0024 | 20 | Heat Energy Total | 4 | float | kWh | Energia cieplna dostarczona łącznie\n0026 | 21 | DHW Energy Total | 4 | float | kWh | Energia CWU dostarczona łącznie\n0028 | 22 | Electric Energy Total | 4 | float | kWh | Energia elektryczna pobrana łącznie\n002A | 23 | Compressor Starts | 4 | uint32 |  | Liczba uruchomień sprężarki\n002C | 24 | Operating Hours Comp | 4 | uint32 | h | Czas pracy sprężarki\n002E | 25 | Operating Hours Pump | 4 | uint32 | h | Czas pracy pompy CO\n0030 | 26 | Setpoint Heat | 2 | int16 | 0.1°C | Zadana temperatura zasilania CO\n0031 | 27 | Setpoint DHW | 2 | int16 | 0.1°C | Zadana temperatura CWU"
+  },
+  {
+    "chunk_id": 15,
+    "source_label": "VIESSMANN VITODENS-200W",
+    "prompts": [
+      "zadana temperatura co setpoint heating vitodens-200w zapis",
+      "reset bledu fault reset 0xe0e0 viessmann vitodens200w",
+      "tryb pracy operating mode zapis vitodens 200w rejestr 0042",
+      "baud rate modbus adres 0048 vitodens-200w konfiguracja",
+      "modulacja max min palnik vitodens200w rejestr 0043 0044"
+    ],
+    "text": "VIESSMANN VITODENS-200W / Rejestry zapisu\n\nAdres (hex) | Rejestr nr | Nazwa | Długość (bajty) | Typ danych | Zakres wartości | Opis\n--- | --- | --- | --- | --- | --- | ---\n0040 | 1 | Setpoint Heating | 2 | int16 | 200–800 (×0.1°C) | Zadana temperatura zasilania CO\n0041 | 2 | Setpoint DHW | 2 | int16 | 350–650 (×0.1°C) | Zadana temperatura CWU\n0042 | 3 | Operating Mode | 2 | uint16 | 0–4 | 0=Off,1=Heat,2=DHW,3=Heat+DHW,4=Summer\n0043 | 4 | Max Modulation | 2 | uint16 | 10–100 | Maksymalny poziom modulacji palnika [%]\n0044 | 5 | Min Modulation | 2 | uint16 | 10–100 | Minimalny poziom modulacji palnika [%]\n0045 | 6 | Heating Curve Slope | 2 | uint16 | 0–35 | Nachylenie krzywej grzewczej\n0046 | 7 | Fault Reset | 2 | uint16 | 0xE0E0 | Kasowanie błędu (zapis 0xE0E0)\n0047 | 8 | Modbus Address | 2 | uint16 | 1–247 | Adres Modbus\n0048 | 9 | Baud Rate | 2 | uint16 | 0–3 | 0=9600,1=19200,2=38400,3=115200\n0049 | 10 | CH Pump Kick | 2 | uint16 | 0–1 | Wymuś uruchomienie pompy CO (1=tak)"
+  },
+  {
+    "chunk_id": 22,
+    "source_label": "SOFAR HYD6000-ES",
+    "prompts": [
+      "napiecie pv1 voltage rejestr sofar hyd6000-es odczyt",
+      "stan baterii battery soc soh adres 001b sofar hyd6000es",
+      "moc sieciowa grid power l1 l2 l3 sofar hyd 6000",
+      "tryb pracy operating mode rejestr 002c sofar hyd6000-es",
+      "energia pv dzis today rejestr 0040 sofar hyd6000es hex"
+    ],
+    "text": "SOFAR HYD6000-ES / Rejestry odczytu\n\nAdres (hex) | Rejestr nr | Nazwa | Długość (bajty) | Typ danych | Jednostka | Opis\n--- | --- | --- | --- | --- | --- | ---\n0000 | 1 | Device Type | 2 | uint16 |  | Typ urządzenia\n0001 | 2 | Firmware Version | 2 | uint16 |  | Wersja oprogramowania\n0002 | 3 | Modbus Address | 2 | uint16 |  | Adres Modbus\n0010 | 4 | PV1 Voltage | 2 | uint16 | 0.1V | Napięcie wejście PV1 (×0.1 V)\n0011 | 5 | PV1 Current | 2 | uint16 | 0.01A | Prąd wejście PV1 (×0.01 A)\n0012 | 6 | PV1 Power | 2 | uint16 | W | Moc wejście PV1 [W]\n0013 | 7 | PV2 Voltage | 2 | uint16 | 0.1V | Napięcie wejście PV2 (×0.1 V)\n0014 | 8 | PV2 Current | 2 | uint16 | 0.01A | Prąd wejście PV2 (×0.01 A)\n0015 | 9 | PV2 Power | 2 | uint16 | W | Moc wejście PV2 [W]\n0016 | 10 | PV Total Power | 4 | uint32 | W | Łączna moc PV\n0018 | 11 | Battery Voltage | 2 | uint16 | 0.1V | Napięcie baterii (×0.1 V)\n0019 | 12 | Battery Current | 2 | int16 | 0.01A | Prąd baterii – ładowanie + (×0.01 A)\n001A | 13 | Battery Power | 2 | int16 | W | Moc baterii – ładowanie +\n001B | 14 | Battery SOC | 2 | uint16 | % | Stan naładowania baterii [%]\n001C | 15 | Battery SOH | 2 | uint16 | % | Stan zdrowia baterii [%]\n001D | 16 | Battery Temp | 2 | int16 | 0.1°C | Temperatura baterii (×0.1)\n001E | 17 | Battery Cycles | 2 | uint16 |  | Liczba cykli ładowania baterii\n001F | 18 | Grid Voltage L1 | 2 | uint16 | 0.1V | Napięcie sieciowe L1 (×0.1 V)\n0020 | 19 | Grid Voltage L2 | 2 | uint16 | 0.1V | Napięcie sieciowe L2 (×0.1 V)\n0021 | 20 | Grid Voltage L3 | 2 | uint16 | 0.1V | Napięcie sieciowe L3 (×0.1 V)\n0022 | 21 | Grid Frequency | 2 | uint16 | 0.01Hz | Częstotliwość sieci (×0.01 Hz)\n0023 | 22 | Grid Power L1 | 2 | int16 | W | Moc sieciowa L1 – pobór +\n0024 | 23 | Grid Power L2 | 2 | int16 | W | Moc sieciowa L2 – pobór +\n0025 | 24 | Grid Power L3 | 2 | int16 | W | Moc sieciowa L3 – pobór +\n0026 | 25 | Grid Total Power | 2 | int16 | W | Łączna moc sieciowa – pobór +\n0027 | 26 | Load Power L1 | 2 | uint16 | W | Moc obciążenia L1\n0028 | 27 | Load Power L2 | 2 | uint16 | W | Moc obciążenia L2\n0029 | 28 | Load Power L3 | 2 | uint16 | W | Moc obciążenia L3\n002A | 29 | Load Total Power | 2 | uint16 | W | Łączna moc obciążenia\n002B | 30 | Inverter Temp | 2 | int16 | 0.1°C | Temperatura falownika (×0.1)\n002C | 31 | Operating Mode | 2 | uint16 |  | 0=Wait,1=Normal,2=Grid-charge,3=EPS,4=Fault\n002D | 32 | Fault Code 1 | 2 | uint16 |  | Kod błędu 1 (bitowy)\n002E | 33 | Fault Code 2 | 2 | uint16 |  | Kod błędu 2 (bitowy)\n0040 | 34 | PV Energy Today | 4 | uint32 | 0.01kWh | Energia PV dziś (×0.01 kWh)\n0042 | 35 | PV Energy Total | 4 | uint32 | 0.1kWh | Energia PV łącznie (×0.1 kWh)\n0044 | 36 | Battery Charge Today | 4 | uint32 | 0.01kWh | Energia naładowana dziś\n0046 | 37 | Battery Discharge Today | 4 | uint32 | 0.01kWh | Energia rozładowana dziś\n0048 | 38 | Grid Import Today | 4 | uint32 | 0.01kWh | Energia pobrana z sieci dziś\n004A | 39 | Grid Export Today | 4 | uint32 | 0.01kWh | Energia oddana do sieci dziś\n004C | 40 | Load Energy Today | 4 | uint32 | 0.01kWh | Energia zużyta przez obciążenie dziś\n0050 | 41 | Grid Import Total | 4 | uint32 | 0.1kWh | Energia pobrana z sieci łącznie\n0052 | 42 | Grid Export Total | 4 | uint32 | 0.1kWh | Energia oddana do sieci łącznie"
+  },
+  {
+    "chunk_id": 11,
+    "source_label": "NIBE F1255",
+    "prompts": [
+      "zadana temperatura co setpoint heat nibe f1255 zapis",
+      "reset alarmu alarm reset zapis 0xA5A5 nibe f1255",
+      "tryb pracy operating mode zapis nibe f 1255 rejestr",
+      "force dhw wymus podgrzanie cwu f1255 rejestr 0035",
+      "baud rate modbus konfiguracja nibe f1255 adres 0036"
+    ],
+    "text": "NIBE F1255 / Rejestry zapisu\n\nAdres (hex) | Rejestr nr | Nazwa | Długość (bajty) | Typ danych | Zakres wartości | Opis\n--- | --- | --- | --- | --- | --- | ---\n0030 | 1 | Setpoint Heat | 2 | int16 | -50–800 (×0.1°C) | Ustaw temperaturę zasilania CO\n0031 | 2 | Setpoint DHW | 2 | int16 | 400–700 (×0.1°C) | Ustaw temperaturę CWU\n0032 | 3 | Operating Mode | 2 | uint16 | 0–4 | 0=Stop,1=Heat,2=DHW,3=Heat+DHW,4=Cool\n0033 | 4 | Heating Curve Slope | 2 | uint16 | 0–15 | Nachylenie krzywej grzewczej (0–15)\n0034 | 5 | Alarm Reset | 2 | uint16 | 0xA5A5 | Skasowanie aktywnego alarmu\n0035 | 6 | Force DHW | 2 | uint16 | 0–1 | Wymuś podgrzanie CWU (1=tak)\n0036 | 7 | Baud Rate | 2 | uint16 | 0–3 | 0=9600,1=19200,2=38400,3=115200\n0037 | 8 | Meter ID | 2 | uint16 | 1–247 | Adres Modbus urządzenia"
+  },
+  {
+    "chunk_id": 18,
+    "source_label": "GRUNDFOS MAGNA3",
+    "prompts": [
+      "predkosc pompy pump speed rejestr grundfos magna3 odczyt",
+      "roznica cisnienia diff pressure adres 0015 magna 3",
+      "pobor mocy input power rejestr grundfos magna3 hex",
+      "stan alarmu alarm word slowo grundfos magna3 rejestr",
+      "czas pracy operating hours grundfos magna 3 odczyt"
+    ],
+    "text": "GRUNDFOS MAGNA3 / Rejestry odczytu\n\nAdres (hex) | Rejestr nr | Nazwa | Długość (bajty) | Typ danych | Jednostka | Opis\n--- | --- | --- | --- | --- | --- | ---\n0000 | 1 | Unit Type | 2 | uint16 |  | Typ jednostki\n0001 | 2 | Firmware Version | 2 | uint16 |  | Wersja oprogramowania\n0002 | 3 | Modbus Address | 2 | uint16 |  | Adres Modbus\n0010 | 4 | Pump Speed | 2 | uint16 | RPM | Aktualna prędkość obrotowa\n0011 | 5 | Speed Setpoint | 2 | uint16 | RPM | Zadana prędkość obrotowa\n0012 | 6 | Relative Speed | 2 | uint16 | 0.1% | Prędkość względna [%×0.1]\n0013 | 7 | Flow Rate | 4 | float | m³/h | Przepływ chwilowy\n0015 | 8 | Diff Pressure | 2 | uint16 | 0.01 bar | Różnica ciśnień (×0.01 bar)\n0016 | 9 | Diff Pressure SP | 2 | uint16 | 0.01 bar | Zadana różnica ciśnień\n0017 | 10 | Head | 4 | float | m | Wysokość podnoszenia [m słupa wody]\n0019 | 11 | Input Power | 4 | float | W | Pobór mocy elektrycznej\n001B | 12 | Motor Current | 2 | uint16 | 0.1A | Prąd silnika (×0.1 A)\n001C | 13 | Motor Voltage | 2 | uint16 | V | Napięcie zasilania silnika\n001D | 14 | Motor Temp | 2 | int16 | °C | Temperatura silnika\n001E | 15 | Operating Mode | 2 | uint16 |  | 0=Stop,1=Min,2=Max,3=Const-speed,4=Auto-press,5=Auto-flow\n001F | 16 | Control Mode | 2 | uint16 |  | 0=Local,1=Remote,2=Bus\n0020 | 17 | Status Word | 2 | uint16 |  | Słowo stanu (bitowe)\n0021 | 18 | Alarm Word | 2 | uint16 |  | Słowo alarmowe (bitowe)\n0022 | 19 | Warning Word | 2 | uint16 |  | Słowo ostrzeżeń (bitowe)\n0030 | 20 | Energy Consumed | 4 | float | kWh | Łączna energia pobrana\n0032 | 21 | Operating Hours | 4 | uint32 | h | Całkowity czas pracy\n0034 | 22 | Number of Starts | 4 | uint32 |  | Liczba uruchomień\n0036 | 23 | Max Observed Flow | 4 | float | m³/h | Maksymalny odnotowany przepływ\n0038 | 24 | Min Observed Temp | 2 | int16 | °C | Minimalna odnotowana temp. silnika\n0039 | 25 | Max Observed Temp | 2 | int16 | °C | Maksymalna odnotowana temp. silnika"
+  },
+  {
+    "chunk_id": 1,
+    "source_label": "ORNO OR-WE-520",
+    "prompts": [
+      "reset licznika we520",
+      "jak zmienić baud rate rejestr zapisu or-we-520",
+      "adres modbus licznika ustawienie or-we-520",
+      "synchronizacja zegara rtc rejestr orwe520",
+      "haslo zabezpieczenie parametry 520"
+    ],
+    "text": "ORNO OR-WE-520 / Rejestry odczytu\n\nAdres (hex) | Rejestr nr | Nazwa | Długość (bajty) | Typ danych | Jednostka | Opis\n--- | --- | --- | --- | --- | --- | ---\n011A | 52 | L1 Reactive Energy | 4 | float | kvarh | Energia bierna fazy L1\n011C | 53 | L2 Reactive Energy | 4 | float | kvarh | Energia bierna fazy L2\n011E | 54 | L3 Reactive Energy | 4 | float | kvarh | Energia bierna fazy L3\n0120 | 55 | Forward Reactive Energy | 4 | float | kvarh | Energia bierna pobrana\n0122 | 56 | L1 Forward Reactive Energy | 4 | float | kvarh | Energia bierna import L1\n0124 | 57 | L2 Forward Reactive Energy | 4 | float | kvarh | Energia bierna import L2\n0126 | 58 | L3 Forward Reactive Energy | 4 | float | kvarh | Energia bierna import L3\n0128 | 59 | Reverse Reactive Energy | 4 | float | kvarh | Energia bierna oddana\n012A | 60 | L1 Reverse Reactive Energy | 4 | float | kvarh | Energia bierna eksport L1\n012C | 61 | L2 Reverse Reactive Energy | 4 | float | kvarh | Energia bierna eksport L2\n012E | 62 | L3 Reverse Reactive Energy | 4 | float | kvarh | Energia bierna eksport L3\n0130 | 63 | T1 Active Energy | 4 | float | kWh | Energia czynna taryfa T1\n0132 | 64 | T2 Active Energy | 4 | float | kWh | Energia czynna taryfa T2\n0134 | 65 | T3 Active Energy | 4 | float | kWh | Energia czynna taryfa T3\n0136 | 66 | T4 Active Energy | 4 | float | kWh | Energia czynna taryfa T4\n0138 | 67 | T1 Forward Active Energy | 4 | float | kWh | Energia import taryfa T1\n013A | 68 | T2 Forward Active Energy | 4 | float | kWh | Energia import taryfa T2\n013C | 69 | T3 Forward Active Energy | 4 | float | kWh | Energia import taryfa T3\n013E | 70 | T4 Forward Active Energy | 4 | float | kWh | Energia import taryfa T4\n0140 | 71 | T1 Reverse Active Energy | 4 | float | kWh | Energia eksport taryfa T1\n0142 | 72 | T2 Reverse Active Energy | 4 | float | kWh | Energia eksport taryfa T2\n0144 | 73 | T3 Reverse Active Energy | 4 | float | kWh | Energia eksport taryfa T3\n0146 | 74 | T4 Reverse Active Energy | 4 | float | kWh | Energia eksport taryfa T4\n0148 | 75 | T1 Reactive Energy | 4 | float | kvarh | Energia bierna taryfa T1\n014A | 76 | T2 Reactive Energy | 4 | float | kvarh | Energia bierna taryfa T2\n014C | 77 | T3 Reactive Energy | 4 | float | kvarh | Energia bierna taryfa T3\n014E | 78 | T4 Reactive Energy | 4 | float | kvarh | Energia bierna taryfa T4\n0150 | 79 | T1 Demand Power | 4 | float | kW | Moc zapotrzebowania taryfa T1\n0152 | 80 | T2 Demand Power | 4 | float | kW | Moc zapotrzebowania taryfa T2\n0154 | 81 | T3 Demand Power | 4 | float | kW | Moc zapotrzebowania taryfa T3\n0156 | 82 | T4 Demand Power | 4 | float | kW | Moc zapotrzebowania taryfa T4"
+  },
+  {
+    "chunk_id": 14,
+    "source_label": "VIESSMANN VITODENS-200W",
+    "prompts": [
+      "temperatura kotla boiler temp rejestr viessmann vitodens 200w",
+      "modulacja palnika modulation level adres 0016 vitodens200w",
+      "kod bledu fault code viessmann vitodens-200w odczyt",
+      "energia gazu gas energy total vitodens 200w hex rejestr",
+      "stan pompy pump status rejestr 0018 viessmann vitodens"
+    ],
+    "text": "VIESSMANN VITODENS-200W / Rejestry odczytu\n\nAdres (hex) | Rejestr nr | Nazwa | Długość (bajty) | Typ danych | Jednostka | Opis\n--- | --- | --- | --- | --- | --- | ---\n0000 | 1 | Device Type | 2 | uint16 |  | Typ urządzenia (stała 0x0200)\n0001 | 2 | Software Version | 2 | uint16 |  | Wersja oprogramowania\n0002 | 3 | Modbus Address | 2 | uint16 |  | Aktualny adres Modbus\n0010 | 4 | Boiler Temp | 2 | int16 | 0.1°C | Temperatura kotła (×0.1)\n0011 | 5 | Supply Temp | 2 | int16 | 0.1°C | Temperatura zasilania CO (×0.1)\n0012 | 6 | Return Temp | 2 | int16 | 0.1°C | Temperatura powrotu CO (×0.1)\n0013 | 7 | Flue Gas Temp | 2 | int16 | 0.1°C | Temperatura spalin (×0.1)\n0014 | 8 | DHW Temp | 2 | int16 | 0.1°C | Temperatura CWU (×0.1)\n0015 | 9 | Outside Temp | 2 | int16 | 0.1°C | Temperatura zewnętrzna (z czujnika)\n0016 | 10 | Modulation Level | 2 | uint16 | % | Poziom modulacji palnika [%]\n0017 | 11 | Burner Status | 2 | uint16 |  | 0=Off,1=Igniting,2=Running,3=Postpurge\n0018 | 12 | Pump Status | 2 | uint16 |  | 0=Off,1=On (pompa CO)\n0019 | 13 | DHW Pump Status | 2 | uint16 |  | 0=Off,1=On (pompa CWU)\n001A | 14 | Heating Power | 4 | float | kW | Chwilowa moc grzewcza\n001C | 15 | Gas Flow Rate | 4 | float | m³/h | Chwilowe zużycie gazu\n001E | 16 | Efficiency | 2 | uint16 | 0.1% | Sprawność chwilowa (×0.1%)\n001F | 17 | CO2 Level | 2 | uint16 | 0.1% | Poziom CO2 w spalinach (×0.1%)\n0020 | 18 | Boiler Setpoint | 2 | int16 | 0.1°C | Aktualny setpoint kotła\n0021 | 19 | Operating Mode | 2 | uint16 |  | 0=Off,1=Heat,2=DHW,3=Heat+DHW,4=Summer\n0022 | 20 | Fault Code | 2 | uint16 |  | Kod błędu (0=brak)\n0023 | 21 | Fault History 1 | 2 | uint16 |  | Ostatni kod błędu\n0024 | 22 | Fault History 2 | 2 | uint16 |  | Przedostatni kod błędu\n0030 | 23 | Gas Energy Total | 4 | float | kWh | Skumulowana energia z gazu\n0032 | 24 | Heat Energy Total | 4 | float | kWh | Skumulowana energia cieplna CO\n0034 | 25 | DHW Energy Total | 4 | float | kWh | Skumulowana energia cieplna CWU\n0036 | 26 | Burner Starts | 4 | uint32 |  | Liczba uruchomień palnika\n0038 | 27 | Burner Hours | 4 | uint32 | h | Łączny czas pracy palnika\n003A | 28 | Pump Hours | 4 | uint32 | h | Łączny czas pracy pompy CO"
+  },
+  {
+    "chunk_id": 24,
+    "source_label": "GOODWE ET-PLUS",
+    "prompts": [
+      "napiecie pv1 pv2 rejestr goodwe et-plus odczyt",
+      "stan baterii battery soc soh adres 0044 goodwe etplus",
+      "moc sieciowa grid power l1 l2 l3 goodwe et plus",
+      "tryb pracy work mode rejestr 0036 goodwe etplus hex",
+      "temperatura falownika inverter temp adres 0035 goodwe"
+    ],
+    "text": "GOODWE ET-PLUS / Rejestry odczytu\n\nAdres (hex) | Rejestr nr | Nazwa | Długość (bajty) | Typ danych | Jednostka | Opis\n--- | --- | --- | --- | --- | --- | ---\n0000 | 1 | Device Model | 4 | uint32 |  | Identyfikator modelu (ASCII)\n0002 | 2 | Serial Number | 16 | string |  | Numer seryjny (8 rejestrów)\n000A | 3 | Firmware DSP | 2 | uint16 |  | Wersja firmware DSP\n000B | 4 | Firmware ARM | 2 | uint16 |  | Wersja firmware ARM\n000C | 5 | Modbus Address | 2 | uint16 |  | Aktualny adres Modbus\n0020 | 6 | PV1 Voltage | 2 | uint16 | 0.1V | Napięcie wejście PV1\n0021 | 7 | PV1 Current | 2 | int16 | 0.1A | Prąd wejście PV1\n0022 | 8 | PV1 Power | 2 | uint16 | W | Moc wejście PV1\n0023 | 9 | PV2 Voltage | 2 | uint16 | 0.1V | Napięcie wejście PV2\n0024 | 10 | PV2 Current | 2 | int16 | 0.1A | Prąd wejście PV2\n0025 | 11 | PV2 Power | 2 | uint16 | W | Moc wejście PV2\n0026 | 12 | PV3 Voltage | 2 | uint16 | 0.1V | Napięcie wejście PV3 (jeśli obsługiwane)\n0027 | 13 | PV3 Current | 2 | int16 | 0.1A | Prąd wejście PV3\n0028 | 14 | PV3 Power | 2 | uint16 | W | Moc wejście PV3\n0029 | 15 | PV Total Power | 4 | uint32 | W | Łączna moc PV\n002B | 16 | On-grid L1 Voltage | 2 | uint16 | 0.1V | Napięcie sieciowe L1\n002C | 17 | On-grid L2 Voltage | 2 | uint16 | 0.1V | Napięcie sieciowe L2\n002D | 18 | On-grid L3 Voltage | 2 | uint16 | 0.1V | Napięcie sieciowe L3\n002E | 19 | On-grid Frequency | 2 | uint16 | 0.01Hz | Częstotliwość sieci\n002F | 20 | On-grid L1 Current | 2 | int16 | 0.1A | Prąd sieciowy L1 – eksport +\n0030 | 21 | On-grid L2 Current | 2 | int16 | 0.1A | Prąd sieciowy L2\n0031 | 22 | On-grid L3 Current | 2 | int16 | 0.1A | Prąd sieciowy L3\n0032 | 23 | Active Power | 2 | int16 | W | Aktywna moc AC – eksport +\n0033 | 24 | Reactive Power | 2 | int16 | VAr | Moc bierna AC\n0034 | 25 | Apparent Power | 2 | uint16 | VA | Moc pozorna AC\n0035 | 26 | Inverter Temp | 2 | int16 | 0.1°C | Temperatura falownika\n0036 | 27 | Work Mode | 2 | uint16 |  | Tryb pracy: 0=Wait,1=Normal,2=Fault,3=Flash,4=Check\n0037 | 28 | Error Code | 4 | uint32 |  | Kod błędu (bitowy)\n0040 | 29 | Battery Voltage | 2 | uint16 | 0.1V | Napięcie baterii\n0041 | 30 | Battery Current | 2 | int16 | 0.1A | Prąd baterii – ładowanie +\n0042 | 31 | Battery Power | 2 | int16 | W | Moc baterii – ładowanie +\n0043 | 32 | Battery Mode | 2 | uint16 |  | 0=Discharge,1=Charge,2=Idle\n0044 | 33 | Battery SOC | 2 | uint16 | % | Stan naładowania baterii\n0045 | 34 | Battery SOH | 2 | uint16 | % | Stan zdrowia baterii\n0046 | 35 | Battery Temp | 2 | int16 | 0.1°C | Temperatura BMS\n0047 | 36 | Battery Cycles | 2 | uint16 |  | Liczba pełnych cykli baterii\n0048 | 37 | BMS Status | 2 | uint16 |  | Słowo statusu BMS (bitowe)\n0049 | 38 | Backup L1 Voltage | 2 | uint16 | 0.1V | Napięcie wyjście backup L1\n004A | 39 | Backup L2 Voltage | 2 | uint16 | 0.1V | Napięcie wyjście backup L2\n004B | 40 | Backup L3 Voltage | 2 | uint16 | 0.1V | Napięcie wyjście backup L3\n004C | 41 | Backup L1 Power | 2 | int16 | W | Moc wyjście backup L1\n004D | 42 | Backup L2 Power | 2 | int16 | W | Moc wyjście backup L2\n004E | 43 | Backup L3 Power | 2 | int16 | W | Moc wyjście backup L3\n004F | 44 | Load Total Power | 2 | int16 | W | Łączna moc obciążenia\n0060 | 45 | PV Energy Today | 2 | uint16 | 0.1kWh | Energia PV dziś\n0061 | 46 | PV Energy Total | 4 | uint32 | 0.1kWh | Energia PV łącznie\n0063 | 47 | Bat Charge Today | 2 | uint16 | 0.1kWh | Energia naładowana dziś\n0064 | 48 | Bat Discharge Today | 2 | uint16 | 0.1kWh | Energia rozładowana dziś\n0065 | 49 | Bat Charge Total | 4 | uint32 | 0.1kWh | Energia naładowana łącznie\n0067 | 50 | Bat Discharge Total | 4 | uint32 | 0.1kWh | Energia rozładowana łącznie"
+  },
+  {
+    "chunk_id": 13,
+    "source_label": "DAIKIN ALTHERMA-R",
+    "prompts": [
+      "zadana temperatura cwu setpoint dhw daikin altherma-r zapis",
+      "reset bledu error reset 0x1234 althermar rejestr",
+      "tryb pracy operation mode zapis daikin altherma r",
+      "baud rate modbus adres 0048 altherma-r konfiguracja",
+      "force dhw wymus podgrzanie althermar rejestr 0044"
+    ],
+    "text": "DAIKIN ALTHERMA-R / Rejestry zapisu\n\nAdres (hex) | Rejestr nr | Nazwa | Długość (bajty) | Typ danych | Zakres wartości | Opis\n--- | --- | --- | --- | --- | --- | ---\n0040 | 1 | Setpoint Heat LWT | 2 | int16 | 200–650 (×0.1°C) | Zadana temp. wody grzewczej\n0041 | 2 | Setpoint Cool LWT | 2 | int16 | 50–250 (×0.1°C) | Zadana temp. wody chłodzenia\n0042 | 3 | Setpoint DHW | 2 | int16 | 400–750 (×0.1°C) | Zadana temperatura CWU\n0043 | 4 | Operation Mode | 2 | uint16 | 0–4 | 0=Off,1=Heating,2=Cooling,3=DHW,4=Auto\n0044 | 5 | Force DHW | 2 | uint16 | 0–1 | Wymuś podgrzanie CWU\n0045 | 6 | Quiet Mode | 2 | uint16 | 0–3 | Poziom trybu cichego (0=wyłączony)\n0046 | 7 | Error Reset | 2 | uint16 | 0x1234 | Skasowanie błędu (zapis 0x1234)\n0047 | 8 | Modbus Address | 2 | uint16 | 1–247 | Adres Modbus\n0048 | 9 | Baud Rate | 2 | uint16 | 0–4 | 0=9600,1=19200,2=38400,3=57600,4=115200"
+  },
+  {
+    "chunk_id": 2,
+    "source_label": "ORNO OR-WE-520",
+    "prompts": [
+      "napiecie L1 rejestr orno 520",
+      "jak odczytac prad fazowy we520",
+      "adres hex moc czynna orwe520",
+      "czestotliwosc sieci grid frequency rejestr or-we-520",
+      "wspolczynnik mocy L2 L3 rejestr orno or-we-520"
+    ],
+    "text": "ORNO OR-WE-520 / Rejestry zapisu\n\nAdres (hex) | Rejestr nr | Nazwa | Długość (bajty) | Typ danych | Zakres wartości | Opis\n--- | --- | --- | --- | --- | --- | ---\n0002 | 1 | Meter ID | 2 | uint16 | 1–247 | Ustaw adres Modbus licznika\n0003 | 2 | Baud Rate | 2 | uint16 | 1–4 | 1=1200, 2=2400, 3=4800, 4=9600 bps\n0009 | 3 | S0 Output Rate | 4 | float | 1/10/100/1000 | Stała impulsowa wyjścia S0 [imp/kWh]\n0042 | 4 | Combined Code | 2 | uint16 | 0x0000–0xFFFF | Kombinowany kod trybu pracy\n000D | 5 | Cycle Time | 2 | uint16 | 1–30 | Czas automatycznego przewijania wyświetlacza [s]\n0200 | 6 | Reset Energy | 2 | uint16 | 0x5A5A | Zapis wartości 0x5A5A resetuje liczniki energii\n0201 | 7 | CT Primary | 2 | uint16 | 1–9999 | Przekładnia pierwotna przekładnika prądowego\n0202 | 8 | CT Secondary | 2 | uint16 | 1–9999 | Przekładnia wtórna przekładnika prądowego\n0203 | 9 | Display Mode | 2 | uint16 | 0–2 | Tryb podświetlania: 0=przycisk, 1=zawsze wł, 2=zawsze wył\n0204 | 10 | Pulse Width | 2 | uint16 | 50–200 | Szerokość impulsu wyjścia S0 [ms]\n0205 | 11 | Tariff Mode | 2 | uint16 | 0–1 | 0=jedna taryfa, 1=wielotaryfowy (tylko OR-WE-517)\n0206 | 12 | Password | 2 | uint16 | 0–9999 | Hasło zabezpieczające przed zmianą parametrów\n0207 | 13 | Time Sync | 4 | uint32 | Unix timestamp | Synchronizacja zegara RTC [sekundy od 1970-01-01]\n0209 | 14 | T1 Start Hour | 2 | uint16 | 0–23 | Godzina rozpoczęcia taryfy T1\n020A | 15 | T2 Start Hour | 2 | uint16 | 0–23 | Godzina rozpoczęcia taryfy T2\n020B | 16 | T3 Start Hour | 2 | uint16 | 0–23 | Godzina rozpoczęcia taryfy T3\n020C | 17 | T4 Start Hour | 2 | uint16 | 0–23 | Godzina rozpoczęcia taryfy T4\n020D | 18 | Demand Interval | 2 | uint16 | 1–60 | Interwał obliczania mocy zapotrzebowania [min]"
+  },
+  {
+    "chunk_id": 17,
+    "source_label": "BOSCH CONDENS 7000i",
+    "prompts": [
+      "zadana temperatura co setpoint bosch condens 7000i zapis",
+      "reset bledu error reset rejestr 0046 condens 7000i",
+      "tryb pracy operating mode zapis bosch7000i",
+      "baud rate modbus adres 0049 bosch condens 7000",
+      "max moc co palnik limit rejestr condens7000i"
+    ],
+    "text": "BOSCH CONDENS 7000i / Rejestry zapisu\n\nAdres (hex) | Rejestr nr | Nazwa | Długość (bajty) | Typ danych | Zakres wartości | Opis\n--- | --- | --- | --- | --- | --- | ---\n0040 | 1 | CH Setpoint | 2 | int16 | 150–900 (×0.1°C) | Zadana temperatura zasilania CO\n0041 | 2 | DHW Setpoint | 2 | int16 | 400–700 (×0.1°C) | Zadana temperatura CWU\n0042 | 3 | Operating Mode | 2 | uint16 | 0–3 | 0=Standby,1=CH,2=DHW,3=CH+DHW\n0043 | 4 | Max CH Power | 2 | uint16 | 1–100 | Maks. moc CO [% mocy nominalnej]\n0044 | 5 | Min CH Power | 2 | uint16 | 1–100 | Min. moc CO [% mocy nominalnej]\n0045 | 6 | Curve Slope | 2 | uint16 | 1–40 | Nachylenie krzywej grzewczej\n0046 | 7 | Error Reset | 2 | uint16 | 0xFF00 | Skasowanie błędu\n0047 | 8 | Service Reset | 2 | uint16 | 0xAB12 | Reset interwału serwisowego\n0048 | 9 | Modbus Address | 2 | uint16 | 1–247 | Adres Modbus\n0049 | 10 | Baud Rate | 2 | uint16 | 0–4 | 0=9600,1=19200,2=38400,3=57600,4=115200\n004A | 11 | Parity | 2 | uint16 | 0–2 | 0=None,1=Even,2=Odd"
+  },
+  {
+    "chunk_id": 25,
+    "source_label": "GOODWE ET-PLUS",
+    "prompts": [
+      "energia pv dzis today rejestr 0060 goodwe et-plus",
+      "energia z sieci grid import total goodwe etplus adres",
+      "energia obciazenia load energy total et-plus rejestr",
+      "energia oddana export today goodwe et plus hex",
+      "bat discharge energia rozladowana goodwe etplus rejestr"
+    ],
+    "text": "GOODWE ET-PLUS / Rejestry odczytu\n\nAdres (hex) | Rejestr nr | Nazwa | Długość (bajty) | Typ danych | Jednostka | Opis\n--- | --- | --- | --- | --- | --- | ---\n0069 | 51 | Grid Import Today | 2 | uint16 | 0.1kWh | Energia pobrana z sieci dziś\n006A | 52 | Grid Export Today | 2 | uint16 | 0.1kWh | Energia oddana do sieci dziś\n006B | 53 | Grid Import Total | 4 | uint32 | 0.1kWh | Energia pobrana z sieci łącznie\n006D | 54 | Grid Export Total | 4 | uint32 | 0.1kWh | Energia oddana do sieci łącznie\n006F | 55 | Load Energy Today | 2 | uint16 | 0.1kWh | Energia zużyta przez obciążenie dziś\n0070 | 56 | Load Energy Total | 4 | uint32 | 0.1kWh | Energia obciążenia łącznie"
+  },
+  {
+    "chunk_id": 4,
+    "source_label": "EASTRON SDM630",
+    "prompts": [
+      "energia bierna import L1 sdm630 adres hex",
+      "rejestr eksport energia bierna fazy L2 eastron",
+      "L3 reactive energy kVArh adres 0166 sdm-630",
+      "całkowita energia bierna fazy sdm630",
+      "import export reactive energy eastron rejestr"
+    ],
+    "text": "EASTRON SDM630 / Rejestry odczytu\n\nAdres (hex) | Rejestr nr | Nazwa | Długość (bajty) | Typ danych | Jednostka | Opis\n--- | --- | --- | --- | --- | --- | ---\n0156 | 51 | L1 Import Reactive Energy | 4 | float | kVArh | Energia bierna import fazy L1\n0158 | 52 | L2 Import Reactive Energy | 4 | float | kVArh | Energia bierna import fazy L2\n015A | 53 | L3 Import Reactive Energy | 4 | float | kVArh | Energia bierna import fazy L3\n015C | 54 | L1 Export Reactive Energy | 4 | float | kVArh | Energia bierna eksport fazy L1\n015E | 55 | L2 Export Reactive Energy | 4 | float | kVArh | Energia bierna eksport fazy L2\n0160 | 56 | L3 Export Reactive Energy | 4 | float | kVArh | Energia bierna eksport fazy L3\n0162 | 57 | L1 Total Reactive Energy | 4 | float | kVArh | Całkowita energia bierna fazy L1\n0164 | 58 | L2 Total Reactive Energy | 4 | float | kVArh | Całkowita energia bierna fazy L2\n0166 | 59 | L3 Total Reactive Energy | 4 | float | kVArh | Całkowita energia bierna fazy L3"
+  },
+  {
+    "chunk_id": 21,
+    "source_label": "WILO STRATOS-MAXO",
+    "prompts": [
+      "tryb sterowania control mode zapis wilo stratos-maxo",
+      "zadana roznica cisnienia pressure setpoint stratosmaxo rejestr",
+      "reset bledu fault reset wilo stratos maxo zapis 0x0055",
+      "baud rate modbus adres 0049 wilo stratos-maxo konfiguracja",
+      "start stop pompa stratos-maxo rejestr 0043 wilo"
+    ],
+    "text": "WILO STRATOS-MAXO / Rejestry zapisu\n\nAdres (hex) | Rejestr nr | Nazwa | Długość (bajty) | Typ danych | Zakres wartości | Opis\n--- | --- | --- | --- | --- | --- | ---\n0040 | 1 | Control Mode | 2 | uint16 | 0–3 | 0=Const-pressure,1=Prop-pressure,2=Const-speed,3=Auto\n0041 | 2 | Pressure Setpoint | 2 | uint16 | 0–600 (×0.01 bar) | Zadana różnica ciśnień\n0042 | 3 | Speed Setpoint | 2 | uint16 | 0–100 (%) | Zadana prędkość względna [%]\n0043 | 4 | Start/Stop | 2 | uint16 | 0–1 | 0=Stop,1=Start\n0044 | 5 | Min Speed Limit | 2 | uint16 | 0–100 (%) | Minimalna prędkość [%]\n0045 | 6 | Max Speed Limit | 2 | uint16 | 0–100 (%) | Maksymalna prędkość [%]\n0046 | 7 | Night Reduction | 2 | uint16 | 0–50 (%) | Redukcja nocna [%]\n0047 | 8 | Fault Reset | 2 | uint16 | 0x0055 | Kasowanie błędu\n0048 | 9 | Modbus Address | 2 | uint16 | 1–247 | Adres Modbus\n0049 | 10 | Baud Rate | 2 | uint16 | 0–3 | 0=9600,1=19200,2=38400,3=115200"
+  },
+  {
+    "chunk_id": 7,
+    "source_label": "KAMSTRUP MULTICAL-403",
+    "prompts": [
+      "reset licznikow energia kamstrup multical-403 zapis 0x5A5A",
+      "adres modbus meter id multical403 ustawienie rejestr",
+      "baud rate konfiguracja kamstrup multical 403 rejestr 0063",
+      "synchronizacja czasu time sync multical-403 rejestr 0202",
+      "haslo zabezpieczenie password kamstrup multical403 zapis"
+    ],
+    "text": "KAMSTRUP MULTICAL-403 / Rejestry zapisu\n\nAdres (hex) | Rejestr nr | Nazwa | Długość (bajty) | Typ danych | Zakres wartości | Opis\n--- | --- | --- | --- | --- | --- | ---\n0062 | 1 | Meter ID | 2 | uint16 | 1–247 | Ustaw adres Modbus\n0063 | 2 | Baud Rate | 2 | uint16 | 1–4 | 1=1200, 2=2400, 3=4800, 4=9600 bps\n0200 | 3 | Reset Energy | 2 | uint16 | 0x5A5A | Zapis 0x5A5A resetuje liczniki energii\n0201 | 4 | Tariff Mode | 2 | uint16 | 0–1 | 0=jedna taryfa, 1=wielotaryfowy\n0202 | 5 | Time Sync | 4 | uint32 | Unix ts | Synchronizacja zegara RTC\n0204 | 6 | Password | 2 | uint16 | 0–9999 | Hasło zabezpieczające\n0205 | 7 | Pulse Output Rate | 2 | uint16 | 1/10/100 | Stała impulsowa [imp/MWh]"
+  },
+  {
+    "chunk_id": 8,
+    "source_label": "SONTEX SUPERCAL-539",
+    "prompts": [
+      "moc cieplna thermal power rejestr sontex supercal 539",
+      "temperatura zasilania powrotu supercal-539 odczyt",
+      "energia cieplna heat energy adres 001c supercal539",
+      "przeplyw chwilowy flow rate rejestr sontex 539",
+      "alarm status slowo alarmowe supercal 539 hex"
+    ],
+    "text": "SONTEX SUPERCAL-539 / Rejestry odczytu\n\nAdres (hex) | Rejestr nr | Nazwa | Długość (bajty) | Typ danych | Jednostka | Opis\n--- | --- | --- | --- | --- | --- | ---\n0000 | 1 | Serial Number | 4 | uint32 |  | Numer seryjny urządzenia\n0002 | 2 | Meter ID | 2 | uint16 |  | Adres Modbus\n0003 | 3 | Baud Rate | 2 | uint16 | bps | Prędkość transmisji\n0010 | 4 | Flow Rate | 4 | float | m³/h | Przepływ chwilowy\n0012 | 5 | Supply Temp | 4 | float | °C | Temperatura na zasilaniu\n0014 | 6 | Return Temp | 4 | float | °C | Temperatura na powrocie\n0016 | 7 | Delta T | 4 | float | K | Różnica temperatur\n0018 | 8 | Thermal Power | 4 | float | kW | Moc cieplna\n001A | 9 | Flow Volume | 4 | float | m³ | Skumulowany wolumen\n001C | 10 | Heat Energy | 4 | float | kWh | Energia cieplna (kWh)\n001E | 11 | Heat Energy MWh | 4 | float | MWh | Energia cieplna (MWh)\n0020 | 12 | Cooling Energy | 4 | float | kWh | Energia chłodzenia\n0022 | 13 | Operating Hours | 4 | uint32 | h | Czas pracy\n0024 | 14 | Alarm Status | 2 | uint16 |  | Słowo alarmowe (bitowe)\n0026 | 15 | Max Flow Rate | 4 | float | m³/h | Maksymalny odnotowany przepływ\n0028 | 16 | Min Flow Rate | 4 | float | m³/h | Minimalny odnotowany przepływ\n002A | 17 | Max Power | 4 | float | kW | Maksymalna odnotowana moc\n002C | 18 | Meter Date | 4 | uint32 |  | Data wewnętrzna miernika (YYMMDDhh)\n002E | 19 | Firmware Version | 2 | uint16 |  | Wersja firmware"
+  },
+  {
+    "chunk_id": 23,
+    "source_label": "SOFAR HYD6000-ES",
+    "prompts": [
+      "minimalne soc baterii battery min soc sofar hyd6000-es zapis",
+      "limit eksportu grid export limit hyd6000es rejestr 0063",
+      "tryb pracy operating mode zapis sofar hyd6000 rejestr 0060",
+      "baud rate modbus adres 0068 sofar hyd6000-es konfiguracja",
+      "reset bledow fault reset hyd6000es zapis 0x00FF"
+    ],
+    "text": "SOFAR HYD6000-ES / Rejestry zapisu\n\nAdres (hex) | Rejestr nr | Nazwa | Długość (bajty) | Typ danych | Zakres wartości | Opis\n--- | --- | --- | --- | --- | --- | ---\n0060 | 1 | Operating Mode | 2 | uint16 | 0–4 | 0=Self-use,1=Feed-in,2=Backup,3=Time-of-use,4=Manual\n0061 | 2 | Battery Min SOC | 2 | uint16 | 5–100 (%) | Minimalne SOC baterii [%]\n0062 | 3 | Battery Reserve SOC | 2 | uint16 | 5–100 (%) | SOC rezerwy (tryb backup) [%]\n0063 | 4 | Grid Export Limit | 2 | uint16 | 0–6000 W | Limit mocy eksportu do sieci [W]\n0064 | 5 | Bat Charge Power | 2 | uint16 | 0–6000 W | Maks. moc ładowania baterii [W]\n0065 | 6 | Bat Discharge Power | 2 | uint16 | 0–6000 W | Maks. moc rozładowania baterii [W]\n0066 | 7 | Fault Reset | 2 | uint16 | 0x00FF | Kasowanie błędów\n0067 | 8 | Modbus Address | 2 | uint16 | 1–247 | Adres Modbus\n0068 | 9 | Baud Rate | 2 | uint16 | 0–4 | 0=9600,1=19200,2=38400,3=57600,4=115200\n0069 | 10 | Time Sync | 4 | uint32 | Unix ts | Synchronizacja czasu\n006B | 11 | TOU Charge Start | 2 | uint16 | 0–2359 (HHMM) | Początek okna ładowania TOU\n006C | 12 | TOU Charge End | 2 | uint16 | 0–2359 (HHMM) | Koniec okna ładowania TOU"
+  },
+  {
+    "chunk_id": 0,
+    "source_label": "ORNO OR-WE-520",
+    "prompts": [
+      "energia bierna taryfa t1 t2 orwe520 adres hex",
+      "rejestr taryfa t4 kvarh 520",
+      "forward reverse reactive energy rejestr or-we-520",
+      "energia eksport L1 L2 L3 rejestr or-we-520",
+      "moc zapotrzebowania demand power taryfa or-we-520"
+    ],
+    "text": "ORNO OR-WE-520 / Rejestry odczytu\n\nAdres (hex) | Rejestr nr | Nazwa | Długość (bajty) | Typ danych | Jednostka | Opis\n--- | --- | --- | --- | --- | --- | ---\n0000 | 1 | Serial Number | 4 | uint32 |  | Numer seryjny urządzenia\n0002 | 2 | Meter ID | 2 | uint16 |  | Adres Modbus (domyślnie 1)\n0003 | 3 | Baud Rate | 2 | uint16 | bps | Prędkość transmisji: 1=1200, 2=2400, 3=4800, 4=9600\n0004 | 4 | Software Version | 4 | float |  | Wersja oprogramowania\n0006 | 5 | Hardware Version | 4 | float |  | Wersja sprzętowa\n0008 | 6 | CT Rate | 2 | uint16 |  | Przekładnia przekładnika prądowego\n0009 | 7 | S0 Output Rate | 4 | float | imp/kWh | Stała impulsowa wyjścia S0\n000B | 8 | A3 Status | 2 | uint16 |  | Słowo stanu A3\n000D | 10 | Cycle Time | 2 | uint16 | s | Czas cyklu wyświetlacza\n000E | 11 | L1 Voltage | 4 | float | V | Napięcie fazowe L1\n0010 | 12 | L2 Voltage | 4 | float | V | Napięcie fazowe L2\n0012 | 13 | L3 Voltage | 4 | float | V | Napięcie fazowe L3\n0014 | 14 | Grid Frequency | 4 | float | Hz | Częstotliwość sieci\n0016 | 15 | L1 Current | 4 | float | A | Prąd fazowy L1\n0018 | 16 | L2 Current | 4 | float | A | Prąd fazowy L2\n001A | 17 | L3 Current | 4 | float | A | Prąd fazowy L3\n001C | 18 | Total Active Power | 4 | float | kW | Całkowita moc czynna\n001E | 19 | L1 Active Power | 4 | float | kW | Moc czynna fazy L1\n0020 | 20 | L2 Active Power | 4 | float | kW | Moc czynna fazy L2\n0022 | 21 | L3 Active Power | 4 | float | kW | Moc czynna fazy L3\n0024 | 22 | Total Reactive Power | 4 | float | kvar | Całkowita moc bierna\n0026 | 23 | L1 Reactive Power | 4 | float | kvar | Moc bierna fazy L1\n0028 | 24 | L2 Reactive Power | 4 | float | kvar | Moc bierna fazy L2\n002A | 25 | L3 Reactive Power | 4 | float | kvar | Moc bierna fazy L3\n002C | 26 | Total Apparent Power | 4 | float | kVA | Całkowita moc pozorna\n002E | 27 | L1 Apparent Power | 4 | float | kVA | Moc pozorna fazy L1\n0030 | 28 | L2 Apparent Power | 4 | float | kVA | Moc pozorna fazy L2\n0032 | 29 | L3 Apparent Power | 4 | float | kVA | Moc pozorna fazy L3\n0034 | 30 | Total Power Factor | 4 | float |  | Całkowity współczynnik mocy\n0036 | 31 | L1 Power Factor | 4 | float |  | Współczynnik mocy fazy L1\n0038 | 32 | L2 Power Factor | 4 | float |  | Współczynnik mocy fazy L2\n003A | 33 | L3 Power Factor | 4 | float |  | Współczynnik mocy fazy L3\n003C | 34 | L1-L2 Voltage | 4 | float | V | Napięcie międzyfazowe L1-L2\n003E | 35 | L2-L3 Voltage | 4 | float | V | Napięcie międzyfazowe L2-L3\n0040 | 36 | L1-L3 Voltage | 4 | float | V | Napięcie międzyfazowe L1-L3\n0041 | 37 | CRC Status | 2 | uint16 |  | Status CRC\n0042 | 38 | Combined Code | 2 | uint16 |  | Kombinowany kod stanu\n0100 | 39 | Total Active Energy | 4 | float | kWh | Całkowita energia czynna (import+eksport)\n0102 | 40 | L1 Total Active Energy | 4 | float | kWh | Energia czynna fazy L1\n0104 | 41 | L2 Total Active Energy | 4 | float | kWh | Energia czynna fazy L2\n0106 | 42 | L3 Total Active Energy | 4 | float | kWh | Energia czynna fazy L3\n0108 | 43 | Forward Active Energy | 4 | float | kWh | Energia czynna pobrana (import)\n010A | 44 | L1 Forward Active Energy | 4 | float | kWh | Energia import fazy L1\n010C | 45 | L2 Forward Active Energy | 4 | float | kWh | Energia import fazy L2\n010E | 46 | L3 Forward Active Energy | 4 | float | kWh | Energia import fazy L3\n0110 | 47 | Reverse Active Energy | 4 | float | kWh | Energia czynna oddana (eksport)\n0112 | 48 | L1 Reverse Active Energy | 4 | float | kWh | Energia eksport fazy L1\n0114 | 49 | L2 Reverse Active Energy | 4 | float | kWh | Energia eksport fazy L2\n0116 | 50 | L3 Reverse Active Energy | 4 | float | kWh | Energia eksport fazy L3\n0118 | 51 | Total Reactive Energy | 4 | float | kvarh | Całkowita energia bierna"
+  },
+  {
+    "chunk_id": 3,
+    "source_label": "EASTRON SDM630",
+    "prompts": [
+      "napięcie L1 L2 L3 adres 0000 sdm-630 eastron",
+      "prąd fazowy L1 current rejestr 0006 sdm630",
+      "active power moc czynna rejestr 000C eastron sdm630",
+      "frequency 003C częstotliwość sieci sdm630",
+      "power factor współczynnik mocy L3 sdm630"
+    ],
+    "text": "EASTRON SDM630 / Rejestry odczytu\n\nAdres (hex) | Rejestr nr | Nazwa | Długość (bajty) | Typ danych | Jednostka | Opis\n--- | --- | --- | --- | --- | --- | ---\n0000 | 1 | L1 Voltage | 4 | float | V | Napięcie fazowe L1\n0002 | 2 | L2 Voltage | 4 | float | V | Napięcie fazowe L2\n0004 | 3 | L3 Voltage | 4 | float | V | Napięcie fazowe L3\n0006 | 4 | L1 Current | 4 | float | A | Prąd fazowy L1\n0008 | 5 | L2 Current | 4 | float | A | Prąd fazowy L2\n000A | 6 | L3 Current | 4 | float | A | Prąd fazowy L3\n000C | 7 | L1 Active Power | 4 | float | W | Moc czynna fazy L1\n000E | 8 | L2 Active Power | 4 | float | W | Moc czynna fazy L2\n0010 | 9 | L3 Active Power | 4 | float | W | Moc czynna fazy L3\n0012 | 10 | L1 Reactive Power | 4 | float | VAr | Moc bierna fazy L1\n0014 | 11 | L2 Reactive Power | 4 | float | VAr | Moc bierna fazy L2\n0016 | 12 | L3 Reactive Power | 4 | float | VAr | Moc bierna fazy L3\n0018 | 13 | L1 Apparent Power | 4 | float | VA | Moc pozorna fazy L1\n001A | 14 | L2 Apparent Power | 4 | float | VA | Moc pozorna fazy L2\n001C | 15 | L3 Apparent Power | 4 | float | VA | Moc pozorna fazy L3\n001E | 16 | L1 Power Factor | 4 | float |  | Współczynnik mocy fazy L1\n0020 | 17 | L2 Power Factor | 4 | float |  | Współczynnik mocy fazy L2\n0022 | 18 | L3 Power Factor | 4 | float |  | Współczynnik mocy fazy L3\n0024 | 19 | L1 Phase Angle | 4 | float | ° | Kąt fazowy L1\n0026 | 20 | L2 Phase Angle | 4 | float | ° | Kąt fazowy L2\n0028 | 21 | L3 Phase Angle | 4 | float | ° | Kąt fazowy L3\n002A | 22 | Average L-N Voltage | 4 | float | V | Średnie napięcie fazowe L-N\n002C | 23 | Average Line Current | 4 | float | A | Średni prąd fazowy\n002E | 24 | Sum of Line Currents | 4 | float | A | Suma prądów fazowych\n0030 | 25 | Total System Power | 4 | float | W | Całkowita moc czynna systemu\n0032 | 26 | Total Reactive Power | 4 | float | VAr | Całkowita moc bierna\n0034 | 27 | Total Apparent Power | 4 | float | VA | Całkowita moc pozorna\n0036 | 28 | Total Power Factor | 4 | float |  | Całkowity współczynnik mocy\n0038 | 29 | Total Phase Angle | 4 | float | ° | Całkowity kąt fazowy\n003C | 30 | Frequency | 4 | float | Hz | Częstotliwość sieci\n003E | 31 | Import Active Energy | 4 | float | kWh | Energia czynna pobrana (import)\n0040 | 32 | Export Active Energy | 4 | float | kWh | Energia czynna oddana (eksport)\n0042 | 33 | Import Reactive Energy | 4 | float | kVArh | Energia bierna pobrana (import)\n0044 | 34 | Export Reactive Energy | 4 | float | kVArh | Energia bierna oddana (eksport)\n0046 | 35 | Total Active Energy | 4 | float | kWh | Całkowita energia czynna\n0048 | 36 | Total Reactive Energy | 4 | float | kVArh | Całkowita energia bierna\n004A | 37 | L1-L2 Voltage | 4 | float | V | Napięcie międzyfazowe L1-L2\n004C | 38 | L2-L3 Voltage | 4 | float | V | Napięcie międzyfazowe L2-L3\n004E | 39 | L3-L1 Voltage | 4 | float | V | Napięcie międzyfazowe L3-L1\n0050 | 40 | Average L-L Voltage | 4 | float | V | Średnie napięcie międzyfazowe\n0052 | 41 | Neutral Current | 4 | float | A | Prąd przewodu neutralnego\n00E0 | 42 | L1 Import Active Energy | 4 | float | kWh | Energia import fazy L1\n00E2 | 43 | L2 Import Active Energy | 4 | float | kWh | Energia import fazy L2\n00E4 | 44 | L3 Import Active Energy | 4 | float | kWh | Energia import fazy L3\n00E6 | 45 | L1 Export Active Energy | 4 | float | kWh | Energia eksport fazy L1\n00E8 | 46 | L2 Export Active Energy | 4 | float | kWh | Energia eksport fazy L2\n00EA | 47 | L3 Export Active Energy | 4 | float | kWh | Energia eksport fazy L3\n00EC | 48 | L1 Total Active Energy | 4 | float | kWh | Całkowita energia czynna fazy L1\n00EE | 49 | L2 Total Active Energy | 4 | float | kWh | Całkowita energia czynna fazy L2\n00F0 | 50 | L3 Total Active Energy | 4 | float | kWh | Całkowita energia czynna fazy L3"
+  },
+  {
+    "chunk_id": 20,
+    "source_label": "WILO STRATOS-MAXO",
+    "prompts": [
+      "predkosc pompy actual speed rejestr wilo stratos-maxo",
+      "roznica cisnienia differential pressure adres 0015 stratos maxo",
+      "pobor mocy power input rejestr 0018 wilo stratos-maxo",
+      "kod bledu fault code wilo stratos maxo odczyt rejestr",
+      "energia pobrana energy consumed stratosmaxo wilo hex"
+    ],
+    "text": "WILO STRATOS-MAXO / Rejestry odczytu\n\nAdres (hex) | Rejestr nr | Nazwa | Długość (bajty) | Typ danych | Jednostka | Opis\n--- | --- | --- | --- | --- | --- | ---\n0000 | 1 | Product Code | 2 | uint16 |  | Kod produktu\n0001 | 2 | Software Version | 2 | uint16 |  | Wersja oprogramowania\n0002 | 3 | Modbus Address | 2 | uint16 |  | Adres Modbus\n0010 | 4 | Actual Speed | 2 | uint16 | RPM | Aktualna prędkość obrotowa\n0011 | 5 | Actual Frequency | 2 | uint16 | 0.1Hz | Częstotliwość pracy (×0.1 Hz)\n0012 | 6 | Relative Speed | 2 | uint16 | 0.1% | Prędkość względna [%×0.1]\n0013 | 7 | Volumetric Flow | 4 | float | m³/h | Objętościowy przepływ chwilowy\n0015 | 8 | Differential Pressure | 2 | uint16 | 0.01 bar | Różnica ciśnień (×0.01 bar)\n0016 | 9 | Head Pressure | 4 | float | m | Wysokość podnoszenia\n0018 | 10 | Power Input | 4 | float | W | Pobór mocy [W]\n001A | 11 | Power Factor | 2 | uint16 | 0.01 | Współczynnik mocy (×0.01)\n001B | 12 | Voltage | 2 | uint16 | V | Napięcie zasilania\n001C | 13 | Current | 2 | uint16 | 0.1A | Prąd zasilania (×0.1 A)\n001D | 14 | Motor Temp | 2 | int16 | °C | Temperatura silnika\n001E | 15 | Electronics Temp | 2 | int16 | °C | Temperatura elektroniki\n001F | 16 | Setpoint | 2 | uint16 | 0.01 bar | Aktywna wartość zadana\n0020 | 17 | Control Mode | 2 | uint16 |  | 0=Const-pressure,1=Prop-pressure,2=Const-speed,3=Auto\n0021 | 18 | Operating Mode | 2 | uint16 |  | 0=Stop,1=Run,2=Min,3=Max\n0022 | 19 | Status Bits | 2 | uint16 |  | Słowo stanu (bitowe)\n0023 | 20 | Fault Code | 2 | uint16 |  | Aktywny kod błędu (0=brak)\n0024 | 21 | Warning Code | 2 | uint16 |  | Aktywny kod ostrzeżenia\n0030 | 22 | Energy Consumed | 4 | float | kWh | Energia pobrana łącznie\n0032 | 23 | Volume Pumped | 4 | float | m³ | Objętość przepompowana łącznie\n0034 | 24 | Operating Hours | 4 | uint32 | h | Czas pracy łącznie\n0036 | 25 | Pump Starts | 4 | uint32 |  | Liczba uruchomień\n0038 | 26 | Max Observed Power | 4 | float | W | Maksymalny odnotowany pobór mocy\n003A | 27 | Dry Run Count | 2 | uint16 |  | Liczba zdarzeń suchobiegu"
+  }
+]

@@ -8,8 +8,9 @@ między RunPodem, środowiskiem lokalnym i testami.
 
 # ── Modele Ollama ──────────────────────────────────────────────────────────────
 
-MODEL = "SpeakLeash/bielik-11b-v3.0-instruct:Q8_0"
-EMBED_MODEL = "nomic-embed-text"
+MODEL        = "SpeakLeash/bielik-11b-v3.0-instruct:Q8_0"
+ROUTER_MODEL = "SpeakLeash/bielik-11b-v3.0-instruct:Q8_0"
+EMBED_MODEL  = "nomic-embed-text"
 
 # ── Baza wektorowa ─────────────────────────────────────────────────────────────
 
@@ -30,6 +31,19 @@ SYSTEM_PROMPT = (
     "Odpowiadaj zwięźle i konkretnie, zgodnie z poleceniem użytkownika. "
     "Jeśli pytanie dotyczy aktualnych danych jak dzisiejsza data lub pogoda, "
     "poinformuj że nie masz dostępu do takich informacji."
+)
+
+# Używany przez Query Router (ROUTER_MODEL) do identyfikacji urządzenia z pytania.
+# Model otrzymuje listę dostępnych urządzeń i pytanie użytkownika.
+# Musi zwrócić DOKŁADNIE jedną nazwę z listy lub słowo "brak" — żadnego innego tekstu.
+ROUTER_SYSTEM_PROMPT = (
+    "Masz listę urządzeń. "
+    "Twoim zadaniem jest określić, którego urządzenia dotyczy pytanie użytkownika.\n\n"
+    "Zasady:\n"
+    "1. Szukaj w pytaniu nazwy urządzenia lub jej fragmentu.\n"
+    "2. Jeśli znajdziesz dopasowanie — odpowiedz DOKŁADNIE nazwą z listy, bez żadnych zmian.\n"
+    "3. Jeśli pytanie nie dotyczy żadnego konkretnego urządzenia z listy — odpowiedz: brak\n"
+    "4. Nie dodawaj żadnych innych słów, wyjaśnień ani znaków interpunkcyjnych."
 )
 
 # Używany gdy RAG jest aktywny (rag=true).

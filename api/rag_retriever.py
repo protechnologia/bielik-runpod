@@ -32,7 +32,7 @@ class RagRetriever:
         self.ollama = ollama
         self.bm25   = bm25
 
-    async def retrieve( self, prompt: str, collection: str, top_k: int, score_threshold: float, bm25_candidates: int = 0 ) -> RagResult | None:
+    async def retrieve( self, prompt: str, collection: str, top_k: int, score_threshold: float, bm25_candidates: int = 0, source_label_filter: str | None = None ) -> RagResult | None:
         """
         Wyszukuje fragmenty pasujące do promptu i zwraca gotowy kontekst RAG.
         Zwraca None jeśli żaden fragment nie przekroczył progu score_threshold.
@@ -42,11 +42,13 @@ class RagRetriever:
         W przeciwnym razie pobiera bezpośrednio top_k fragmentów z Qdrant.
 
         Args:
-            prompt:          zapytanie użytkownika, np. "Jakie jest napięcie znamionowe licznika ORNO OR-WE-516?"
-            collection:      nazwa kolekcji Qdrant, np. "documents"
-            top_k:           maksymalna liczba zwracanych fragmentów, np. 3
-            score_threshold: minimalny próg podobieństwa wektorowego, np. 0.3
-            bm25_candidates: liczba kandydatów pobieranych z Qdrant przed rerankingiem BM25; 0 wyłącza BM25 (domyślnie: 0), np. 20
+            prompt:               zapytanie użytkownika, np. "Jakie jest napięcie znamionowe licznika ORNO OR-WE-516?"
+            collection:           nazwa kolekcji Qdrant, np. "documents"
+            top_k:                maksymalna liczba zwracanych fragmentów, np. 3
+            score_threshold:      minimalny próg podobieństwa wektorowego, np. 0.3
+            bm25_candidates:      liczba kandydatów pobieranych z Qdrant przed rerankingiem BM25; 0 wyłącza BM25 (domyślnie: 0), np. 20
+            source_label_filter:  jeśli podany, przeszukuje tylko chunki z tym source_label;
+                                  None = przeszukuje całą kolekcję (domyślnie: None), np. "ORNO OR-WE-516"
 
         Returns:
             RagResult z kontekstem i listą chunków, lub None jeśli brak trafień.
@@ -65,7 +67,7 @@ class RagRetriever:
 
         use_bm25 = self.bm25 is not None and bm25_candidates > 0
         fetch_k  = bm25_candidates if use_bm25 else top_k
-        hits     = self.store.search(collection, vector, fetch_k, score_threshold)
+        hits     = self.store.search(collection, vector, fetch_k, score_threshold, source_label_filter)
 
         if not hits:
             return None
