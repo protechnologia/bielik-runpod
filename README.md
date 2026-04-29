@@ -90,6 +90,13 @@ bielik-runpod/
 │   └── golden_set_unique.json       ← golden set z promptami kierowanymi (ORNO + EASTRON)
 ├── test/
 │   ├── test_xlsx_chunker.py     ← testy jednostkowe XlsxChunker
+│   ├── test_bm25_reranker.py    ← testy jednostkowe Bm25Reranker
+│   ├── test_query_router.py     ← testy jednostkowe QueryRouter
+│   ├── test_xlsx_ingester.py    ← testy jednostkowe XlsxIngester
+│   ├── test_ollama_client.py    ← testy jednostkowe OllamaClient
+│   ├── test_qdrant_store.py     ← testy jednostkowe QdrantStore
+│   ├── test_rag_retriever.py    ← testy jednostkowe RagRetriever
+│   ├── test_ask_pipeline.py     ← testy jednostkowe AskPipeline
 │   ├── eval_retriever.py        ← ewaluacja retrievera: embedder / BM25 / query router (Recall@k, MRR)
 │   └── eval_query_router.py     ← ewaluacja Query Routera: Accuracy, trafienia, fallbacki, błędy
 └── start.sh
@@ -459,11 +466,24 @@ Projekt zawiera dwa gotowe golden sety:
 
 ### Testy jednostkowe
 
-Testy jednostkowe dla klasy `XlsxChunker` znajdują się w `test/test_xlsx_chunker.py`.
+85 testów jednostkowych pokrywających wszystkie klasy logiki biznesowej. Nie wymagają działającej Ollamy ani Qdrant — zależności zewnętrzne są mockowane.
+
+| Plik | Klasa | Testów | Pokrycie |
+|---|---|---|---|
+| `test_xlsx_chunker.py` | `XlsxChunker` | 11 | 100% |
+| `test_bm25_reranker.py` | `Bm25Reranker` | 15 | 100% |
+| `test_query_router.py` | `QueryRouter` | 10 | 100% |
+| `test_xlsx_ingester.py` | `XlsxIngester` | 12 | 100% |
+| `test_ollama_client.py` | `OllamaClient` | 14 | 100% |
+| `test_qdrant_store.py` | `QdrantStore` | 13 | 100% |
+| `test_rag_retriever.py` | `RagRetriever` | 9 | 100% |
+| `test_ask_pipeline.py` | `AskPipeline` | 11 | 100% |
+
+Pokrycie logiki biznesowej (bez `main.py`): **100%**. Plik `main.py` (endpointy FastAPI) nie jest objęty testami jednostkowymi — testowany jest przez testy integracyjne.
 
 ```bash
 pip install pytest
-pytest test/test_xlsx_chunker.py -v
+pytest test/test_xlsx_chunker.py test/test_bm25_reranker.py test/test_query_router.py test/test_xlsx_ingester.py test/test_ollama_client.py test/test_qdrant_store.py test/test_rag_retriever.py test/test_ask_pipeline.py -v
 ```
 
 ### Ewaluacja retrievera
@@ -682,7 +702,7 @@ Najważniejsza metryka to **brak błędów** (0 złych urządzeń). Błąd route
 - [ ] Prosty frontend
 
 ### Testy
-- [ ] Testy jednostkowe dla `RagRetriever`, `AskPipeline`, `XlsxIngester` — nowe klasy nie mają pokrycia testami
+- [ ] Testy integracyjne end-to-end (wymagają działającej Ollamy i Qdrant)
 
 ---
 
