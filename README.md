@@ -869,6 +869,10 @@ Najważniejsza metryka to **brak błędów** (0 złych urządzeń). Błąd route
 | Recall@10  | 0.867 (117/135) | 0.985 (133/135)     | **1.000** (135/135)     |
 | **MRR**    | 0.567           | 0.600               | **0.749**               |
 
+**MRR** (Mean Reciprocal Rank) to średnia z odwrotności pozycji pierwszego trafienia — dla każdego pytania liczymy 1/rank, gdzie rank to pozycja właściwego chunku na liście wyników (1, 2, 3, ...). Przykłady: MRR = 1.0 — właściwy chunk zawsze pierwszy; MRR = 0.75 — przeciętnie między pozycją 1 a 2 (np. połowa pytań na #1, połowa na #2 daje dokładnie 0.75); MRR = 0.567 (nasz wynik EMBED+BM25@20) — właściwy chunk trafia na pierwszą pozycję w ~57% przypadków, na drugą w kolejnych ~15%, reszta dalej; MRR = 0.5 — przeciętnie druga pozycja; MRR = 0.33 — przeciętnie trzecia pozycja. Metryka jest wrażliwa na pozycję pierwszego trafienia i ignoruje kolejność pozostałych wyników — istotna gdy model dostaje do kontekstu tylko top-1 lub top-2 chunki.
+
+Query router ma największy wpływ na wyniki — sam wzrost puli kandydatów BM25 z 20 do 100 poprawia Recall@1 zaledwie o 2 pp., natomiast dołączenie routera przy @100 daje skok o prawie 10 pp. (0.444 → 0.541) i dramatycznie poprawia wyniki przy wyższych k (Recall@2: 0.585 → 0.896, Recall@7: 0.889 → 1.000). Intuicja jest prosta: router zawęża corpus do jednego urządzenia, więc embedder nie musi konkurować z semantycznie podobnymi chunkami z innych urządzeń. Słaby punkt to Recall@1 nawet z routerem (0.541) — właściwy chunk nie zawsze trafia na pierwszą pozycję, co uzasadnia ustawienie `rag_top_k` na 3–5 w produkcji.
+
 ---
 
 ## TODO
