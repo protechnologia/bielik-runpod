@@ -69,7 +69,7 @@ Dzięki temu zapytanie `"520"` trafi na chunk zawierający `"OR-WE-520"`, a zapy
 bielik-runpod/
 ├── api/
 │   ├── __init__.py
-│   ├── main.py           ← endpointy FastAPI (każdy to 1-2 linie)
+│   ├── main.py           ← endpointy FastAPI + fabryki zależności (@lru_cache + Depends)
 │   ├── config.py         ← stałe konfiguracyjne (MODEL, ROUTER_MODEL, EMBED_MODEL, prompty)
 │   ├── schemas.py        ← modele Pydantic requestów i odpowiedzi API
 │   ├── ollama_client.py  ← klient HTTP do Ollamy (embed, generate, pull, check)
@@ -97,6 +97,8 @@ bielik-runpod/
 │   ├── test_qdrant_store.py     ← testy jednostkowe QdrantStore
 │   ├── test_rag_retriever.py    ← testy jednostkowe RagRetriever
 │   ├── test_ask_pipeline.py     ← testy jednostkowe AskPipeline
+│   ├── test_main.py             ← testy jednostkowe endpointów FastAPI (TestClient + dependency_overrides)
+│   ├── test_integration.py      ← testy integracyjne (prawdziwa Ollama + Qdrant embedded)
 │   ├── eval_retriever.py        ← ewaluacja retrievera: embedder / BM25 / query router (Recall@k, MRR)
 │   └── eval_query_router.py     ← ewaluacja Query Routera: Accuracy, trafienia, fallbacki, błędy
 └── start.sh
@@ -466,7 +468,7 @@ Projekt zawiera dwa gotowe golden sety:
 
 ### Testy jednostkowe
 
-85 testów jednostkowych pokrywających wszystkie klasy logiki biznesowej. Nie wymagają działającej Ollamy ani Qdrant — zależności zewnętrzne są mockowane.
+106 testów jednostkowych pokrywających wszystkie klasy logiki biznesowej oraz warstwę HTTP (`main.py`). Nie wymagają działającej Ollamy ani Qdrant — zależności zewnętrzne są mockowane.
 
 | Plik | Klasa | Testów | Pokrycie |
 |---|---|---|---|
@@ -478,12 +480,195 @@ Projekt zawiera dwa gotowe golden sety:
 | `test_qdrant_store.py` | `QdrantStore` | 13 | 100% |
 | `test_rag_retriever.py` | `RagRetriever` | 9 | 100% |
 | `test_ask_pipeline.py` | `AskPipeline` | 11 | 100% |
+| `test_main.py` | endpointy FastAPI (`main.py`) | 11 | 100% |
 
-Pokrycie logiki biznesowej (bez `main.py`): **100%**. Plik `main.py` (endpointy FastAPI) nie jest objęty testami jednostkowymi — testowany jest przez testy integracyjne.
+Pokrycie: **100%** — logika biznesowa i warstwa HTTP. `test_main.py` używa `TestClient` z `dependency_overrides` (FastAPI DI), co stało się możliwe po refaktoryzacji `main.py` — zamiana globali na fabryki `@lru_cache` + `Depends()`.
 
 ```bash
 pip install pytest
-pytest test/test_xlsx_chunker.py test/test_bm25_reranker.py test/test_query_router.py test/test_xlsx_ingester.py test/test_ollama_client.py test/test_qdrant_store.py test/test_rag_retriever.py test/test_ask_pipeline.py -v
+pytest test/test_xlsx_chunker.py test/test_bm25_reranker.py test/test_query_router.py test/test_xlsx_ingester.py test/test_ollama_client.py test/test_qdrant_store.py test/test_rag_retriever.py test/test_ask_pipeline.py test/test_main.py -v
+```
+
+```
+============================= test session starts =============================
+platform win32 -- Python 3.10.5, pytest-9.0.3, pluggy-1.6.0
+collected 106 items
+
+test/test_xlsx_chunker.py::test_load_sheets_basic PASSED                 [  0%]
+test/test_xlsx_chunker.py::test_load_sheets_skips_empty PASSED           [  1%]
+test/test_xlsx_chunker.py::test_load_sheets_multiple PASSED              [  2%]
+test/test_xlsx_chunker.py::test_to_markdown_structure PASSED             [  3%]
+test/test_xlsx_chunker.py::test_chunk_sheet_single_chunk PASSED          [  4%]
+test/test_xlsx_chunker.py::test_chunk_sheet_multiple_chunks PASSED       [  5%]
+test/test_xlsx_chunker.py::test_chunk_sheet_prefix_in_text PASSED        [  6%]
+test/test_xlsx_chunker.py::test_chunk_sheet_payload_fields PASSED        [  7%]
+test/test_xlsx_chunker.py::test_chunk_returns_all_sheets PASSED          [  8%]
+test/test_xlsx_chunker.py::test_chunk_header_repeated_in_every_chunk PASSED [  9%]
+test/test_xlsx_chunker.py::test_chunk_empty_file PASSED                  [ 11%]
+test/test_bm25_reranker.py::test_normalize_lowercase PASSED              [ 12%]
+test/test_bm25_reranker.py::test_normalize_removes_diacritics PASSED     [ 13%]
+test/test_bm25_reranker.py::test_normalize_l_with_stroke PASSED          [ 14%]
+test/test_bm25_reranker.py::test_normalize_mixed PASSED                  [ 15%]
+test/test_bm25_reranker.py::test_tokenize_hyphenated_code PASSED         [ 16%]
+test/test_bm25_reranker.py::test_tokenize_alphanumeric PASSED            [ 17%]
+test/test_bm25_reranker.py::test_tokenize_skips_single_chars PASSED      [ 18%]
+test/test_bm25_reranker.py::test_tokenize_diacritics_normalized PASSED   [ 20%]
+test/test_bm25_reranker.py::test_combine_scores_order PASSED             [ 21%]
+test/test_bm25_reranker.py::test_combine_scores_both_lists_boost PASSED  [ 22%]
+test/test_bm25_reranker.py::test_combine_scores_empty_bm25 PASSED        [ 23%]
+test/test_bm25_reranker.py::test_combine_scores_rrf_formula PASSED       [ 24%]
+test/test_bm25_reranker.py::test_rerank_best_match_first PASSED          [ 25%]
+test/test_bm25_reranker.py::test_rerank_returns_all_candidates PASSED    [ 26%]
+test/test_bm25_reranker.py::test_rerank_diacritics_insensitive PASSED    [ 27%]
+test/test_query_router.py::test_empty_labels_returns_none PASSED         [ 28%]
+test/test_query_router.py::test_brak_returns_none PASSED                 [ 29%]
+test/test_query_router.py::test_brak_case_insensitive PASSED             [ 30%]
+test/test_query_router.py::test_empty_response_returns_none PASSED       [ 31%]
+test/test_query_router.py::test_whitespace_response_returns_none PASSED  [ 32%]
+test/test_query_router.py::test_exact_match PASSED                       [ 33%]
+test/test_query_router.py::test_exact_match_case_insensitive PASSED      [ 34%]
+test/test_query_router.py::test_substring_model_shortened PASSED         [ 35%]
+test/test_query_router.py::test_substring_model_extended PASSED          [ 36%]
+test/test_query_router.py::test_no_match_returns_none PASSED             [ 37%]
+test/test_xlsx_ingester.py::test_parse_rejects_non_xlsx PASSED           [ 38%]
+test/test_xlsx_ingester.py::test_parse_rejects_missing_filename PASSED   [ 40%]
+test/test_xlsx_ingester.py::test_parse_accepts_xlsm_extension PASSED     [ 41%]
+test/test_xlsx_ingester.py::test_parse_rejects_empty_file PASSED         [ 42%]
+test/test_xlsx_ingester.py::test_parse_rejects_invalid_bytes PASSED      [ 43%]
+test/test_xlsx_ingester.py::test_parse_returns_parsed_xlsx PASSED        [ 44%]
+test/test_xlsx_ingester.py::test_parse_sheet_names_unique_and_ordered PASSED [ 45%]
+test/test_xlsx_ingester.py::test_inspect_returns_correct_chunk_count PASSED [ 46%]
+test/test_xlsx_ingester.py::test_inspect_chunk_info_fields PASSED        [ 47%]
+test/test_xlsx_ingester.py::test_ingest_calls_ensure_collection PASSED   [ 48%]
+test/test_xlsx_ingester.py::test_ingest_calls_embed_for_each_chunk PASSED [ 49%]
+test/test_xlsx_ingester.py::test_ingest_returns_response_summary PASSED  [ 50%]
+test/test_ollama_client.py::test_embed_returns_first_embedding PASSED    [ 51%]
+test/test_ollama_client.py::test_embed_raises_502_on_error PASSED        [ 52%]
+test/test_ollama_client.py::test_generate_extracts_response_content PASSED [ 53%]
+test/test_ollama_client.py::test_generate_adds_wall_time PASSED          [ 54%]
+test/test_ollama_client.py::test_generate_raises_502_on_error PASSED     [ 55%]
+test/test_ollama_client.py::test_generate_missing_message_returns_empty_response PASSED [ 56%]
+test/test_ollama_client.py::test_list_models_returns_response PASSED     [ 57%]
+test/test_ollama_client.py::test_list_models_raises_502_on_error PASSED  [ 58%]
+test/test_ollama_client.py::test_pull_model_returns_status PASSED        [ 60%]
+test/test_ollama_client.py::test_pull_model_uses_default_when_none PASSED [ 61%]
+test/test_ollama_client.py::test_pull_model_raises_502_on_error PASSED   [ 62%]
+test/test_ollama_client.py::test_check_model_ready_when_present PASSED   [ 63%]
+test/test_ollama_client.py::test_check_model_not_ready_when_absent PASSED [ 64%]
+test/test_ollama_client.py::test_check_returns_available_models PASSED   [ 65%]
+test/test_qdrant_store.py::test_ensure_collection_creates_when_missing PASSED [ 66%]
+test/test_qdrant_store.py::test_ensure_collection_skips_when_exists PASSED [ 67%]
+test/test_qdrant_store.py::test_ensure_collection_uses_correct_name PASSED [ 68%]
+test/test_qdrant_store.py::test_scroll_source_labels_returns_sorted_unique PASSED [ 69%]
+test/test_qdrant_store.py::test_scroll_source_labels_handles_pagination PASSED [ 70%]
+test/test_qdrant_store.py::test_scroll_source_labels_skips_missing_payload PASSED [ 71%]
+test/test_qdrant_store.py::test_list_collections_returns_name_and_count PASSED [ 72%]
+test/test_qdrant_store.py::test_list_collections_empty PASSED            [ 73%]
+test/test_qdrant_store.py::test_upsert_calls_client_upsert PASSED        [ 74%]
+test/test_qdrant_store.py::test_search_returns_score_and_payload PASSED  [ 75%]
+test/test_qdrant_store.py::test_search_with_source_label_passes_filter PASSED [ 76%]
+test/test_qdrant_store.py::test_search_without_source_label_no_filter PASSED [ 77%]
+test/test_qdrant_store.py::test_delete_collection_calls_client PASSED    [ 78%]
+test/test_rag_retriever.py::test_retrieve_returns_none_when_no_hits PASSED [ 80%]
+test/test_rag_retriever.py::test_retrieve_returns_rag_result PASSED      [ 81%]
+test/test_rag_retriever.py::test_retrieve_context_format PASSED          [ 82%]
+test/test_rag_retriever.py::test_retrieve_fragment_labels_in_context PASSED [ 83%]
+test/test_rag_retriever.py::test_retrieve_chunks_count_matches_hits PASSED [ 84%]
+test/test_rag_retriever.py::test_retrieve_chunk_fields PASSED            [ 85%]
+test/test_rag_retriever.py::test_retrieve_with_bm25_limits_to_top_k PASSED [ 86%]
+test/test_rag_retriever.py::test_retrieve_bm25_disabled_when_candidates_zero PASSED [ 87%]
+test/test_rag_retriever.py::test_retrieve_bm25_disabled_when_bm25_is_none PASSED [ 88%]
+test/test_ask_pipeline.py::test_rag_disabled_skips_retrieve PASSED       [ 83%]
+test/test_ask_pipeline.py::test_rag_disabled_uses_original_prompt PASSED [ 84%]
+test/test_ask_pipeline.py::test_rag_enabled_no_results_uses_original_prompt PASSED [ 85%]
+test/test_ask_pipeline.py::test_rag_enabled_with_results_uses_rag_prompt PASSED [ 86%]
+test/test_ask_pipeline.py::test_rag_chunks_in_response PASSED            [ 87%]
+test/test_ask_pipeline.py::test_query_router_disabled_skips_route PASSED [ 88%]
+test/test_ask_pipeline.py::test_query_router_enabled_calls_route PASSED  [ 89%]
+test/test_ask_pipeline.py::test_response_tps_calculated PASSED           [ 90%]
+test/test_ask_pipeline.py::test_response_tps_none_when_no_eval_count PASSED [ 91%]
+test/test_ask_pipeline.py::test_response_tps_none_when_eval_ns_zero PASSED [ 92%]
+test/test_ask_pipeline.py::test_response_fields PASSED                   [ 93%]
+test/test_main.py::test_health_ok PASSED                                 [ 94%]
+test/test_main.py::test_health_error_when_ollama_raises PASSED           [ 94%]
+test/test_main.py::test_pull_model PASSED                                [ 95%]
+test/test_main.py::test_ingest_xlsx_returns_response_model PASSED        [ 95%]
+test/test_main.py::test_ingest_xlsx_missing_source_label_returns_422 PASSED [ 96%]
+test/test_main.py::test_inspect_xlsx_returns_chunks PASSED               [ 96%]
+test/test_main.py::test_ask_returns_answer PASSED                        [ 97%]
+test/test_main.py::test_ask_missing_prompt_returns_422 PASSED            [ 97%]
+test/test_main.py::test_list_models PASSED                               [ 98%]
+test/test_main.py::test_list_collections PASSED                          [ 99%]
+test/test_main.py::test_delete_collection PASSED                         [100%]
+
+============================== 106 passed in 3.19s ==============================
+```
+
+### Testy integracyjne
+
+Plik `test/test_integration.py` sprawdza współpracę prawdziwych komponentów — bez mockowania. Wymagają działającej Ollamy z modelem `nomic-embed-text`. Qdrant działa w trybie embedded (plik lokalny przez `qdrant-client`) — osobny serwer nie jest potrzebny.
+
+Zakres testów:
+
+| Grupa | Co jest sprawdzane |
+|---|---|
+| `OllamaClient` | `embed()` zwraca wektor 768 wymiarów; `check()` raportuje status modeli |
+| `QdrantStore` | `ensure_collection` tworzy kolekcję; `upsert` + `search` zwraca wstawiony punkt; `scroll_source_labels` zwraca właściwą etykietę |
+| `XlsxIngester` | pełny pipeline ingestion z syntetycznym XLSX: po `ingest()` kolekcja istnieje, `vectors_count` = liczba chunków, `scroll_source_labels` zawiera wstawiony `source_label` |
+| `RagRetriever` | po ingestion `retrieve()` zwraca co najmniej jeden chunk; filtr `source_label` na inną etykietę zwraca `None` |
+
+Każdy test tworzy własną kolekcję z losowym sufiksem i usuwa ją po zakończeniu — testy są izolowane i nie zostawiają danych w Qdrant.
+
+Gdy `OLLAMA_URL` nie jest ustawiony, używany jest domyślny adres `http://localhost:11434`.
+
+**Wymagania (jednorazowo):**
+
+1. Zainstaluj zależności Pythona i pytest (jeśli jeszcze nie zainstalowane):
+```bash
+pip install -r api/requirements.txt
+pip install pytest
+```
+
+2. Zainstaluj Ollama — pobierz installer ze strony [ollama.com](https://ollama.com/download) i uruchom.
+
+3. Pobierz model embeddingu:
+```bash
+ollama pull nomic-embed-text
+```
+
+**Uruchomienie:**
+
+4. Uruchom Ollama (jeśli nie działa jako serwis):
+```bash
+ollama serve
+```
+
+5. Uruchom testy integracyjne ze zmienną `OLLAMA_URL`:
+```bash
+OLLAMA_URL=http://localhost:11434 pytest test/test_integration.py -v
+```
+
+Na Windows (PowerShell):
+```powershell
+$env:OLLAMA_URL="http://localhost:11434"; pytest test/test_integration.py -v
+```
+
+```
+============================= test session starts =============================
+platform win32 -- Python 3.10.5, pytest-9.0.3, pluggy-1.6.0
+collected 9 items
+
+test/test_integration.py::test_embed_returns_768_dimensions PASSED       [ 11%]
+test/test_integration.py::test_check_embed_ready PASSED                  [ 22%]
+test/test_integration.py::test_qdrant_create_and_list_collection PASSED  [ 33%]
+test/test_integration.py::test_qdrant_upsert_and_search PASSED           [ 44%]
+test/test_integration.py::test_qdrant_scroll_source_labels PASSED        [ 55%]
+test/test_integration.py::test_ingest_vectors_count_matches_chunks PASSED [ 66%]
+test/test_integration.py::test_ingest_source_label_visible_in_scroll PASSED [ 77%]
+test/test_integration.py::test_retrieve_returns_chunk_after_ingest PASSED [ 88%]
+test/test_integration.py::test_retrieve_wrong_source_label_returns_none PASSED [100%]
+
+============================== 9 passed in 9.61s ==============================
 ```
 
 ### Ewaluacja retrievera
@@ -689,20 +874,21 @@ Najważniejsza metryka to **brak błędów** (0 złych urządzeń). Błąd route
 ## TODO
 
 ### Jakość RAG
-- [ ] Implementacja FuzzyRouter w oparciu o rapidfuzz — alternatywa dla routera LLM: dopasowanie rozmyte nazwy urządzenia z zapytania do listy `source_label`, bez angażowania Bielika 11B
-- [ ] Lepszy model embeddingów (np. `multilingual-e5-large`)
-- [ ] HyDE — model generuje hipotetyczną odpowiedź, jej embedding idzie do Qdrant
-- [ ] Osobne kolekcje per urządzenie
+- [ ] **FuzzyRouter** (rapidfuzz) — alternatywa dla routera LLM. Obecny `QueryRouter` wysyła zapytanie do Bielika 11B, żeby rozpoznał nazwę urządzenia — to ~1–2 sekundy opóźnienia na każde pytanie. FuzzyRouter porównałby zapytanie z listą `source_label` przez dopasowanie rozmyte (Levenshtein / token sort ratio), bez żadnego wywołania modelu. Szybszy o rząd wielkości, deterministyczny, nie wymaga GPU. Wadą jest brak rozumienia kontekstu — "licznik trójfazowy Orno" może nie dopasować się do "ORNO OR-WE-520", podczas gdy Bielik sobie z tym radzi.
+- [ ] **Lepszy model embeddingów** (np. `multilingual-e5-large`) — `nomic-embed-text` ma 768 wymiarów i dobry angielski, ale słabiej rozumie polskie konstrukcje techniczne. `multilingual-e5-large` (1024 wymiary, trenowany na 100+ językach) powinien dawać wyższe podobieństwo cosinusowe między polskim pytaniem a polskim fragmentem dokumentacji. Spodziewany efekt: wzrost Recall@1 i MRR w ewaluacji, szczególnie przy pytaniach z polską terminologią.
+- [ ] **HyDE** (Hypothetical Document Embeddings) — zamiast embedować surowe pytanie użytkownika ("Jakie jest napięcie znamionowe?"), model najpierw generuje hipotetyczną odpowiedź ("Napięcie znamionowe wynosi 3×230/400V, częstotliwość 50Hz..."), a jej embedding trafia do Qdrant. Embedding hipotetycznej odpowiedzi jest bliższy przestrzeni wektorowej dokumentacji niż embedding pytania — co przekłada się na trafniejsze wyniki wyszukiwania. Koszt: dodatkowe wywołanie LLM przed każdym retrieve.
 
 ### Architektura i produkcyjność
 - [ ] Asynchroniczny ingest + endpoint `/tasks/{id}` ze statusem — przy dużych plikach embedding sekwencyjny będzie wolny
 - [ ] Autoryzacja — API key
 - [ ] Obsługa duplikatów przy ponownym wgraniu tego samego pliku
-
+- [ ] Globalny exception handler w FastAPI — `/ingest/xlsx` przy uszkodzonym pliku rzuca 500 zamiast czytelnego 422
 - [ ] Prosty frontend
 
-### Testy
-- [ ] Testy integracyjne end-to-end (wymagają działającej Ollamy i Qdrant)
+### Testy i infrastruktura
+- [ ] `conftest.py` z `sys.path` — ten sam blok `sys.path.insert` powtarza się w każdym pliku testowym; jeden `conftest.py` w `test/` to eliminuje
+- [ ] `pytest.ini` / `pyproject.toml` z `testpaths = test` i `pythonpath = . api` — zastąpi `sys.path.insert` i pozwoli uruchamiać `pytest` bez podawania ścieżek
+- [ ] Reset `lru_cache` w fixture `test_main.py` — jeśli test wywoła prawdziwą fabrykę (brak override), kolejne testy dostaną tę samą zepsutą instancję z cache'a; fikstura powinna czyścić cache po każdym teście
 
 ---
 

@@ -2,8 +2,9 @@
 Bielik test API – endpoint do mierzenia czasu generowania + RAG przez Qdrant.
 """
 import os
+from functools import lru_cache
 from config import MODEL, ROUTER_MODEL, EMBED_MODEL, VECTOR_SIZE, DEFAULT_COLLECTION
-from fastapi import FastAPI, File, Form, UploadFile
+from fastapi import Depends, FastAPI, File, Form, UploadFile
 from ollama_client import OllamaClient
 from qdrant_store import QdrantStore
 from bm25_reranker import Bm25Reranker
@@ -20,28 +21,56 @@ QDRANT_PATH = os.getenv("QDRANT_PATH", "/root/data/qdrant")
 
 app = FastAPI(title="Bielik test API")
 
-# lokalny tryb embedded, dane persystują na Volume
-store = QdrantStore(path=QDRANT_PATH, vector_size=VECTOR_SIZE)
-# embed i generacja tekstu
-ollama = OllamaClient(base_url=OLLAMA_URL, model=MODEL, embed_model=EMBED_MODEL)
-# oddzielna instancja klienta do identyfikacji urządzenia z pytania (query routing)
-router_ollama = OllamaClient(base_url=OLLAMA_URL, model=ROUTER_MODEL, embed_model=EMBED_MODEL)
-# reranker BM25 — używany opcjonalnie przez RagRetriever
-bm25 = Bm25Reranker()
-# wyszukiwanie kontekstu do promptu
-rag_retriever = RagRetriever(store, ollama, bm25)
-# router identyfikujący urządzenie z pytania — filtruje Qdrant po source_label
-query_router = QueryRouter(router_ollama)
-# walidacja, chunkowanie i indeksowanie plików XLSX
-xlsx_ingester = XlsxIngester(store, ollama)
-# pełny pipeline zapytania: RAG → generowanie → metryki
-ask_pipeline = AskPipeline(ollama, rag_retriever, query_router)
+
+# ── Fabryki zależności ────────────────────────────────────────────────────────
+
+@lru_cache
+def get_store() -> QdrantStore:
+    return QdrantStore(path=QDRANT_PATH, vector_size=VECTOR_SIZE)
+
+
+@lru_cache
+def get_ollama() -> OllamaClient:
+    return OllamaClient(base_url=OLLAMA_URL, model=MODEL, embed_model=EMBED_MODEL)
+
+
+@lru_cache
+def get_router_ollama() -> OllamaClient:
+    return OllamaClient(base_url=OLLAMA_URL, model=ROUTER_MODEL, embed_model=EMBED_MODEL)
+
+
+@lru_cache
+def get_bm25() -> Bm25Reranker:
+    return Bm25Reranker()
+
+
+@lru_cache
+def get_rag_retriever() -> RagRetriever:
+    return RagRetriever(get_store(), get_ollama(), get_bm25())
+
+
+@lru_cache
+def get_query_router() -> QueryRouter:
+    return QueryRouter(get_router_ollama())
+
+
+@lru_cache
+def get_xlsx_ingester() -> XlsxIngester:
+    return XlsxIngester(get_store(), get_ollama())
+
+
+@lru_cache
+def get_ask_pipeline() -> AskPipeline:
+    return AskPipeline(get_ollama(), get_rag_retriever(), get_query_router())
 
 
 # ── Endpointy ─────────────────────────────────────────────────────────────────
 
 @app.get("/health")
-async def health():
+async def health(
+    ollama: OllamaClient = Depends(get_ollama),
+    store: QdrantStore   = Depends(get_store),
+):
     """
     Zwraca status Ollamy, modeli i kolekcji Qdrant.
 
@@ -84,7 +113,10 @@ async def health():
 
 
 @app.post("/pull")
-async def pull_model(req: PullRequest = PullRequest()):
+async def pull_model(
+    req: PullRequest      = PullRequest(),
+    ollama: OllamaClient  = Depends(get_ollama),
+):
     """
     Pobiera model przez Ollama. Bez podania modelu pobiera domyślny model generowania.
 
@@ -99,10 +131,11 @@ async def pull_model(req: PullRequest = PullRequest()):
 
 @app.post("/ingest/xlsx", response_model=IngestXlsxResponse)
 async def ingest_xlsx(
-    file: UploadFile    = File(...),
-    source_label: str   = Form(...),
-    collection: str     = Form(DEFAULT_COLLECTION),
-    rows_per_chunk: int = Form(DEFAULT_ROWS_PER_CHUNK),
+    file: UploadFile               = File(...),
+    source_label: str              = Form(...),
+    collection: str                = Form(DEFAULT_COLLECTION),
+    rows_per_chunk: int            = Form(DEFAULT_ROWS_PER_CHUNK),
+    ingester: XlsxIngester         = Depends(get_xlsx_ingester),
 ):
     """
     Przyjmuje plik XLSX, dzieli na chunki i zapisuje do Qdrant.
@@ -124,14 +157,15 @@ async def ingest_xlsx(
             "collection": "documents"
         }
     """
-    return await xlsx_ingester.ingest(file, source_label, collection, rows_per_chunk)
+    return await ingester.ingest(file, source_label, collection, rows_per_chunk)
 
 
 @app.post("/inspect/xlsx", response_model=InspectXlsxResponse)
 async def inspect_xlsx(
-    file: UploadFile = File(...),
-    source_label: str = Form(...),
-    rows_per_chunk: int = Form(DEFAULT_ROWS_PER_CHUNK),
+    file: UploadFile        = File(...),
+    source_label: str       = Form(...),
+    rows_per_chunk: int     = Form(DEFAULT_ROWS_PER_CHUNK),
+    ingester: XlsxIngester  = Depends(get_xlsx_ingester),
 ):
     """
     Przyjmuje plik XLSX i zwraca listę chunków bez zapisywania do Qdrant.
@@ -159,11 +193,14 @@ async def inspect_xlsx(
             ]
         }
     """
-    return await xlsx_ingester.inspect(file, source_label, rows_per_chunk)
+    return await ingester.inspect(file, source_label, rows_per_chunk)
 
 
 @app.post("/ask", response_model=AskResponse)
-async def ask(req: AskRequest):
+async def ask(
+    req: AskRequest,
+    pipeline: AskPipeline = Depends(get_ask_pipeline),
+):
     """
     Wysyła prompt do modelu i zwraca odpowiedź wraz z metrykami czasu generowania.
     Przy rag=true wyszukuje najpierw kontekst w Qdrant i dokłada go do promptu.
@@ -203,11 +240,11 @@ async def ask(req: AskRequest):
             ]
         }
     """
-    return await ask_pipeline.run(req)
+    return await pipeline.run(req)
 
 
 @app.get("/models")
-async def list_models():
+async def list_models(ollama: OllamaClient = Depends(get_ollama)):
     """
     Zwraca listę modeli załadowanych w Ollama.
 
@@ -231,7 +268,7 @@ async def list_models():
 
 
 @app.get("/collections")
-async def list_collections():
+async def list_collections(store: QdrantStore = Depends(get_store)):
     """
     Zwraca listę kolekcji Qdrant z liczbą zapisanych wektorów.
 
@@ -244,7 +281,10 @@ async def list_collections():
 
 
 @app.delete("/collections/{collection}")
-async def delete_collection(collection: str):
+async def delete_collection(
+    collection: str,
+    store: QdrantStore = Depends(get_store),
+):
     """
     Usuwa kolekcję wraz ze wszystkimi wektorami i metadanymi.
 

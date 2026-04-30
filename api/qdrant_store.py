@@ -179,7 +179,7 @@ class QdrantStore:
             info = self.client.get_collection(c.name)
             result.append({
                 "name": c.name,
-                "vectors_count": info.vectors_count,
+                "vectors_count": info.vectors_count or info.points_count,
             })
         return result
 
