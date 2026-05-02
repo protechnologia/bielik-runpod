@@ -11,6 +11,10 @@ REST API do uruchamiania polskiego modelu językowego **Bielik 11B v3.0** z obs�
 - REST API z dokumentacją Swagger UI
 - Narzędzia lokalne do budowania i ewaluacji golden setu (Recall@k, MRR, Accuracy routera)
 
+**Ograniczenia:**
+- Brak obsługi konwersacji — każde zapytanie jest niezależne; model nie pamięta poprzednich pytań ani odpowiedzi. Projekt działa wyłącznie w formule: pytanie → RAG → odpowiedź.
+- Tylko XLSX — ingestion przyjmuje wyłącznie pliki XLSX. Projekt jest nastawiony na dane techniczne (mapy rejestrów, tabele parametrów), które wymagają precyzji przy chunkowaniu. Parsowanie PDF wprowadza szum (artefakty OCR, niejednoznaczne podziały stron, znaki specjalne), który zaburza tę precyzję i obniża jakość wyszukiwania.
+
 **Stack:**
 | Komponent | Rola |
 |---|---|

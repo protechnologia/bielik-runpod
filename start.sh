@@ -11,7 +11,12 @@ pip install -q -r api/requirements.txt
 
 echo ">>> Start Ollama..."
 OLLAMA_MODELS=/root/data/ollama ollama serve &
-sleep 15
+
+echo ">>> Czekam na gotowość Ollama..."
+until curl -s http://localhost:11434/api/tags > /dev/null 2>&1; do
+    sleep 2
+done
+echo ">>> Ollama gotowa."
 
 echo ">>> Pobieranie modelu Bielik 11B v3.0..."
 ollama pull SpeakLeash/bielik-11b-v3.0-instruct:Q8_0
