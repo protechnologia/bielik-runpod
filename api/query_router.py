@@ -1,5 +1,5 @@
-from api.ollama_client import OllamaClient
-from api.config import ROUTER_SYSTEM_PROMPT
+from ollama_client import OllamaClient
+from config import ROUTER_SYSTEM_PROMPT
 
 
 class QueryRouter:

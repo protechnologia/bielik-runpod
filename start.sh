@@ -4,9 +4,10 @@ set -e
 echo ">>> Instalacja Pythona..."
 apt-get update -qq && apt-get install -y python3 python3-pip
 
+cd /tmp/init
+
 echo ">>> Instalacja zależności Python..."
-cd /tmp/init/api
-pip install -q -r requirements.txt
+pip install -q -r api/requirements.txt
 
 echo ">>> Start Ollama..."
 OLLAMA_MODELS=/root/data/ollama ollama serve &
@@ -24,4 +25,5 @@ OLLAMA_MODELS=/root/data/ollama \
 MODEL=SpeakLeash/bielik-11b-v3.0-instruct:Q8_0 \
 EMBED_MODEL=nomic-embed-text \
 QDRANT_PATH=/root/data/qdrant \
-uvicorn main:app --host 0.0.0.0 --port 8000
+PYTHONPATH=/tmp/init/api \
+uvicorn api.main:app --host 0.0.0.0 --port 8000

@@ -86,8 +86,8 @@ bielik-runpod/
 │   └── cli_golden_set.py    ← generowanie golden setu do ewaluacji RAG
 ├── data/
 │   ├── xlsx/                        ← przykładowe pliki XLSX z mapami rejestrów urządzeń (dane testowe)
-│   ├── golden_set.json              ← golden set z promptami ogólnymi (ORNO + EASTRON)
-│   └── golden_set_unique.json       ← golden set z promptami kierowanymi (ORNO + EASTRON)
+│   ├── golden_sets/                 ← golden sety do ewaluacji RAG
+│   └── reports/                     ← logi z ewaluacji
 ├── test/
 │   ├── test_xlsx_chunker.py     ← testy jednostkowe XlsxChunker
 │   ├── test_bm25_reranker.py    ← testy jednostkowe Bm25Reranker
@@ -433,7 +433,7 @@ python cli/cli_golden_set.py <plik1.xlsx> <etykieta1> [plik2.xlsx <etykieta2> ..
 
 Przykład z jednym urządzeniem:
 ```bash
-python cli/cli_golden_set.py "data/xlsx/ORNO OR-WE-520.xlsx" "ORNO OR-WE-520" --output data/golden_set.json
+python cli/cli_golden_set.py "data/xlsx/ORNO OR-WE-520.xlsx" "ORNO OR-WE-520" --output data/golden_sets/golden_set.json
 ```
 
 Przykład z dwoma urządzeniami (polecana forma — korpus lepiej testuje rozróżnianie urządzeń):
@@ -441,7 +441,7 @@ Przykład z dwoma urządzeniami (polecana forma — korpus lepiej testuje rozró
 python cli/cli_golden_set.py \
   "data/xlsx/ORNO OR-WE-520.xlsx" "ORNO OR-WE-520" \
   "data/xlsx/EASTRON SDM630.xlsx" "EASTRON SDM630" \
-  --output data/golden_set.json
+  --output data/golden_sets/golden_set.json
 ```
 
 Przykładowy output (`golden_set.json`):
@@ -458,7 +458,7 @@ Przykładowy output (`golden_set.json`):
 
 Pole `prompts` należy wypełnić listą pytań testowych (ręcznie lub przez AI), a następnie uruchomić ewaluator.
 
-Projekt zawiera dwa gotowe golden sety:
+Projekt zawiera dwa gotowe golden sety w katalogu `data/golden_sets/`:
 - `golden_set.json` — prompty realistyczne (5 na chunk): sformułowane tak jak użytkownik mógłby naprawdę zapytać, często bez nazwy urządzenia lub rejestru; mierzą jakość RAG w warunkach zbliżonych do produkcji
 - `golden_set_unique.json` — prompty ukierunkowane na unikalność (2 na chunk): zawierają nazwę urządzenia, adres hex lub nazwę rejestru, które jednoznacznie wskazują na konkretny chunk; mierzą górną granicę możliwości embeddera — jeśli tu wynik jest słaby, problem leży w modelu lub chunkingu, nie w jakości pytań
 
@@ -706,23 +706,23 @@ ollama serve
 
 5. Uruchom ewaluator:
 ```bash
-python test/eval_retriever.py data/golden_set.json
+python test/eval_retriever.py data/golden_sets/golden_set.json
 ```
 
 Na obu golden setach:
 ```bash
-python test/eval_retriever.py data/golden_set.json
-python test/eval_retriever.py data/golden_set_unique.json
+python test/eval_retriever.py data/golden_sets/golden_set.json
+python test/eval_retriever.py data/golden_sets/golden_set_unique.json
 ```
 
 Opcjonalnie — wyłączony BM25, query router, wyższe k, tryb szczegółowy lub zdalny Pod:
 ```bash
-python test/eval_retriever.py data/golden_set.json --bm25-candidates 0
-python test/eval_retriever.py data/golden_set.json --query-router
-python test/eval_retriever.py data/golden_set.json --bm25-candidates 20 --query-router --verbose
-python test/eval_retriever.py data/golden_set.json --k 6
-python test/eval_retriever.py data/golden_set.json --verbose
-python test/eval_retriever.py data/golden_set.json --ollama-url https://{POD_ID}-11434.proxy.runpod.net
+python test/eval_retriever.py data/golden_sets/golden_set.json --bm25-candidates 0
+python test/eval_retriever.py data/golden_sets/golden_set.json --query-router
+python test/eval_retriever.py data/golden_sets/golden_set.json --bm25-candidates 20 --query-router --verbose
+python test/eval_retriever.py data/golden_sets/golden_set.json --k 6
+python test/eval_retriever.py data/golden_sets/golden_set.json --verbose
+python test/eval_retriever.py data/golden_sets/golden_set.json --ollama-url https://{POD_ID}-11434.proxy.runpod.net
 ```
 
 Przykładowy output (6 chunków — ORNO OR-WE-520 + EASTRON SDM630):
@@ -786,15 +786,15 @@ ollama serve
 
 5. Uruchom ewaluator:
 ```bash
-python test/eval_query_router.py data/golden_set.json
+python test/eval_query_router.py data/golden_sets/golden_set.json
 ```
 
 Opcjonalnie — inny model, tryb szczegółowy lub zdalny Pod:
 ```bash
-python test/eval_query_router.py data/golden_set.json --verbose
-python test/eval_query_router.py data/golden_set.json --router-model SpeakLeash/bielik-4.5b-v3.0-instruct:Q8_0
-python test/eval_query_router.py data/golden_set.json --router-model SpeakLeash/bielik-11b-v3.0-instruct:Q8_0 --verbose
-python test/eval_query_router.py data/golden_set.json --ollama-url https://{POD_ID}-11434.proxy.runpod.net
+python test/eval_query_router.py data/golden_sets/golden_set.json --verbose
+python test/eval_query_router.py data/golden_sets/golden_set.json --router-model SpeakLeash/bielik-4.5b-v3.0-instruct:Q8_0
+python test/eval_query_router.py data/golden_sets/golden_set.json --router-model SpeakLeash/bielik-11b-v3.0-instruct:Q8_0 --verbose
+python test/eval_query_router.py data/golden_sets/golden_set.json --ollama-url https://{POD_ID}-11434.proxy.runpod.net
 ```
 
 Przykładowy output:
