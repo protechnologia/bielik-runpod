@@ -1,16 +1,19 @@
 """
 Stałe konfiguracyjne aplikacji — wartości niezmienne między środowiskami.
 
-Zmienne zależne od środowiska (OLLAMA_URL, QDRANT_PATH) są wczytywane
-przez os.getenv() w main.py i tu nie należą — ich wartość różni się
-między RunPodem, środowiskiem lokalnym i testami.
+Zmienne zależne od środowiska (OLLAMA_URL, QDRANT_PATH, MODEL, EMBED_MODEL)
+są wczytywane przez os.getenv() — ich wartość różni się między RunPodem,
+środowiskiem lokalnym i testami. Wartości domyślne tu są fallbackiem gdy
+zmienne środowiskowe nie są ustawione (np. lokalny dev bez start.sh).
 """
+
+import os
 
 # ── Modele Ollama ──────────────────────────────────────────────────────────────
 
-MODEL        = "SpeakLeash/bielik-11b-v3.0-instruct:Q8_0"
-ROUTER_MODEL = "SpeakLeash/bielik-11b-v3.0-instruct:Q8_0"
-EMBED_MODEL  = "nomic-embed-text"
+MODEL        = os.getenv("MODEL",       "SpeakLeash/bielik-11b-v3.0-instruct:Q8_0")
+ROUTER_MODEL = os.getenv("MODEL",       "SpeakLeash/bielik-11b-v3.0-instruct:Q8_0")
+EMBED_MODEL  = os.getenv("EMBED_MODEL", "nomic-embed-text")
 
 # ── Baza wektorowa ─────────────────────────────────────────────────────────────
 
