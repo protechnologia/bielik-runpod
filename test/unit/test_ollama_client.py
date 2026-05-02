@@ -1,12 +1,6 @@
-import sys
 import asyncio
 import pytest
-from pathlib import Path
 from unittest.mock import AsyncMock, MagicMock, patch
-
-ROOT = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(ROOT))
-sys.path.insert(0, str(ROOT / "api"))
 
 from fastapi import HTTPException
 from api.ollama_client import OllamaClient

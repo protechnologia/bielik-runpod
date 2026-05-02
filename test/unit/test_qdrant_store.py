@@ -1,10 +1,4 @@
-import sys
-from pathlib import Path
 from unittest.mock import MagicMock, patch
-
-ROOT = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(ROOT))
-sys.path.insert(0, str(ROOT / "api"))
 
 from api.qdrant_store import QdrantStore
 

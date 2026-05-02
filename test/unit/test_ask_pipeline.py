@@ -1,11 +1,5 @@
-import sys
 import asyncio
-from pathlib import Path
 from unittest.mock import AsyncMock, MagicMock
-
-ROOT = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(ROOT))
-sys.path.insert(0, str(ROOT / "api"))
 
 from api.ask_pipeline import AskPipeline
 from api.rag_retriever import RagResult

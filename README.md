@@ -92,8 +92,12 @@ bielik-runpod/
 │   ├── xlsx/                        ← przykładowe pliki XLSX z mapami rejestrów urządzeń (dane testowe)
 │   ├── golden_sets/                 ← golden sety do ewaluacji RAG
 │   └── reports/                     ← logi z ewaluacji
-├── test/                ← testy jednostkowe, integracyjne i ewaluatory
-└── start.sh
+├── test/
+│   ├── unit/                ← testy jednostkowe (pytest)
+│   ├── integration/         ← testy integracyjne (wymagają Ollamy)
+│   └── eval/                ← skrypty ewaluacyjne (golden set)
+├── pytest.ini               ← konfiguracja pytest (testpaths, pythonpath)
+└── start.sh                 ← skrypt startowy kontenera RunPod
 ```
 
 ---
@@ -514,7 +518,7 @@ Pokrycie: **100%** — logika biznesowa i warstwa HTTP. `test_main.py` używa `T
 
 ```bash
 pip install pytest
-pytest test/test_xlsx_chunker.py test/test_bm25_reranker.py test/test_query_router.py test/test_xlsx_ingester.py test/test_ollama_client.py test/test_qdrant_store.py test/test_rag_retriever.py test/test_ask_pipeline.py test/test_main.py -v
+pytest -v
 ```
 
 ```
@@ -522,18 +526,18 @@ pytest test/test_xlsx_chunker.py test/test_bm25_reranker.py test/test_query_rout
 platform win32 -- Python 3.10.5, pytest-9.0.3, pluggy-1.6.0
 collected 106 items
 
-test/test_xlsx_chunker.py::test_load_sheets_basic PASSED                 [  0%]
-test/test_xlsx_chunker.py::test_load_sheets_skips_empty PASSED           [  1%]
+test/unit/test_xlsx_chunker.py::test_load_sheets_basic PASSED            [  0%]
+test/unit/test_xlsx_chunker.py::test_load_sheets_skips_empty PASSED      [  1%]
 ...
-test/test_main.py::test_list_collections PASSED                          [ 99%]
-test/test_main.py::test_delete_collection PASSED                         [100%]
+test/unit/test_main.py::test_list_collections PASSED                     [ 99%]
+test/unit/test_main.py::test_delete_collection PASSED                    [100%]
 
 ============================== 106 passed in 3.19s ==============================
 ```
 
 ### Testy integracyjne
 
-Plik `test/test_integration.py` sprawdza współpracę prawdziwych komponentów — bez mockowania. Wymagają działającej Ollamy z modelem `nomic-embed-text`. Qdrant działa w trybie embedded (plik lokalny przez `qdrant-client`) — osobny serwer nie jest potrzebny.
+Plik `test/integration/test_integration.py` sprawdza współpracę prawdziwych komponentów — bez mockowania. Wymagają działającej Ollamy z modelem `nomic-embed-text`. Qdrant działa w trybie embedded (plik lokalny przez `qdrant-client`) — osobny serwer nie jest potrzebny.
 
 Zakres testów:
 
@@ -551,12 +555,17 @@ Gdy `OLLAMA_URL` nie jest ustawiony, używany jest domyślny adres `http://local
 Wymagania: [Uruchomienie lokalne](#uruchomienie-lokalne) (Ollama + modele + zależności Pythona).
 
 ```bash
-OLLAMA_URL=http://localhost:11434 pytest test/test_integration.py -v
+pytest test/integration/ -v
 ```
 
 Na Windows (PowerShell):
 ```powershell
-$env:OLLAMA_URL="http://localhost:11434"; pytest test/test_integration.py -v
+pytest test/integration/ -v
+```
+
+Dla zdalnej Ollamy (np. RunPod):
+```powershell
+$env:OLLAMA_URL="https://{POD_ID}-11434.proxy.runpod.net"; pytest test/integration/ -v
 ```
 
 ```
@@ -564,22 +573,22 @@ $env:OLLAMA_URL="http://localhost:11434"; pytest test/test_integration.py -v
 platform win32 -- Python 3.10.5, pytest-9.0.3, pluggy-1.6.0
 collected 9 items
 
-test/test_integration.py::test_embed_returns_768_dimensions PASSED       [ 11%]
-test/test_integration.py::test_check_embed_ready PASSED                  [ 22%]
-test/test_integration.py::test_qdrant_create_and_list_collection PASSED  [ 33%]
-test/test_integration.py::test_qdrant_upsert_and_search PASSED           [ 44%]
-test/test_integration.py::test_qdrant_scroll_source_labels PASSED        [ 55%]
-test/test_integration.py::test_ingest_vectors_count_matches_chunks PASSED [ 66%]
-test/test_integration.py::test_ingest_source_label_visible_in_scroll PASSED [ 77%]
-test/test_integration.py::test_retrieve_returns_chunk_after_ingest PASSED [ 88%]
-test/test_integration.py::test_retrieve_wrong_source_label_returns_none PASSED [100%]
+test/integration/test_integration.py::test_embed_returns_768_dimensions PASSED       [ 11%]
+test/integration/test_integration.py::test_check_embed_ready PASSED                  [ 22%]
+test/integration/test_integration.py::test_qdrant_create_and_list_collection PASSED  [ 33%]
+test/integration/test_integration.py::test_qdrant_upsert_and_search PASSED           [ 44%]
+test/integration/test_integration.py::test_qdrant_scroll_source_labels PASSED        [ 55%]
+test/integration/test_integration.py::test_ingest_vectors_count_matches_chunks PASSED [ 66%]
+test/integration/test_integration.py::test_ingest_source_label_visible_in_scroll PASSED [ 77%]
+test/integration/test_integration.py::test_retrieve_returns_chunk_after_ingest PASSED [ 88%]
+test/integration/test_integration.py::test_retrieve_wrong_source_label_returns_none PASSED [100%]
 
 ============================== 9 passed in 9.61s ==============================
 ```
 
 ### Ewaluacja retrievera
 
-Skrypt `test/eval_retriever.py` mierzy jakość retrievera na golden secie — bez Qdrant, wyłącznie przez porównanie cosinusowe wektorów z opcjonalnym rerankingiem BM25 i opcjonalnym query routerem. Wyniki: Recall@1, Recall@2, Recall@3 i MRR.
+Skrypt `test/eval/eval_retriever.py` mierzy jakość retrievera na golden secie — bez Qdrant, wyłącznie przez porównanie cosinusowe wektorów z opcjonalnym rerankingiem BM25 i opcjonalnym query routerem. Wyniki: Recall@1, Recall@2, Recall@3 i MRR.
 
 Tryby pracy:
 - `--bm25-candidates 0` — sam embedder (porównanie cosinusowe)
@@ -592,23 +601,23 @@ Działa na CPU — `nomic-embed-text` (~274 MB) nie wymaga GPU. Embedowanie będ
 Wymagania: [Uruchomienie lokalne](#uruchomienie-lokalne) (Ollama + `nomic-embed-text` + zależności Pythona).
 
 ```bash
-python test/eval_retriever.py data/golden_sets/golden_set.json
+python test/eval/eval_retriever.py data/golden_sets/golden_set.json
 ```
 
 Na obu golden setach:
 ```bash
-python test/eval_retriever.py data/golden_sets/golden_set.json
-python test/eval_retriever.py data/golden_sets/golden_set_unique.json
+python test/eval/eval_retriever.py data/golden_sets/golden_set.json
+python test/eval/eval_retriever.py data/golden_sets/golden_set_unique.json
 ```
 
 Opcjonalnie — wyłączony BM25, query router, wyższe k, tryb szczegółowy lub zdalny Pod:
 ```bash
-python test/eval_retriever.py data/golden_sets/golden_set.json --bm25-candidates 0
-python test/eval_retriever.py data/golden_sets/golden_set.json --query-router
-python test/eval_retriever.py data/golden_sets/golden_set.json --bm25-candidates 20 --query-router --verbose
-python test/eval_retriever.py data/golden_sets/golden_set.json --k 6
-python test/eval_retriever.py data/golden_sets/golden_set.json --verbose
-python test/eval_retriever.py data/golden_sets/golden_set.json --ollama-url https://{POD_ID}-11434.proxy.runpod.net
+python test/eval/eval_retriever.py data/golden_sets/golden_set.json --bm25-candidates 0
+python test/eval/eval_retriever.py data/golden_sets/golden_set.json --query-router
+python test/eval/eval_retriever.py data/golden_sets/golden_set.json --bm25-candidates 20 --query-router --verbose
+python test/eval/eval_retriever.py data/golden_sets/golden_set.json --k 6
+python test/eval/eval_retriever.py data/golden_sets/golden_set.json --verbose
+python test/eval/eval_retriever.py data/golden_sets/golden_set.json --ollama-url https://{POD_ID}-11434.proxy.runpod.net
 ```
 
 Przykładowy output (6 chunków — ORNO OR-WE-520 + EASTRON SDM630):
@@ -645,20 +654,20 @@ Przykładowy output z `--verbose`:
 
 ### Ewaluacja Query Routera
 
-Skrypt `test/eval_query_router.py` mierzy samodzielną jakość Query Routera (Bielik 11B) — dla każdego prompta w golden secie sprawdza, czy router poprawnie identyfikuje urządzenie. Wyniki: Accuracy, trafienia, fallbacki (brak odpowiedzi), błędy (zły label).
+Skrypt `test/eval/eval_query_router.py` mierzy samodzielną jakość Query Routera (Bielik 11B) — dla każdego prompta w golden secie sprawdza, czy router poprawnie identyfikuje urządzenie. Wyniki: Accuracy, trafienia, fallbacki (brak odpowiedzi), błędy (zły label).
 
 Wymagania: [Uruchomienie lokalne](#uruchomienie-lokalne) (Ollama + `bielik-11b-v3.0-instruct:Q4_K_M` + zależności Pythona). Wymaga GPU — Bielik 11B na CPU będzie bardzo wolny.
 
 ```bash
-python test/eval_query_router.py data/golden_sets/golden_set.json
+python test/eval/eval_query_router.py data/golden_sets/golden_set.json
 ```
 
 Opcjonalnie — inny model, tryb szczegółowy lub zdalny Pod:
 ```bash
-python test/eval_query_router.py data/golden_sets/golden_set.json --verbose
-python test/eval_query_router.py data/golden_sets/golden_set.json --router-model SpeakLeash/bielik-4.5b-v3.0-instruct:Q4_K_M
-python test/eval_query_router.py data/golden_sets/golden_set.json --router-model SpeakLeash/bielik-11b-v3.0-instruct:Q4_K_M --verbose
-python test/eval_query_router.py data/golden_sets/golden_set.json --ollama-url https://{POD_ID}-11434.proxy.runpod.net
+python test/eval/eval_query_router.py data/golden_sets/golden_set.json --verbose
+python test/eval/eval_query_router.py data/golden_sets/golden_set.json --router-model SpeakLeash/bielik-4.5b-v3.0-instruct:Q4_K_M
+python test/eval/eval_query_router.py data/golden_sets/golden_set.json --router-model SpeakLeash/bielik-11b-v3.0-instruct:Q4_K_M --verbose
+python test/eval/eval_query_router.py data/golden_sets/golden_set.json --ollama-url https://{POD_ID}-11434.proxy.runpod.net
 ```
 
 Przykładowy output:
@@ -757,8 +766,6 @@ Query router ma największy wpływ na wyniki — sam wzrost puli kandydatów BM2
 - [ ] Prosty frontend
 
 ### Testy i infrastruktura
-- [ ] `conftest.py` z `sys.path` — ten sam blok `sys.path.insert` powtarza się w każdym pliku testowym; jeden `conftest.py` w `test/` to eliminuje
-- [ ] `pytest.ini` / `pyproject.toml` z `testpaths = test` i `pythonpath = . api` — zastąpi `sys.path.insert` i pozwoli uruchamiać `pytest` bez podawania ścieżek
 - [ ] Reset `lru_cache` w fixture `test_main.py` — jeśli test wywoła prawdziwą fabrykę (brak override), kolejne testy dostaną tę samą zepsutą instancję z cache'a; fikstura powinna czyścić cache po każdym teście
 
 ---

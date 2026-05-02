@@ -1,12 +1,6 @@
-import sys
 import pytest
-from pathlib import Path
 from unittest.mock import AsyncMock, MagicMock
 from io import BytesIO
-
-ROOT = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(ROOT))
-sys.path.insert(0, str(ROOT / "api"))
 
 from fastapi.testclient import TestClient
 from api.main import (

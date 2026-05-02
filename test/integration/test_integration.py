@@ -1,15 +1,9 @@
-import sys
 import asyncio
 import os
 import uuid
 import pytest
-from pathlib import Path
 from io import BytesIO
 from unittest.mock import MagicMock, AsyncMock
-
-ROOT = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(ROOT))
-sys.path.insert(0, str(ROOT / "api"))
 
 import openpyxl
 from api.ollama_client import OllamaClient
