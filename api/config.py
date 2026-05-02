@@ -11,8 +11,8 @@ import os
 
 # ── Modele Ollama ──────────────────────────────────────────────────────────────
 
-MODEL        = os.getenv("MODEL",       "SpeakLeash/bielik-11b-v3.0-instruct:Q8_0")
-ROUTER_MODEL = os.getenv("MODEL",       "SpeakLeash/bielik-11b-v3.0-instruct:Q8_0")
+MODEL        = os.getenv("MODEL",       "SpeakLeash/bielik-11b-v3.0-instruct:Q4_K_M")
+ROUTER_MODEL = os.getenv("MODEL",       "SpeakLeash/bielik-11b-v3.0-instruct:Q4_K_M")
 EMBED_MODEL  = os.getenv("EMBED_MODEL", "nomic-embed-text")
 
 # ── Baza wektorowa ─────────────────────────────────────────────────────────────

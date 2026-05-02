@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-export MODEL="${MODEL:-SpeakLeash/bielik-11b-v3.0-instruct:Q8_0}"
+export MODEL="${MODEL:-SpeakLeash/bielik-11b-v3.0-instruct:Q4_K_M}"
 export EMBED_MODEL="${EMBED_MODEL:-nomic-embed-text}"
 export OLLAMA_URL="${OLLAMA_URL:-http://localhost:11434}"
 export OLLAMA_MODELS="${OLLAMA_MODELS:-/root/data/ollama}"

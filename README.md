@@ -18,8 +18,8 @@ REST API do uruchamiania polskiego modelu językowego **Bielik 11B v3.0** z obs�
 **Stack:**
 | Komponent | Rola |
 |---|---|
-| Bielik 11B v3.0 Q8_0 | LLM — generowanie odpowiedzi |
-| Bielik 11B v3.0 Q8_0 | Query Router — identyfikacja urządzenia z pytania |
+| Bielik 11B v3.0 Q4_K_M | LLM — generowanie odpowiedzi |
+| Bielik 11B v3.0 Q4_K_M | Query Router — identyfikacja urządzenia z pytania |
 | nomic-embed-text | Embeddingi — wyszukiwanie semantyczne |
 | Qdrant | Baza wektorowa |
 | BM25 + RRF | Reranking kandydatów |
@@ -117,7 +117,7 @@ bielik-runpod/
 
 | Pole | Wartość |
 |---|---|
-| Template Name | `Bielik-11B-v3-Q8` |
+| Template Name | `Bielik-11B-v3-Q4` |
 | Container Image | `runpod/pytorch:2.8.0-py3.11-cuda12.8.1-cudnn-devel-ubuntu22.04` |
 | Container Start Command | *(patrz niżej)* |
 | Expose HTTP Ports | `8000` |
@@ -137,7 +137,7 @@ bash -c "apt-get update && apt-get install -y curl git zstd && curl -fsSL https:
 - **Cloud:** Secure Cloud (On Demand) — do prezentacji; Community Cloud — do testów
 - **GPU Count:** 1
 
-Pierwsze uruchomienie trwa ~13 minut (pobieranie modeli ~12 GB Bielik + ~274 MB nomic-embed-text na Volume).  
+Pierwsze uruchomienie trwa ~8 minut (pobieranie modeli ~6.7 GB Bielik + ~274 MB nomic-embed-text na Volume).  
 Kolejne uruchomienia ~2 minuty — modele już są na Volume.
 
 #### Zmienne środowiskowe
@@ -146,7 +146,7 @@ Kolejne uruchomienia ~2 minuty — modele już są na Volume.
 |---|---|
 | `OLLAMA_URL` | `http://localhost:11434` |
 | `OLLAMA_MODELS` | `/root/data/ollama` |
-| `MODEL` | `SpeakLeash/bielik-11b-v3.0-instruct:Q8_0` |
+| `MODEL` | `SpeakLeash/bielik-11b-v3.0-instruct:Q4_K_M` |
 | `EMBED_MODEL` | `nomic-embed-text` |
 | `QDRANT_PATH` | `/root/data/qdrant` |
 
@@ -163,7 +163,7 @@ pip install -r api/requirements.txt
 
 3. Pobierz modele:
 ```bash
-ollama pull SpeakLeash/bielik-11b-v3.0-instruct:Q8_0
+ollama pull SpeakLeash/bielik-11b-v3.0-instruct:Q4_K_M
 ollama pull nomic-embed-text
 ```
 
@@ -223,12 +223,12 @@ Przykładowa odpowiedź:
   "status": "ok",
   "ollama": {
     "reachable": true,
-    "model": "SpeakLeash/bielik-11b-v3.0-instruct:Q8_0",
+    "model": "SpeakLeash/bielik-11b-v3.0-instruct:Q4_K_M",
     "model_ready": true,
     "embed_model": "nomic-embed-text",
     "embed_ready": true,
     "available_models": [
-      "SpeakLeash/bielik-11b-v3.0-instruct:Q8_0",
+      "SpeakLeash/bielik-11b-v3.0-instruct:Q4_K_M",
       "nomic-embed-text:latest"
     ]
   },
@@ -249,7 +249,7 @@ Przykładowa odpowiedź:
 ```json
 {
   "answer": "Spółdzielnia energetyczna to...",
-  "model": "SpeakLeash/bielik-11b-v3.0-instruct:Q8_0",
+  "model": "SpeakLeash/bielik-11b-v3.0-instruct:Q4_K_M",
   "time_total_s": 12.1,
   "time_to_first_token_s": 1.3,
   "tokens_generated": 87,
@@ -326,7 +326,7 @@ Przykładowa odpowiedź `/ask` z RAG:
 ```json
 {
   "answer": "Napięcie znamionowe licznika ORNO OR-WE-516 wynosi 3x230/400V.",
-  "model": "SpeakLeash/bielik-11b-v3.0-instruct:Q8_0",
+  "model": "SpeakLeash/bielik-11b-v3.0-instruct:Q4_K_M",
   "time_total_s": 14.2,
   "time_to_first_token_s": 1.5,
   "tokens_generated": 104,
@@ -376,7 +376,7 @@ Przykładowa odpowiedź:
 {
   "models": [
     {
-      "name": "SpeakLeash/bielik-11b-v3.0-instruct:Q8_0",
+      "name": "SpeakLeash/bielik-11b-v3.0-instruct:Q4_K_M",
       "size": 11800000000,
       "digest": "sha256:..."
     },
@@ -524,108 +524,7 @@ collected 106 items
 
 test/test_xlsx_chunker.py::test_load_sheets_basic PASSED                 [  0%]
 test/test_xlsx_chunker.py::test_load_sheets_skips_empty PASSED           [  1%]
-test/test_xlsx_chunker.py::test_load_sheets_multiple PASSED              [  2%]
-test/test_xlsx_chunker.py::test_to_markdown_structure PASSED             [  3%]
-test/test_xlsx_chunker.py::test_chunk_sheet_single_chunk PASSED          [  4%]
-test/test_xlsx_chunker.py::test_chunk_sheet_multiple_chunks PASSED       [  5%]
-test/test_xlsx_chunker.py::test_chunk_sheet_prefix_in_text PASSED        [  6%]
-test/test_xlsx_chunker.py::test_chunk_sheet_payload_fields PASSED        [  7%]
-test/test_xlsx_chunker.py::test_chunk_returns_all_sheets PASSED          [  8%]
-test/test_xlsx_chunker.py::test_chunk_header_repeated_in_every_chunk PASSED [  9%]
-test/test_xlsx_chunker.py::test_chunk_empty_file PASSED                  [ 11%]
-test/test_bm25_reranker.py::test_normalize_lowercase PASSED              [ 12%]
-test/test_bm25_reranker.py::test_normalize_removes_diacritics PASSED     [ 13%]
-test/test_bm25_reranker.py::test_normalize_l_with_stroke PASSED          [ 14%]
-test/test_bm25_reranker.py::test_normalize_mixed PASSED                  [ 15%]
-test/test_bm25_reranker.py::test_tokenize_hyphenated_code PASSED         [ 16%]
-test/test_bm25_reranker.py::test_tokenize_alphanumeric PASSED            [ 17%]
-test/test_bm25_reranker.py::test_tokenize_skips_single_chars PASSED      [ 18%]
-test/test_bm25_reranker.py::test_tokenize_diacritics_normalized PASSED   [ 20%]
-test/test_bm25_reranker.py::test_combine_scores_order PASSED             [ 21%]
-test/test_bm25_reranker.py::test_combine_scores_both_lists_boost PASSED  [ 22%]
-test/test_bm25_reranker.py::test_combine_scores_empty_bm25 PASSED        [ 23%]
-test/test_bm25_reranker.py::test_combine_scores_rrf_formula PASSED       [ 24%]
-test/test_bm25_reranker.py::test_rerank_best_match_first PASSED          [ 25%]
-test/test_bm25_reranker.py::test_rerank_returns_all_candidates PASSED    [ 26%]
-test/test_bm25_reranker.py::test_rerank_diacritics_insensitive PASSED    [ 27%]
-test/test_query_router.py::test_empty_labels_returns_none PASSED         [ 28%]
-test/test_query_router.py::test_brak_returns_none PASSED                 [ 29%]
-test/test_query_router.py::test_brak_case_insensitive PASSED             [ 30%]
-test/test_query_router.py::test_empty_response_returns_none PASSED       [ 31%]
-test/test_query_router.py::test_whitespace_response_returns_none PASSED  [ 32%]
-test/test_query_router.py::test_exact_match PASSED                       [ 33%]
-test/test_query_router.py::test_exact_match_case_insensitive PASSED      [ 34%]
-test/test_query_router.py::test_substring_model_shortened PASSED         [ 35%]
-test/test_query_router.py::test_substring_model_extended PASSED          [ 36%]
-test/test_query_router.py::test_no_match_returns_none PASSED             [ 37%]
-test/test_xlsx_ingester.py::test_parse_rejects_non_xlsx PASSED           [ 38%]
-test/test_xlsx_ingester.py::test_parse_rejects_missing_filename PASSED   [ 40%]
-test/test_xlsx_ingester.py::test_parse_accepts_xlsm_extension PASSED     [ 41%]
-test/test_xlsx_ingester.py::test_parse_rejects_empty_file PASSED         [ 42%]
-test/test_xlsx_ingester.py::test_parse_rejects_invalid_bytes PASSED      [ 43%]
-test/test_xlsx_ingester.py::test_parse_returns_parsed_xlsx PASSED        [ 44%]
-test/test_xlsx_ingester.py::test_parse_sheet_names_unique_and_ordered PASSED [ 45%]
-test/test_xlsx_ingester.py::test_inspect_returns_correct_chunk_count PASSED [ 46%]
-test/test_xlsx_ingester.py::test_inspect_chunk_info_fields PASSED        [ 47%]
-test/test_xlsx_ingester.py::test_ingest_calls_ensure_collection PASSED   [ 48%]
-test/test_xlsx_ingester.py::test_ingest_calls_embed_for_each_chunk PASSED [ 49%]
-test/test_xlsx_ingester.py::test_ingest_returns_response_summary PASSED  [ 50%]
-test/test_ollama_client.py::test_embed_returns_first_embedding PASSED    [ 51%]
-test/test_ollama_client.py::test_embed_raises_502_on_error PASSED        [ 52%]
-test/test_ollama_client.py::test_generate_extracts_response_content PASSED [ 53%]
-test/test_ollama_client.py::test_generate_adds_wall_time PASSED          [ 54%]
-test/test_ollama_client.py::test_generate_raises_502_on_error PASSED     [ 55%]
-test/test_ollama_client.py::test_generate_missing_message_returns_empty_response PASSED [ 56%]
-test/test_ollama_client.py::test_list_models_returns_response PASSED     [ 57%]
-test/test_ollama_client.py::test_list_models_raises_502_on_error PASSED  [ 58%]
-test/test_ollama_client.py::test_pull_model_returns_status PASSED        [ 60%]
-test/test_ollama_client.py::test_pull_model_uses_default_when_none PASSED [ 61%]
-test/test_ollama_client.py::test_pull_model_raises_502_on_error PASSED   [ 62%]
-test/test_ollama_client.py::test_check_model_ready_when_present PASSED   [ 63%]
-test/test_ollama_client.py::test_check_model_not_ready_when_absent PASSED [ 64%]
-test/test_ollama_client.py::test_check_returns_available_models PASSED   [ 65%]
-test/test_qdrant_store.py::test_ensure_collection_creates_when_missing PASSED [ 66%]
-test/test_qdrant_store.py::test_ensure_collection_skips_when_exists PASSED [ 67%]
-test/test_qdrant_store.py::test_ensure_collection_uses_correct_name PASSED [ 68%]
-test/test_qdrant_store.py::test_scroll_source_labels_returns_sorted_unique PASSED [ 69%]
-test/test_qdrant_store.py::test_scroll_source_labels_handles_pagination PASSED [ 70%]
-test/test_qdrant_store.py::test_scroll_source_labels_skips_missing_payload PASSED [ 71%]
-test/test_qdrant_store.py::test_list_collections_returns_name_and_count PASSED [ 72%]
-test/test_qdrant_store.py::test_list_collections_empty PASSED            [ 73%]
-test/test_qdrant_store.py::test_upsert_calls_client_upsert PASSED        [ 74%]
-test/test_qdrant_store.py::test_search_returns_score_and_payload PASSED  [ 75%]
-test/test_qdrant_store.py::test_search_with_source_label_passes_filter PASSED [ 76%]
-test/test_qdrant_store.py::test_search_without_source_label_no_filter PASSED [ 77%]
-test/test_qdrant_store.py::test_delete_collection_calls_client PASSED    [ 78%]
-test/test_rag_retriever.py::test_retrieve_returns_none_when_no_hits PASSED [ 80%]
-test/test_rag_retriever.py::test_retrieve_returns_rag_result PASSED      [ 81%]
-test/test_rag_retriever.py::test_retrieve_context_format PASSED          [ 82%]
-test/test_rag_retriever.py::test_retrieve_fragment_labels_in_context PASSED [ 83%]
-test/test_rag_retriever.py::test_retrieve_chunks_count_matches_hits PASSED [ 84%]
-test/test_rag_retriever.py::test_retrieve_chunk_fields PASSED            [ 85%]
-test/test_rag_retriever.py::test_retrieve_with_bm25_limits_to_top_k PASSED [ 86%]
-test/test_rag_retriever.py::test_retrieve_bm25_disabled_when_candidates_zero PASSED [ 87%]
-test/test_rag_retriever.py::test_retrieve_bm25_disabled_when_bm25_is_none PASSED [ 88%]
-test/test_ask_pipeline.py::test_rag_disabled_skips_retrieve PASSED       [ 83%]
-test/test_ask_pipeline.py::test_rag_disabled_uses_original_prompt PASSED [ 84%]
-test/test_ask_pipeline.py::test_rag_enabled_no_results_uses_original_prompt PASSED [ 85%]
-test/test_ask_pipeline.py::test_rag_enabled_with_results_uses_rag_prompt PASSED [ 86%]
-test/test_ask_pipeline.py::test_rag_chunks_in_response PASSED            [ 87%]
-test/test_ask_pipeline.py::test_query_router_disabled_skips_route PASSED [ 88%]
-test/test_ask_pipeline.py::test_query_router_enabled_calls_route PASSED  [ 89%]
-test/test_ask_pipeline.py::test_response_tps_calculated PASSED           [ 90%]
-test/test_ask_pipeline.py::test_response_tps_none_when_no_eval_count PASSED [ 91%]
-test/test_ask_pipeline.py::test_response_tps_none_when_eval_ns_zero PASSED [ 92%]
-test/test_ask_pipeline.py::test_response_fields PASSED                   [ 93%]
-test/test_main.py::test_health_ok PASSED                                 [ 94%]
-test/test_main.py::test_health_error_when_ollama_raises PASSED           [ 94%]
-test/test_main.py::test_pull_model PASSED                                [ 95%]
-test/test_main.py::test_ingest_xlsx_returns_response_model PASSED        [ 95%]
-test/test_main.py::test_ingest_xlsx_missing_source_label_returns_422 PASSED [ 96%]
-test/test_main.py::test_inspect_xlsx_returns_chunks PASSED               [ 96%]
-test/test_main.py::test_ask_returns_answer PASSED                        [ 97%]
-test/test_main.py::test_ask_missing_prompt_returns_422 PASSED            [ 97%]
-test/test_main.py::test_list_models PASSED                               [ 98%]
+...
 test/test_main.py::test_list_collections PASSED                          [ 99%]
 test/test_main.py::test_delete_collection PASSED                         [100%]
 
@@ -748,7 +647,7 @@ Przykładowy output z `--verbose`:
 
 Skrypt `test/eval_query_router.py` mierzy samodzielną jakość Query Routera (Bielik 11B) — dla każdego prompta w golden secie sprawdza, czy router poprawnie identyfikuje urządzenie. Wyniki: Accuracy, trafienia, fallbacki (brak odpowiedzi), błędy (zły label).
 
-Wymagania: [Uruchomienie lokalne](#uruchomienie-lokalne) (Ollama + `bielik-11b-v3.0-instruct:Q8_0` + zależności Pythona). Wymaga GPU — Bielik 11B na CPU będzie bardzo wolny.
+Wymagania: [Uruchomienie lokalne](#uruchomienie-lokalne) (Ollama + `bielik-11b-v3.0-instruct:Q4_K_M` + zależności Pythona). Wymaga GPU — Bielik 11B na CPU będzie bardzo wolny.
 
 ```bash
 python test/eval_query_router.py data/golden_sets/golden_set.json
@@ -757,21 +656,21 @@ python test/eval_query_router.py data/golden_sets/golden_set.json
 Opcjonalnie — inny model, tryb szczegółowy lub zdalny Pod:
 ```bash
 python test/eval_query_router.py data/golden_sets/golden_set.json --verbose
-python test/eval_query_router.py data/golden_sets/golden_set.json --router-model SpeakLeash/bielik-4.5b-v3.0-instruct:Q8_0
-python test/eval_query_router.py data/golden_sets/golden_set.json --router-model SpeakLeash/bielik-11b-v3.0-instruct:Q8_0 --verbose
+python test/eval_query_router.py data/golden_sets/golden_set.json --router-model SpeakLeash/bielik-4.5b-v3.0-instruct:Q4_K_M
+python test/eval_query_router.py data/golden_sets/golden_set.json --router-model SpeakLeash/bielik-11b-v3.0-instruct:Q4_K_M --verbose
 python test/eval_query_router.py data/golden_sets/golden_set.json --ollama-url https://{POD_ID}-11434.proxy.runpod.net
 ```
 
 Przykładowy output:
 ```
-Model routera:  SpeakLeash/bielik-11b-v3.0-instruct:Q8_0
+Model routera:  SpeakLeash/bielik-11b-v3.0-instruct:Q4_K_M
 Urządzenia:     ['EASTRON SDM630', 'ORNO OR-WE-520']
 Chunków:        6
 Par (prompt, chunk): 30
   [1/30] "energia bierna taryfa t1 t2 or-we-520 adres hex"
   ...
 ══════════════════════════════════════════════════
-  Model routera:       SpeakLeash/bielik-11b-v3.0-instruct:Q8_0
+  Model routera:       SpeakLeash/bielik-11b-v3.0-instruct:Q4_K_M
   Urządzenia:          2  (EASTRON SDM630, ORNO OR-WE-520)
   Par (prompt, chunk): 30
   Trafień:             27/30  (90.0%)
@@ -809,7 +708,7 @@ Blok `PROMPT DO LLM` jest wyświetlany zawsze — niezależnie od flagi `--verbo
 
 ### Query Router
 
-| Metryka                  | Bielik 11B Q8_0 |
+| Metryka                  | Bielik 11B Q4_K_M |
 |:-------------------------|:----------------|
 | Trafień                  | 120/135         |
 | Fallback (brak)          | 15/135          |
