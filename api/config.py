@@ -61,6 +61,5 @@ RAG_SYSTEM_PROMPT = (
     "'Zapis' — do odczytu i zapisu, tylko takie sugeruj do zmiany. "
     "Odpowiadaj zwięźle — bez zbędnych wstępów i wyjaśnień. "
     "Jeśli odpowiedź nie wynika z kontekstu, odpowiedz dokładnie: "
-    "'Nie znalazłem tej informacji w dostępnej dokumentacji.' "
-    "Zawsze odpowiadaj po polsku."
+    "'Nie znalazłem tej informacji w dostępnej dokumentacji.'"
 )

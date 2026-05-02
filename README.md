@@ -26,7 +26,7 @@ REST API do uruchamiania polskiego modelu językowego **Bielik 11B v3.0** z obs�
 | FastAPI | REST API |
 | Ollama | Serwer modeli |
 
-Uruchamiany na RunPod (GPU RTX 4090) przez on-start script.
+Działa na RunPod oraz lokalnie.
 
 ---
 
@@ -92,25 +92,17 @@ bielik-runpod/
 │   ├── xlsx/                        ← przykładowe pliki XLSX z mapami rejestrów urządzeń (dane testowe)
 │   ├── golden_sets/                 ← golden sety do ewaluacji RAG
 │   └── reports/                     ← logi z ewaluacji
-├── test/
-│   ├── test_xlsx_chunker.py     ← testy jednostkowe XlsxChunker
-│   ├── test_bm25_reranker.py    ← testy jednostkowe Bm25Reranker
-│   ├── test_query_router.py     ← testy jednostkowe QueryRouter
-│   ├── test_xlsx_ingester.py    ← testy jednostkowe XlsxIngester
-│   ├── test_ollama_client.py    ← testy jednostkowe OllamaClient
-│   ├── test_qdrant_store.py     ← testy jednostkowe QdrantStore
-│   ├── test_rag_retriever.py    ← testy jednostkowe RagRetriever
-│   ├── test_ask_pipeline.py     ← testy jednostkowe AskPipeline
-│   ├── test_main.py             ← testy jednostkowe endpointów FastAPI (TestClient + dependency_overrides)
-│   ├── test_integration.py      ← testy integracyjne (prawdziwa Ollama + Qdrant embedded)
-│   ├── eval_retriever.py        ← ewaluacja retrievera: embedder / BM25 / query router (Recall@k, MRR)
-│   └── eval_query_router.py     ← ewaluacja Query Routera: Accuracy, trafienia, fallbacki, błędy
+├── test/                ← testy jednostkowe, integracyjne i ewaluatory
 └── start.sh
 ```
 
 ---
 
-## Struktura Volume (`/root/data`)
+## Uruchomienie
+
+### Uruchomienie na RunPod
+
+#### Struktura Volume (`/root/data`)
 
 ```
 /root/data/
@@ -118,11 +110,8 @@ bielik-runpod/
 └── qdrant/      ← baza wektorowa Qdrant (dokumenty RAG)
 ```
 
-Oba katalogi persystują na Volume i przeżywają Terminate Poda.
 
----
-
-## Tworzenie Template na RunPod
+#### Tworzenie Template
 
 **Manage → My Templates → New Template**
 
@@ -137,16 +126,12 @@ Oba katalogi persystują na Volume i przeżywają Terminate Poda.
 | Volume Disk | `35 GB` |
 | Volume Mount Path | `/root/data` |
 
-> ⚠️ Zmiana Volume Mount Path z `/root/.ollama` na `/root/data` wymaga **Terminate** istniejącego Poda i stworzenia nowego z nowym Template.
-
 **Container Start Command:**
 ```
 bash -c "apt-get update && apt-get install -y curl git zstd && curl -fsSL https://ollama.com/install.sh | sh && rm -rf /tmp/init && git clone --depth=1 https://github.com/protechnologia/bielik-runpod /tmp/init && bash /tmp/init/start.sh"
 ```
 
----
-
-## Uruchamianie Poda
+#### Uruchamianie Poda
 
 - **GPU:** RTX 4090
 - **Cloud:** Secure Cloud (On Demand) — do prezentacji; Community Cloud — do testów
@@ -155,9 +140,7 @@ bash -c "apt-get update && apt-get install -y curl git zstd && curl -fsSL https:
 Pierwsze uruchomienie trwa ~13 minut (pobieranie modeli ~12 GB Bielik + ~274 MB nomic-embed-text na Volume).  
 Kolejne uruchomienia ~2 minuty — modele już są na Volume.
 
----
-
-## Zmienne środowiskowe (w start.sh)
+#### Zmienne środowiskowe
 
 | Zmienna | Wartość |
 |---|---|
@@ -166,6 +149,43 @@ Kolejne uruchomienia ~2 minuty — modele już są na Volume.
 | `MODEL` | `SpeakLeash/bielik-11b-v3.0-instruct:Q8_0` |
 | `EMBED_MODEL` | `nomic-embed-text` |
 | `QDRANT_PATH` | `/root/data/qdrant` |
+
+### Uruchomienie lokalne
+
+**Wymagania (jednorazowo):**
+
+1. Zainstaluj zależności Pythona:
+```bash
+pip install -r api/requirements.txt
+```
+
+2. Zainstaluj Ollama — pobierz installer ze strony [ollama.com](https://ollama.com/download) i uruchom.
+
+3. Pobierz modele:
+```bash
+ollama pull SpeakLeash/bielik-11b-v3.0-instruct:Q8_0
+ollama pull nomic-embed-text
+```
+
+**Uruchomienie:**
+
+4. Uruchom Ollama (jeśli nie działa jako serwis):
+```bash
+ollama serve
+```
+
+5. Uruchom API:
+```bash
+OLLAMA_URL=http://localhost:11434 QDRANT_PATH=./data/qdrant PYTHONPATH=. uvicorn api.main:app --host 0.0.0.0 --port 8000
+```
+
+Na Windows (PowerShell):
+```powershell
+$env:OLLAMA_URL="http://localhost:11434"; $env:QDRANT_PATH="./data/qdrant"; $env:PYTHONPATH="."; uvicorn api.main:app --host 0.0.0.0 --port 8000
+```
+
+API dostępne pod: `http://localhost:8000`  
+Swagger UI: `http://localhost:8000/docs`
 
 ---
 
@@ -186,7 +206,11 @@ Kolejne uruchomienia ~2 minuty — modele już są na Volume.
 
 ## Weryfikacja API
 
-URL Poda dostępny w panelu RunPod: **Connect → HTTP Service [Port 8000]**
+Baza URL:
+- lokalnie: `http://localhost:8000`
+- RunPod: `https://{POD_ID}-8000.proxy.runpod.net` (URL dostępny w panelu: **Connect → HTTP Service [Port 8000]**)
+
+Poniższe przykłady używają adresu RunPod — zastąp go `http://localhost:8000` przy uruchomieniu lokalnym.
 
 **Health check:**
 ```bash
@@ -382,7 +406,7 @@ Przykładowa odpowiedź:
 {"status": "pulled", "model": "nomic-embed-text"}
 ```
 
-Swagger UI: `https://{POD_ID}-8000.proxy.runpod.net/docs`
+Swagger UI: `https://{POD_ID}-8000.proxy.runpod.net/docs` (lokalnie: `http://localhost:8000/docs`)
 
 ---
 
@@ -625,29 +649,8 @@ Każdy test tworzy własną kolekcję z losowym sufiksem i usuwa ją po zakończ
 
 Gdy `OLLAMA_URL` nie jest ustawiony, używany jest domyślny adres `http://localhost:11434`.
 
-**Wymagania (jednorazowo):**
+Wymagania: [Uruchomienie lokalne](#uruchomienie-lokalne) (Ollama + modele + zależności Pythona).
 
-1. Zainstaluj zależności Pythona i pytest (jeśli jeszcze nie zainstalowane):
-```bash
-pip install -r api/requirements.txt
-pip install pytest
-```
-
-2. Zainstaluj Ollama — pobierz installer ze strony [ollama.com](https://ollama.com/download) i uruchom.
-
-3. Pobierz model embeddingu:
-```bash
-ollama pull nomic-embed-text
-```
-
-**Uruchomienie:**
-
-4. Uruchom Ollama (jeśli nie działa jako serwis):
-```bash
-ollama serve
-```
-
-5. Uruchom testy integracyjne ze zmienną `OLLAMA_URL`:
 ```bash
 OLLAMA_URL=http://localhost:11434 pytest test/test_integration.py -v
 ```
@@ -687,28 +690,8 @@ Tryby pracy:
 
 Działa na CPU — `nomic-embed-text` (~274 MB) nie wymaga GPU. Embedowanie będzie wolniejsze niż na karcie graficznej (kilka sekund na tekst), ale przy małym golden secie czas jest do przyjęcia.
 
-**Wymagania (jednorazowo):**
+Wymagania: [Uruchomienie lokalne](#uruchomienie-lokalne) (Ollama + `nomic-embed-text` + zależności Pythona).
 
-1. Zainstaluj zależności Pythona:
-```bash
-pip install -r api/requirements.txt
-```
-
-2. Zainstaluj Ollama — pobierz installer ze strony [ollama.com](https://ollama.com/download) i uruchom.
-
-3. Pobierz model embeddingu:
-```bash
-ollama pull nomic-embed-text
-```
-
-**Uruchomienie:**
-
-4. Uruchom Ollama (jeśli nie działa jako serwis):
-```bash
-ollama serve
-```
-
-5. Uruchom ewaluator:
 ```bash
 python test/eval_retriever.py data/golden_sets/golden_set.json
 ```
@@ -765,30 +748,8 @@ Przykładowy output z `--verbose`:
 
 Skrypt `test/eval_query_router.py` mierzy samodzielną jakość Query Routera (Bielik 11B) — dla każdego prompta w golden secie sprawdza, czy router poprawnie identyfikuje urządzenie. Wyniki: Accuracy, trafienia, fallbacki (brak odpowiedzi), błędy (zły label).
 
-Wymaga GPU — Bielik 11B jest znacznie większy niż model embeddingowy i na CPU będzie bardzo wolny.
+Wymagania: [Uruchomienie lokalne](#uruchomienie-lokalne) (Ollama + `bielik-11b-v3.0-instruct:Q8_0` + zależności Pythona). Wymaga GPU — Bielik 11B na CPU będzie bardzo wolny.
 
-**Wymagania (jednorazowo):**
-
-1. Zainstaluj zależności Pythona (jeśli jeszcze nie zainstalowane):
-```bash
-pip install -r api/requirements.txt
-```
-
-2. Zainstaluj Ollama — pobierz installer ze strony [ollama.com](https://ollama.com/download) i uruchom.
-
-3. Pobierz model routera:
-```bash
-ollama pull SpeakLeash/bielik-11b-v3.0-instruct:Q8_0
-```
-
-**Uruchomienie:**
-
-4. Uruchom Ollama (jeśli nie działa jako serwis):
-```bash
-ollama serve
-```
-
-5. Uruchom ewaluator:
 ```bash
 python test/eval_query_router.py data/golden_sets/golden_set.json
 ```
@@ -885,8 +846,11 @@ Query router ma największy wpływ na wyniki — sam wzrost puli kandydatów BM2
 - [ ] **FuzzyRouter** (rapidfuzz) — alternatywa dla routera LLM. Obecny `QueryRouter` wysyła zapytanie do Bielika 11B, żeby rozpoznał nazwę urządzenia — to ~1–2 sekundy opóźnienia na każde pytanie. FuzzyRouter porównałby zapytanie z listą `source_label` przez dopasowanie rozmyte (Levenshtein / token sort ratio), bez żadnego wywołania modelu. Szybszy o rząd wielkości, deterministyczny, nie wymaga GPU. Wadą jest brak rozumienia kontekstu — "licznik trójfazowy Orno" może nie dopasować się do "ORNO OR-WE-520", podczas gdy Bielik sobie z tym radzi.
 - [ ] **Lepszy model embeddingów** (np. `multilingual-e5-large`) — `nomic-embed-text` ma 768 wymiarów i dobry angielski, ale słabiej rozumie polskie konstrukcje techniczne. `multilingual-e5-large` (1024 wymiary, trenowany na 100+ językach) powinien dawać wyższe podobieństwo cosinusowe między polskim pytaniem a polskim fragmentem dokumentacji. Spodziewany efekt: wzrost Recall@1 i MRR w ewaluacji, szczególnie przy pytaniach z polską terminologią.
 - [ ] **HyDE** (Hypothetical Document Embeddings) — zamiast embedować surowe pytanie użytkownika ("Jakie jest napięcie znamionowe?"), model najpierw generuje hipotetyczną odpowiedź ("Napięcie znamionowe wynosi 3×230/400V, częstotliwość 50Hz..."), a jej embedding trafia do Qdrant. Embedding hipotetycznej odpowiedzi jest bliższy przestrzeni wektorowej dokumentacji niż embedding pytania — co przekłada się na trafniejsze wyniki wyszukiwania. Koszt: dodatkowe wywołanie LLM przed każdym retrieve.
+- [ ] **Nie ucinać odpowiedzi w połowie zdania** — zbadać czy i jak ograniczamy `max_tokens`; jeśli odpowiedź jest przycinana, powinna kończyć się na granicy zdania lub akapitu, nie w środku.
 
 ### Architektura i produkcyjność
+- [ ] **Nowe pola w odpowiedzi `/ask`** — dodać `routed_device` (rozpoznana przez Query Router nazwa urządzenia lub `"brak"`) oraz `qdrant_chunks` (liczba chunków z Qdrant przed rerankiem cosinus+BM25), analogicznie do istniejącego `rag_chunks_used`.
+- [ ] **Limit znaków w XlsxChunker** (`max_chars`) — szerokie tabele XLSX (np. 10 kolumn × 50 wierszy) mogą przekroczyć limit kontekstu `nomic-embed-text` (2048 tokenów); chunker powinien przycinać tekst i logować ostrzeżenie.
 - [ ] Asynchroniczny ingest + endpoint `/tasks/{id}` ze statusem — przy dużych plikach embedding sekwencyjny będzie wolny
 - [ ] Autoryzacja — API key
 - [ ] Obsługa duplikatów przy ponownym wgraniu tego samego pliku
@@ -897,16 +861,6 @@ Query router ma największy wpływ na wyniki — sam wzrost puli kandydatów BM2
 - [ ] `conftest.py` z `sys.path` — ten sam blok `sys.path.insert` powtarza się w każdym pliku testowym; jeden `conftest.py` w `test/` to eliminuje
 - [ ] `pytest.ini` / `pyproject.toml` z `testpaths = test` i `pythonpath = . api` — zastąpi `sys.path.insert` i pozwoli uruchamiać `pytest` bez podawania ścieżek
 - [ ] Reset `lru_cache` w fixture `test_main.py` — jeśli test wywoła prawdziwą fabrykę (brak override), kolejne testy dostaną tę samą zepsutą instancję z cache'a; fikstura powinna czyścić cache po każdym teście
-
----
-
-## Uwagi
-
-- Zmiany w Template wymagają **Terminate** istniejącego Poda i stworzenia nowego.
-- Volume (`/root/data`) przeżywa Terminate — modele i dane Qdrant nie muszą być pobierane ponownie.
-- `rm -rf /tmp/init` w start command zabezpiecza przed błędem przy ponownym starcie na tym samym węźle.
-- Container Disk kasuje się przy każdym Stop — `git clone` i `pip install` wykonują się przy każdym starcie (~60 sek.).
-- Volume Disk ustawiony na **35 GB**: ~12 GB Bielik + ~274 MB nomic-embed-text + margines na dane Qdrant.
 
 ---
 
