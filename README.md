@@ -708,12 +708,12 @@ Blok `PROMPT DO LLM` jest wyświetlany zawsze — niezależnie od flagi `--verbo
 
 ### Query Router
 
-| Metryka                  | Bielik 11B Q4_K_M |
-|:-------------------------|:----------------|
-| Trafień                  | 120/135         |
-| Fallback (brak)          | 15/135          |
-| Błędów (złe urządzenie)  | 0/135           |
-| **Accuracy**             | **88.9%**       |
+| Metryka                  | Bielik 11B Q8 | Bielik 11B Q4_K_M |
+|:-------------------------|:----------------|:------------------|
+| Trafień                  | 120/135         | 128/135           |
+| Fallback (brak)          | 15/135          | 6/135             |
+| Błędów (złe urządzenie)  | 0/135           | 1/135             |
+| **Accuracy**             | **88.9%**       | **94.8%**         |
 
 Najważniejsza metryka to **brak błędów** (0 złych urządzeń). Błąd routera — wskazanie nieprawidłowego urządzenia — jest gorszy niż fallback: retriever przeszukuje wtedy wyłącznie chunki błędnie wskazanego urządzenia, co gwarantuje pominięcie właściwego wyniku bez względu na jakość embeddera. Fallback (brak rozpoznania) uruchamia wyszukiwanie po całej kolekcji, więc retriever nadal ma szansę odnaleźć właściwy chunk. W drugiej kolejności zależy nam na jak najwyższej liczbie trafień — im rzadziej router odpada do fallbacku, tym mniejszy corpus przeszukuje embedder i tym precyzyjniejszy wynik.
 
