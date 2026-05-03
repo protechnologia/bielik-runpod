@@ -96,6 +96,8 @@ bielik-runpod/
 │   ├── unit/                ← testy jednostkowe (pytest)
 │   ├── integration/         ← testy integracyjne (wymagają Ollamy)
 │   └── eval/                ← skrypty ewaluacyjne (golden set)
+├── integrations/            ← gotowe integracje z zewnętrznymi systemami
+│   └── wordpress-elementor/ ← plugin WordPress z widgetem Elementor
 ├── pytest.ini               ← konfiguracja pytest (testpaths, pythonpath)
 └── start.sh                 ← skrypt startowy kontenera RunPod
 ```
@@ -745,6 +747,22 @@ Najważniejsza metryka to **brak błędów** (0 złych urządzeń). Błąd route
 **MRR** (Mean Reciprocal Rank) to średnia z odwrotności pozycji pierwszego trafienia — dla każdego pytania liczymy 1/rank, gdzie rank to pozycja właściwego chunku na liście wyników (1, 2, 3, ...). Przykłady: MRR = 1.0 — właściwy chunk zawsze pierwszy; MRR = 0.75 — przeciętnie między pozycją 1 a 2 (np. połowa pytań na #1, połowa na #2 daje dokładnie 0.75); MRR = 0.567 (nasz wynik EMBED+BM25@20) — właściwy chunk trafia na pierwszą pozycję w ~57% przypadków, na drugą w kolejnych ~15%, reszta dalej; MRR = 0.5 — przeciętnie druga pozycja; MRR = 0.33 — przeciętnie trzecia pozycja. Metryka jest wrażliwa na pozycję pierwszego trafienia i ignoruje kolejność pozostałych wyników — istotna gdy model dostaje do kontekstu tylko top-1 lub top-2 chunki.
 
 Query router ma największy wpływ na wyniki — sam wzrost puli kandydatów BM25 z 20 do 100 poprawia Recall@1 zaledwie o 2 pp., natomiast dołączenie routera przy @100 daje skok o prawie 10 pp. (0.444 → 0.541) i dramatycznie poprawia wyniki przy wyższych k (Recall@2: 0.585 → 0.896, Recall@7: 0.889 → 1.000). Intuicja jest prosta: router zawęża corpus do jednego urządzenia, więc embedder nie musi konkurować z semantycznie podobnymi chunkami z innych urządzeń. Słaby punkt to Recall@1 nawet z routerem (0.541) — właściwy chunk nie zawsze trafia na pierwszą pozycję, co uzasadnia ustawienie `rag_top_k` na 3–5 w produkcji.
+
+---
+
+## Integracje
+
+### WordPress + Elementor (`integrations/wordpress-elementor/`)
+
+Plugin WordPress (`bielik-rag-widget`) dodaje widget Elementor z interfejsem Q&A — użytkownik wpisuje pytanie, widget wysyła je do API Bielika i wyświetla odpowiedź wraz ze statystykami wydajności (czas odpowiedzi, tokeny/s) oraz fragmentami RAG jako klikalne przyciski otwierające modal z pełnym tekstem chunku.
+
+**Architektura:**
+- Parametry połączenia (URL API, token Bearer, nazwa kolekcji Qdrant, parametry RAG) konfigurowane w panelu WordPress (Ustawienia → Bielik RAG) — token nigdy nie opuszcza serwera PHP.
+- Kontrolki Elementora obejmują wyłącznie warstwę prezentacji: tytuł, placeholder, kolory, typografia.
+- PHP proxy (`class-rest-proxy.php`) pośredniczy między przeglądarką a FastAPI — przeglądarka wysyła tylko `{ prompt }`, proxy dołącza wszystkie parametry RAG z `wp_options`.
+- Widget obsługuje wiele instancji na jednej stronie (unikalne ID z `$this->get_id()`).
+
+**Instalacja:** wgraj `bielik-rag-widget.zip` przez WordPress → Wtyczki → Dodaj nową → Wyślij wtyczkę.
 
 ---
 
