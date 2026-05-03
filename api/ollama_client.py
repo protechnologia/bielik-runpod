@@ -9,6 +9,10 @@ class OllamaClient:
 
     Odpowiada wyłącznie za transport — wysyłanie requestów i parsowanie odpowiedzi.
     Nie zawiera logiki aplikacji (promptów systemowych, strategii RAG itp.).
+
+    Wszystkie żądania do /api/chat i /api/embed wysyłają "keep_alive": -1, co zapobiega
+    wyładowaniu modelu z VRAM po domyślnym czasie bezczynności (5 min). Model pozostaje
+    załadowany do restartu serwera Ollama.
     """
 
     def __init__(self, base_url: str, model: str, embed_model: str):
@@ -26,6 +30,9 @@ class OllamaClient:
         """
         Zwraca wektor embeddingu dla podanego tekstu.
 
+        Args:
+            text: Tekst do zwektoryzowania.
+
         Wywołuje /api/embed na modelu embed_model.
         Rzuca HTTPException(502) jeśli Ollama zwróci błąd.
 
@@ -33,7 +40,8 @@ class OllamaClient:
             POST /api/embed
             {
                 "model": "nomic-embed-text",
-                "input": "Jakie jest napięcie znamionowe?"
+                "input": "Jakie jest napięcie znamionowe?",
+                "keep_alive": -1
             }
 
         Response z Ollama:
@@ -46,19 +54,17 @@ class OllamaClient:
         async with httpx.AsyncClient(timeout=60.0) as client:
             resp = await client.post(
                 f"{self.base_url}/api/embed",
-                json={"model": self.embed_model, "input": text},
+                json={
+                    "model": self.embed_model,
+                    "input": text,
+                    "keep_alive": -1
+                },
             )
         if resp.status_code != 200:
             raise HTTPException(status_code=502, detail=f"Embed error: {resp.text}")
         return resp.json()["embeddings"][0]
 
-    async def generate(
-        self,
-        prompt: str,
-        max_tokens: int,
-        temperature: float,
-        system: str | None = None,
-    ) -> dict:
+    async def generate( self, prompt: str, max_tokens: int, temperature: float, system: str | None = None ) -> dict:
         """
         Generuje odpowiedź modelu na podstawie promptu.
 
@@ -84,6 +90,7 @@ class OllamaClient:
                     {"role": "user",   "content": "Jakie jest napięcie znamionowe?"}
                 ],
                 "stream": false,
+                "keep_alive": -1,
                 "options": {"num_predict": 512, "temperature": 0.1}
             }
 
@@ -106,6 +113,7 @@ class OllamaClient:
                 {"role": "user", "content": prompt},
             ],
             "stream": False,
+            "keep_alive": -1,
             "options": {
                 "num_predict": max_tokens,
                 "temperature": temperature,
@@ -157,6 +165,9 @@ class OllamaClient:
         """
         Pobiera model przez Ollama. Jeśli model nie zostanie podany,
         używa domyślnego modelu generowania (self.model).
+
+        Args:
+            model: Nazwa modelu do pobrania, np. 'nomic-embed-text'. Jeśli None, używa self.model.
 
         Rzuca HTTPException(502) jeśli Ollama zwróci błąd.
 
