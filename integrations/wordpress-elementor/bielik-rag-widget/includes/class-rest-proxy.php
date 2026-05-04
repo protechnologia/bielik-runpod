@@ -125,6 +125,8 @@ class Bielik_Rest_Proxy {
 	 *    - `bm25_candidates`     — (int) kandydaci dla re-rankingu BM25
 	 *    - `query_router`        — (bool) czy używać klasyfikatora pytań
 	 *    - `max_tokens`          — (int) limit tokenów generowanej odpowiedzi
+	 *    - `trim_to_sentence`    — (bool) czy przycinać odpowiedź do pełnego zdania gdy
+	 *                               done_reason == "length"
 	 *    - `temperature`         — stała wartość 0.1 (niska, dla odpowiedzi faktycznych)
 	 *    Wszystkie parametry poza `prompt` i `temperature` są odczytywane z wp_options —
 	 *    użytkownik frontendu nie może ich zmienić ani podejrzeć.
@@ -181,6 +183,7 @@ class Bielik_Rest_Proxy {
 			'bm25_candidates'     => (int)   Bielik_Admin_Settings::get( 'bm25_candidates' ),
 			'query_router'        => (bool)  Bielik_Admin_Settings::get( 'query_router' ),
 			'max_tokens'          => (int)   Bielik_Admin_Settings::get( 'max_tokens' ),
+			'trim_to_sentence'    => (bool)  Bielik_Admin_Settings::get( 'trim_to_sentence' ),
 			'temperature'         => 0.1,
 		];
 

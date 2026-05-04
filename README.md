@@ -37,7 +37,7 @@ Zapytanie użytkownika przechodzi przez cztery etapy:
 1. **Query Router** (Bielik 11B, opcjonalny) — identyfikuje urządzenie z pytania na podstawie listy `source_label` pobranej z Qdrant. Jeśli rozpozna urządzenie, kolejne etapy przeszukują tylko jego chunki; jeśli nie — fallback do pełnej kolekcji.
 2. **Embedder** (`nomic-embed-text`) — zamienia zapytanie na wektor i wyszukuje semantycznie podobne chunki w Qdrant (z filtrem `source_label` jeśli router zadziałał).
 3. **BM25 reranker** (opcjonalny) — spośród kandydatów z etapu 2. reankuje przez dopasowanie słów kluczowych, łącząc oba rankingi metodą RRF (Reciprocal Rank Fusion). Ustawienie wysokiej liczby kandydatów (równej lub wyższej niż łączna liczba chunków w kolekcji) zamienia BM25 w symetryczny RRF — oba rankingi obejmują wtedy pełen zestaw dokumentów. Przy małej bazie chunków jest to korzystne, bo BM25 reankuje wszystkich kandydatów i nie pomija trafnych wyników.
-4. **LLM** (Bielik 11B) — generuje odpowiedź na podstawie wybranych fragmentów jako kontekst.
+4. **LLM** (Bielik 11B) — generuje odpowiedź na podstawie wybranych fragmentów jako kontekst. Jeśli odpowiedź została urwana przez limit tokenów (`done_reason == "length"`), pipeline przycina ją do ostatniego pełnego zdania (`.!?…`).
 
 **Dlaczego same embeddingi nie wystarczają — wyzwanie terminów technicznych:**
 
@@ -106,16 +106,19 @@ bielik-runpod/
 
 ## Uruchomienie
 
+### Zmienne środowiskowe
+
+Domyślne wartości zmiennych są dostosowane pod RunPod (kolumna „RunPod"). Przy uruchomieniu lokalnym `QDRANT_PATH` trzeba zawsze ustawić jawnie — domyślna ścieżka (`/root/data/qdrant`) nie istnieje lokalnie. `OLLAMA_MODELS` można opcjonalnie ustawić, żeby wybrać lokalizację modeli; jeśli pominiesz, Ollama użyje domyślnej lokalizacji ustalonej przez instalator.
+
+| Zmienna | Opis | RunPod | Lokalne |
+|---|---|---|---|
+| `OLLAMA_URL` | Adres serwera Ollama | `http://localhost:11434` | ← |
+| `OLLAMA_MODELS` | Katalog modeli Ollama (opcjonalne lokalnie) | `/root/data/ollama` | np. `C:\ollama-models` |
+| `MODEL` | Model LLM do generowania odpowiedzi | `SpeakLeash/bielik-11b-v3.0-instruct:Q4_K_M` | ← |
+| `EMBED_MODEL` | Model embeddingów do RAG | `nomic-embed-text` | ← |
+| `QDRANT_PATH` | Ścieżka bazy wektorowej Qdrant (wymagane lokalnie) | `/root/data/qdrant` | np. `./data/qdrant` |
+
 ### Uruchomienie na RunPod
-
-#### Struktura Volume (`/root/data`)
-
-```
-/root/data/
-├── ollama/      ← modele Ollama (Bielik, nomic-embed-text)
-└── qdrant/      ← baza wektorowa Qdrant (dokumenty RAG)
-```
-
 
 #### Tworzenie Template
 
@@ -146,48 +149,73 @@ bash -c "apt-get update && apt-get install -y curl git zstd && curl -fsSL https:
 Pierwsze uruchomienie trwa ~8 minut (pobieranie modeli ~6.7 GB Bielik + ~274 MB nomic-embed-text na Volume).  
 Kolejne uruchomienia ~2 minuty — modele już są na Volume.
 
-#### Zmienne środowiskowe
+#### Struktura Volume (`/root/data`)
 
-| Zmienna | Wartość |
-|---|---|
-| `OLLAMA_URL` | `http://localhost:11434` |
-| `OLLAMA_MODELS` | `/root/data/ollama` |
-| `MODEL` | `SpeakLeash/bielik-11b-v3.0-instruct:Q4_K_M` |
-| `EMBED_MODEL` | `nomic-embed-text` |
-| `QDRANT_PATH` | `/root/data/qdrant` |
+Struktura wynikająca z domyślnych wartości zmiennych środowiskowych (`OLLAMA_MODELS`, `QDRANT_PATH`):
+
+```
+/root/data/
+├── ollama/      ← modele Ollama (Bielik, nomic-embed-text)
+└── qdrant/      ← baza wektorowa Qdrant (dokumenty RAG)
+```
 
 ### Uruchomienie lokalne
 
 **Wymagania (jednorazowo):**
 
-1. Zainstaluj zależności Pythona:
+1. Przygotuj miejsce na dysku:
+   - **Ollama** — ~6.7 GB (Bielik 11B Q4_K_M) + ~274 MB (nomic-embed-text); lokalizację modeli kontroluje zmienna `OLLAMA_MODELS` (patrz krok 4)
+   - **Qdrant** — zależy od liczby wgranych dokumentów; ścieżkę ustawia zmienna `QDRANT_PATH` (patrz krok 6)
+
+2. Zainstaluj zależności Pythona:
 ```bash
 pip install -r api/requirements.txt
 ```
 
-2. Zainstaluj Ollama — pobierz installer ze strony [ollama.com](https://ollama.com/download) i uruchom.
+3. Zainstaluj Ollama — pobierz installer ze strony [ollama.com](https://ollama.com/download) i uruchom.
 
-3. Pobierz modele:
+4. Pobierz modele (odkomentuj `OLLAMA_MODELS` jeśli chcesz wybrać lokalizację — dostosuj ścieżkę):
 ```bash
+# export OLLAMA_MODELS="/data/ollama"  # opcjonalne — dostosuj ścieżkę
+ollama pull SpeakLeash/bielik-11b-v3.0-instruct:Q4_K_M
+ollama pull nomic-embed-text
+```
+
+Na Windows (PowerShell):
+```powershell
+# $env:OLLAMA_MODELS="C:\ollama-models"  # opcjonalne — dostosuj ścieżkę
 ollama pull SpeakLeash/bielik-11b-v3.0-instruct:Q4_K_M
 ollama pull nomic-embed-text
 ```
 
 **Uruchomienie:**
 
-4. Uruchom Ollama (jeśli nie działa jako serwis):
+5. Uruchom Ollama (jeśli nie działa jako serwis):
 ```bash
+# export OLLAMA_MODELS="/data/ollama"  # opcjonalne — ta sama ścieżka co w kroku 4
 ollama serve
-```
-
-5. Uruchom API:
-```bash
-OLLAMA_URL=http://localhost:11434 QDRANT_PATH=./data/qdrant PYTHONPATH=. uvicorn api.main:app --host 0.0.0.0 --port 8000
 ```
 
 Na Windows (PowerShell):
 ```powershell
-$env:OLLAMA_URL="http://localhost:11434"; $env:QDRANT_PATH="./data/qdrant"; $env:PYTHONPATH="."; uvicorn api.main:app --host 0.0.0.0 --port 8000
+# $env:OLLAMA_MODELS="C:\ollama-models"  # opcjonalne — ta sama ścieżka co w kroku 4
+ollama serve
+```
+
+6. Uruchom API:
+```bash
+# export OLLAMA_URL=http://localhost:11434  # opcjonalne — domyślnie http://localhost:11434
+export QDRANT_PATH=./data/qdrant           # wymagane — domyślna ścieżka (/root/data/qdrant) nie działa lokalnie
+export PYTHONPATH=.                        # wymagane — umożliwia import modułów z katalogu api/
+uvicorn api.main:app --host 0.0.0.0 --port 8000
+```
+
+Na Windows (PowerShell):
+```powershell
+# $env:OLLAMA_URL="http://localhost:11434"  # opcjonalne — domyślnie http://localhost:11434
+$env:QDRANT_PATH="./data/qdrant"           # wymagane — domyślna ścieżka (/root/data/qdrant) nie działa lokalnie
+$env:PYTHONPATH="."                        # wymagane — umożliwia import modułów z katalogu api/
+uvicorn api.main:app --host 0.0.0.0 --port 8000
 ```
 
 API dostępne pod: `http://localhost:8000`  
@@ -502,7 +530,7 @@ Projekt zawiera dwa gotowe golden sety w katalogu `data/golden_sets/`:
 
 ### Testy jednostkowe
 
-106 testów jednostkowych pokrywających wszystkie klasy logiki biznesowej oraz warstwę HTTP (`main.py`). Nie wymagają działającej Ollamy ani Qdrant — zależności zewnętrzne są mockowane.
+110 testów jednostkowych pokrywających wszystkie klasy logiki biznesowej oraz warstwę HTTP (`main.py`). Nie wymagają działającej Ollamy ani Qdrant — zależności zewnętrzne są mockowane.
 
 | Plik | Klasa | Testów | Pokrycie |
 |---|---|---|---|
@@ -513,7 +541,7 @@ Projekt zawiera dwa gotowe golden sety w katalogu `data/golden_sets/`:
 | `test_ollama_client.py` | `OllamaClient` | 14 | 100% |
 | `test_qdrant_store.py` | `QdrantStore` | 13 | 100% |
 | `test_rag_retriever.py` | `RagRetriever` | 9 | 100% |
-| `test_ask_pipeline.py` | `AskPipeline` | 11 | 100% |
+| `test_ask_pipeline.py` | `AskPipeline` | 15 | 100% |
 | `test_main.py` | endpointy FastAPI (`main.py`) | 11 | 100% |
 
 Pokrycie: **100%** — logika biznesowa i warstwa HTTP. `test_main.py` używa `TestClient` z `dependency_overrides` (FastAPI DI), co stało się możliwe po refaktoryzacji `main.py` — zamiana globali na fabryki `@lru_cache` + `Depends()`.
@@ -526,7 +554,7 @@ pytest -v
 ```
 ============================= test session starts =============================
 platform win32 -- Python 3.10.5, pytest-9.0.3, pluggy-1.6.0
-collected 106 items
+collected 110 items
 
 test/unit/test_xlsx_chunker.py::test_load_sheets_basic PASSED            [  0%]
 test/unit/test_xlsx_chunker.py::test_load_sheets_skips_empty PASSED      [  1%]
@@ -534,7 +562,7 @@ test/unit/test_xlsx_chunker.py::test_load_sheets_skips_empty PASSED      [  1%]
 test/unit/test_main.py::test_list_collections PASSED                     [ 99%]
 test/unit/test_main.py::test_delete_collection PASSED                    [100%]
 
-============================== 106 passed in 3.19s ==============================
+============================== 110 passed in 3.19s ==============================
 ```
 
 ### Testy integracyjne
@@ -772,8 +800,6 @@ Plugin WordPress (`bielik-rag-widget`) dodaje widget Elementor z interfejsem Q&A
 - [ ] **FuzzyRouter** (rapidfuzz) — alternatywa dla routera LLM. Obecny `QueryRouter` wysyła zapytanie do Bielika 11B, żeby rozpoznał nazwę urządzenia — to ~1–2 sekundy opóźnienia na każde pytanie. FuzzyRouter porównałby zapytanie z listą `source_label` przez dopasowanie rozmyte (Levenshtein / token sort ratio), bez żadnego wywołania modelu. Szybszy o rząd wielkości, deterministyczny, nie wymaga GPU. Wadą jest brak rozumienia kontekstu — "licznik trójfazowy Orno" może nie dopasować się do "ORNO OR-WE-520", podczas gdy Bielik sobie z tym radzi.
 - [ ] **Lepszy model embeddingów** (np. `multilingual-e5-large`) — `nomic-embed-text` ma 768 wymiarów i dobry angielski, ale słabiej rozumie polskie konstrukcje techniczne. `multilingual-e5-large` (1024 wymiary, trenowany na 100+ językach) powinien dawać wyższe podobieństwo cosinusowe między polskim pytaniem a polskim fragmentem dokumentacji. Spodziewany efekt: wzrost Recall@1 i MRR w ewaluacji, szczególnie przy pytaniach z polską terminologią.
 - [ ] **HyDE** (Hypothetical Document Embeddings) — zamiast embedować surowe pytanie użytkownika ("Jakie jest napięcie znamionowe?"), model najpierw generuje hipotetyczną odpowiedź ("Napięcie znamionowe wynosi 3×230/400V, częstotliwość 50Hz..."), a jej embedding trafia do Qdrant. Embedding hipotetycznej odpowiedzi jest bliższy przestrzeni wektorowej dokumentacji niż embedding pytania — co przekłada się na trafniejsze wyniki wyszukiwania. Koszt: dodatkowe wywołanie LLM przed każdym retrieve.
-- [ ] **Nie ucinać odpowiedzi w połowie zdania** — zbadać czy i jak ograniczamy `max_tokens`; jeśli odpowiedź jest przycinana, powinna kończyć się na granicy zdania lub akapitu, nie w środku.
-
 ### Architektura i produkcyjność
 - [ ] **Nowe pola w odpowiedzi `/ask`** — dodać `routed_device` (rozpoznana przez Query Router nazwa urządzenia lub `"brak"`) oraz `qdrant_chunks` (liczba chunków z Qdrant przed rerankiem cosinus+BM25), analogicznie do istniejącego `rag_chunks_used`.
 - [ ] **Limit znaków w XlsxChunker** (`max_chars`) — szerokie tabele XLSX (np. 10 kolumn × 50 wierszy) mogą przekroczyć limit kontekstu `nomic-embed-text` (2048 tokenów); chunker powinien przycinać tekst i logować ostrzeżenie.

@@ -1,3 +1,5 @@
+import re
+
 from config import MODEL, SYSTEM_PROMPT, RAG_SYSTEM_PROMPT
 from ollama_client import OllamaClient
 from query_router import QueryRouter
@@ -6,7 +8,7 @@ from schemas import AskRequest, AskResponse
 
 
 class AskPipeline:
-    """Orkiestruje pełny przepływ zapytania: RAG → generowanie → metryki → AskResponse."""
+    """Orkiestruje pełny przepływ zapytania: RAG → generowanie → przycinanie → metryki → AskResponse."""
 
     def __init__(self, ollama: OllamaClient, rag_retriever: RagRetriever, query_router: QueryRouter):
         """
@@ -18,6 +20,17 @@ class AskPipeline:
         self.ollama = ollama
         self.rag_retriever = rag_retriever
         self.query_router = query_router
+
+    @staticmethod
+    def _trim_to_sentence(text: str) -> str:
+        """
+        Przycina tekst do ostatniego znaku końca zdania (.!?…). Zwraca oryginał jeśli nie znaleziono.
+
+        Przykład:
+            "Napięcie wynosi 230V. Prąd znamionowy wy" → "Napięcie wynosi 230V."
+        """
+        match = re.search(r'[.!?…](?=[^.!?…]*$)', text)
+        return text[:match.end()] if match else text
 
     async def run(self, req: AskRequest) -> AskResponse:
         """
@@ -35,9 +48,14 @@ class AskPipeline:
                     time_to_first_token_s=1.5,
                     tokens_generated=104,
                     tokens_per_second=7.3,
+                    truncated=False,
                     rag_chunks_used=2,
                     rag_chunks=[RagChunk(index=1, score=0.8731, ...)],
                 )
+
+            truncated=True sygnalizuje, że Ollama urwała generowanie po osiągnięciu limitu
+            tokenów (done_reason == "length"). Jeśli req.trim_to_sentence=True, odpowiedź
+            jest dodatkowo przycinana do ostatniego znaku końca zdania (.!?…).
         """
         # domyślnie: czysty prompt użytkownika, bez kontekstu
         prompt          = req.prompt
@@ -67,6 +85,12 @@ class AskPipeline:
         # generowanie — blokuje do końca odpowiedzi (stream=False)
         data = await self.ollama.generate(prompt, req.max_tokens, req.temperature, system)
 
+        # done_reason == "length" oznacza urwanie przez limit tokenów — przytnij do pełnego zdania
+        answer    = data.get("response", "")
+        truncated = data.get("done_reason") == "length"
+        if truncated and req.trim_to_sentence:
+            answer = self._trim_to_sentence(answer)
+
         # metryki z odpowiedzi Ollamy — czasy w nanosekundach, przeliczamy na sekundy i TPS
         ns             = 1e9
         prompt_eval_ns = data.get("prompt_eval_duration", 0)
@@ -75,12 +99,13 @@ class AskPipeline:
         tps = (eval_count / (eval_ns / ns)) if eval_count and eval_ns else None
 
         return AskResponse(
-            answer                = data.get("response", ""),
+            answer                = answer,
             model                 = data.get("model", MODEL),
             time_total_s          = round(data["_wall_time"], 3),
             time_to_first_token_s = round(prompt_eval_ns / ns, 3) if prompt_eval_ns else None,
             tokens_generated      = eval_count,
             tokens_per_second     = round(tps, 1) if tps else None,
+            truncated             = truncated,
             rag_chunks_used       = rag_chunks_used,
             rag_chunks            = rag_chunks,
         )

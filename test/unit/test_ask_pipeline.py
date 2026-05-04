@@ -141,3 +141,37 @@ def test_response_fields():
     assert response.answer == "Napięcie wynosi 230V."
     assert response.model == "bielik-11b"
     assert response.time_total_s == 3.5
+
+
+# ── trim_to_sentence ──────────────────────────────────────────────────────────
+
+def test_trim_length_trim_enabled():
+    """done_reason=length, trim_to_sentence=True — odpowiedź przycięta do ostatniego zdania."""
+    data = {**make_generate_data(answer="Pierwsze zdanie. Drugie zdan"), "done_reason": "length"}
+    pipeline = make_pipeline(data)
+    response = run(pipeline.run(req(trim_to_sentence=True)))
+    assert response.answer == "Pierwsze zdanie."
+    assert response.truncated is True
+
+def test_trim_length_trim_disabled():
+    """done_reason=length, trim_to_sentence=False — odpowiedź nieprzycinana, truncated=True."""
+    data = {**make_generate_data(answer="Pierwsze zdanie. Drugie zdan"), "done_reason": "length"}
+    pipeline = make_pipeline(data)
+    response = run(pipeline.run(req(trim_to_sentence=False)))
+    assert response.answer == "Pierwsze zdanie. Drugie zdan"
+    assert response.truncated is True
+
+def test_trim_stop_not_truncated():
+    """done_reason=stop — naturalne zakończenie, truncated=False, brak przycinania."""
+    data = {**make_generate_data(answer="Napięcie wynosi 230V."), "done_reason": "stop"}
+    pipeline = make_pipeline(data)
+    response = run(pipeline.run(req(trim_to_sentence=True)))
+    assert response.answer == "Napięcie wynosi 230V."
+    assert response.truncated is False
+
+def test_trim_no_done_reason_not_truncated():
+    """Brak done_reason w odpowiedzi — truncated=False, brak przycinania."""
+    pipeline = make_pipeline(make_generate_data(answer="Napięcie wynosi 230V."))
+    response = run(pipeline.run(req(trim_to_sentence=True)))
+    assert response.answer == "Napięcie wynosi 230V."
+    assert response.truncated is False

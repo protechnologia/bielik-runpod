@@ -62,6 +62,9 @@ class Bielik_Admin_Settings {
 	 *   bm25_candidates     — 20; pobranie 20 kandydatów przed rerankingiem BM25+RRF
 	 *                         zapewnia dobre wyniki przy małym narzucie czasowym.
 	 *   max_tokens          — 512; wystarczające dla typowych odpowiedzi technicznych.
+	 *   trim_to_sentence    — '1' (włączone); jeśli odpowiedź jest ucięta przez limit
+	 *                         tokenów (done_reason == "length"), przycina ją do ostatniego
+	 *                         pełnego zdania (.!?…).
 	 *
 	 * @return array<string, mixed> Tablica [klucz => wartość_domyślna].
 	 */
@@ -76,6 +79,7 @@ class Bielik_Admin_Settings {
 			'rag_score_threshold' => 0.3,
 			'bm25_candidates'     => 20,
 			'max_tokens'          => 512,
+			'trim_to_sentence'    => '1',
 			'debug_mode'          => '',
 		];
 	}
@@ -166,7 +170,7 @@ class Bielik_Admin_Settings {
 	 * Sekcje:
 	 *   'section_connection' — URL API, token Bearer, nazwa kolekcji Qdrant.
 	 *   'section_rag'        — przełączniki i parametry pobierania chunków RAG.
-	 *   'section_generation' — limit tokenów odpowiedzi modelu.
+	 *   'section_generation' — limit tokenów, przycinanie odpowiedzi do pełnego zdania.
 	 *
 	 * @return void
 	 */
@@ -248,6 +252,11 @@ class Bielik_Admin_Settings {
 				'max'         => 4096,
 				'step'        => 64,
 				'description' => __( 'Limit długości odpowiedzi modelu.', 'bielik-rag-widget' ),
+			],
+			'trim_to_sentence' => [
+				'label'       => __( 'Przytnij do pełnego zdania', 'bielik-rag-widget' ),
+				'type'        => 'checkbox',
+				'description' => __( 'Jeśli odpowiedź jest ucięta przez limit tokenów, przycina ją do ostatniego pełnego zdania (.!?…).', 'bielik-rag-widget' ),
 			],
 
 			// Section: Diagnostyka
@@ -464,6 +473,14 @@ class Bielik_Admin_Settings {
 	 * @return int      Liczba z zakresu [64, 4096].
 	 */
 	public function sanitize_max_tokens( $v )          { return max( 64, min( 4096, (int) $v ) ); }
+
+	/**
+	 * Sanityzuje wartość checkboxa "Przytnij do pełnego zdania".
+	 *
+	 * @param  mixed $v Wartość z formularza.
+	 * @return string   '1' gdy włączony, '' gdy wyłączony.
+	 */
+	public function sanitize_trim_to_sentence( $v )    { return $v ? '1' : ''; }
 
 	/**
 	 * Sanityzuje wartość checkboxa "Tryb debugowania".

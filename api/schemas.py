@@ -24,10 +24,19 @@ class AskRequest(BaseModel):
             "query_router": true
         }
 
-    bm25_candidates: liczba kandydatów pobieranych z Qdrant przed rerankingiem BM25;
-                     0 wyłącza BM25 i zwraca bezpośrednio top rag_top_k z Qdrant.
-    query_router:    jeśli true i rag=true, przed wyszukiwaniem identyfikuje urządzenie
-                     i filtruje Qdrant po source_label; false = przeszukuje całą kolekcję.
+    prompt:            treść pytania użytkownika.
+    max_tokens:        maksymalna liczba tokenów do wygenerowania (num_predict w Ollama).
+    temperature:       temperatura próbkowania; niższe wartości = bardziej deterministyczne odpowiedzi.
+    rag:               jeśli true, przed generowaniem wyszukuje kontekst w Qdrant.
+    collection:        nazwa kolekcji Qdrant do przeszukania.
+    rag_top_k:         liczba fragmentów RAG dołączanych do kontekstu modelu.
+    rag_score_threshold: minimalny próg podobieństwa wektorowego; fragmenty poniżej progu są odrzucane.
+    bm25_candidates:   liczba kandydatów pobieranych z Qdrant przed rerankingiem BM25;
+                       0 wyłącza BM25 i zwraca bezpośrednio top rag_top_k z Qdrant.
+    query_router:      jeśli true i rag=true, przed wyszukiwaniem identyfikuje urządzenie
+                       i filtruje Qdrant po source_label; false = przeszukuje całą kolekcję.
+    trim_to_sentence:  jeśli true i odpowiedź została ucięta przez limit tokenów
+                       (done_reason == "length"), przycina ją do ostatniego pełnego zdania.
     """
 
     prompt: str
@@ -39,6 +48,7 @@ class AskRequest(BaseModel):
     rag_score_threshold: float = 0.3
     bm25_candidates: int = 20
     query_router: bool = False
+    trim_to_sentence: bool = True
 
 
 class RagChunk(BaseModel):
@@ -78,9 +88,22 @@ class AskResponse(BaseModel):
             "time_to_first_token_s": 1.5,
             "tokens_generated": 104,
             "tokens_per_second": 7.3,
+            "truncated": false,
             "rag_chunks_used": 2,
             "rag_chunks": [...]
         }
+
+    answer:               treść odpowiedzi wygenerowana przez model.
+    model:                nazwa modelu użytego do generowania.
+    time_total_s:         całkowity czas żądania do Ollamy w sekundach.
+    time_to_first_token_s: czas od wysłania żądania do wygenerowania pierwszego tokenu
+                           (prompt_eval_duration z Ollamy); None jeśli niedostępne.
+    tokens_generated:     liczba wygenerowanych tokenów (eval_count z Ollamy); None jeśli niedostępne.
+    tokens_per_second:    prędkość generowania tokenów; None jeśli niedostępne.
+    truncated:            true jeśli Ollama urwała generowanie po osiągnięciu limitu tokenów
+                          (done_reason == "length"); false przy naturalnym zakończeniu lub braku info.
+    rag_chunks_used:      liczba fragmentów RAG dołączonych do kontekstu; None jeśli rag=false.
+    rag_chunks:           szczegóły fragmentów RAG użytych do budowy kontekstu; None jeśli rag=false.
     """
 
     answer: str
@@ -89,6 +112,7 @@ class AskResponse(BaseModel):
     time_to_first_token_s: float | None
     tokens_generated: int | None
     tokens_per_second: float | None
+    truncated: bool = False
     rag_chunks_used: int | None = None
     rag_chunks: list[RagChunk] | None = None
 
