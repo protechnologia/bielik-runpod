@@ -818,25 +818,26 @@ Plugin WordPress (`bielik-rag-widget`) dodaje widget Elementor z interfejsem Q&A
 
 ```mermaid
 flowchart TD
-    Q([Pytanie użytkownika]) --> A{query_router\n= true?}
+    Q([Pytanie użytkownika]) --> A{Czy Query Router włączony?\nquery_router = true}
 
-    A -- nie --> E
-    A -- tak --> R[Query Router\nBielik 11B]
-    R --> R2{urządzenie\nrozpoznane?}
-    R2 -- tak --> F[filtr: source_label]
-    R2 -- nie / fallback --> E
+    A -- nie --> E[Embedder\nzamiana tekstu na wektor]
+    A -- tak --> R{Query Router\nurządzenie rozpoznane\nw pytaniu?}
+    R -- tak --> F[filtr: source_label]
+    R -- nie / fallback --> FB[szukanie we\nwszystkich dokumentach]
+    FB --> E
 
-    F --> E[Embedder\nnomic-embed-text]
-    E --> S[Qdrant search\ncosine similarity]
+    F --> E[Embedder\nzamiana tekstu na wektor]
+    E --> S[Baza Qdrant\npodobieństwo wektorowe]
 
-    S --> B{bm25_candidates\n> 0?}
-    B -- nie --> CTX
+    S --> B{Czy BM25 włączony\nbm25_candidates > 0?}
+    B -- nie --> COS[tylko podobieństwo\ncosinusowe]
+    COS --> CTX
     B -- tak --> BM[BM25 reranker\n+ RRF fusion]
     BM --> CTX
 
-    CTX[Top-k chunków\njako kontekst] --> LLM[LLM\nBielik 11B]
-    LLM --> TR{done_reason\n= length?}
+    CTX[Top-k chunków\njako kontekst] --> LLM[Wnioskowanie LLM]
+    LLM --> TR{Czy odpowiedź ucięta\nlimitem tokenów\ndone_reason = length?}
     TR -- nie --> ANS([Odpowiedź])
-    TR -- tak --> TRS[trim_to_sentence]
+    TR -- tak --> TRS[Przytnij do pełnego zdania\njeżeli włączone]
     TRS --> ANS([Odpowiedź])
 ```
