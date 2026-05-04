@@ -835,5 +835,8 @@ flowchart TD
     BM --> CTX
 
     CTX[Top-k chunków\njako kontekst] --> LLM[LLM\nBielik 11B]
-    LLM --> ANS([Odpowiedź])
+    LLM --> TR{done_reason\n= length?}
+    TR -- nie --> ANS([Odpowiedź])
+    TR -- tak --> TRS[trim_to_sentence]
+    TRS --> ANS([Odpowiedź])
 ```
