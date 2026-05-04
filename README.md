@@ -818,13 +818,11 @@ Plugin WordPress (`bielik-rag-widget`) dodaje widget Elementor z interfejsem Q&A
 
 ```mermaid
 flowchart TD
-    Q([Pytanie użytkownika]) --> A{Czy Query Router włączony?\nquery_router = true}
+    Q([Pytanie użytkownika]) --> QR{Query Router}
 
-    A -- nie --> E[Embedder\nzamiana tekstu na wektor]
-    A -- tak --> R{Query Router\nurządzenie rozpoznane\nw pytaniu?}
-    R -- tak --> F[filtr: source_label]
-    R -- nie / fallback --> FB[szukanie we\nwszystkich dokumentach]
-    FB --> E
+    QR -- urządzenie rozpoznane --> F[filtr: source_label]
+    QR -- wyłączony / nierozpoznane --> FB[szukanie we\nwszystkich dokumentach]
+    FB --> E[Embedder\nzamiana tekstu na wektor]
 
     F --> E[Embedder\nzamiana tekstu na wektor]
     E --> S[Baza Qdrant\npodobieństwo wektorowe]
